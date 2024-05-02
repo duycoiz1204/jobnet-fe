@@ -1,0 +1,1141 @@
+{
+  "header": {
+    "jobSeeker": {
+      "search": {
+        "label": "Search",
+        "dropdown": {
+          "searchJobs": "Search jobs",
+          "appliedJobs": "View applied-for jobs",
+          "bookmarkedJobs": "View bookmarked jobs",
+          "suitableJobs": "View suitable jobs"
+        }
+      },
+      "profileAndCV": {
+        "label": "Profile & CV",
+        "dropdown": {
+          "CVs": "Manage CVs",
+          "coverLetters": "Manage Cover Letters",
+          "cvTemplate": "CV Template",
+          "topCVProfile": "Top CV Profile"
+        }
+      },
+      "business": {
+        "label": "Business",
+        "dropdown": {
+          "businessList": "Business list",
+          "topBusinesses": "Top businesses"
+        }
+      },
+      "contact": "Contact",
+      "notifications": "Notifications",
+      "user": {
+        "dropdown": {
+          "account": "Account",
+          "settings": "Settings",
+          "logout": "Log out"
+        }
+      },
+      "classification": "Classification",
+      "modal": {
+        "logout": {
+          "title": "Do you want to log out?",
+          "button": {
+            "logout": "Log out",
+            "cancel": "Cancel"
+          }
+        }
+      },
+      "unRegister": {
+        "login": "Sign in",
+        "register": "Sign up",
+        "recruiter": "Recruiter"
+      }
+    },
+    "recruiter": {
+      "candidate": {
+        "label": "Candidate",
+        "dropdown": {
+          "managementCandidate": "Candidate management",
+          "rightCandidate": "Right candidate",
+          "appliedCandiate": "Candidate applied"
+        }
+      },
+      "posts": {
+        "label": "Post",
+        "dropdown": {
+          "managementPosts": "Posts management",
+          "createPost": "Create post"
+        }
+      },
+      "cv": {
+        "label": "Resume",
+        "dropdown": {
+          "rightCV": "Right resume"
+        }
+      },
+      "email": "Email",
+      "notifications": "Notifications",
+      "button": "Posting",
+      "accountPopup": {
+        "account": "Account",
+        "businessInfo": "Business Information",
+        "setting": "Settings",
+        "logout": "Log out"
+      },
+      "modal": {
+        "logout": {
+          "title": "Do you want to log out?",
+          "button": {
+            "logout": "Log out",
+            "cancel": "Cancel"
+          }
+        }
+      },
+      "unRegister": {
+        "login": "Sign in",
+        "register": "Sign up",
+        "candidate": "Candidate"
+      }
+    }
+  },
+  "toast": {
+    "follow": {
+      "followed": "Followed",
+      "unfollow": "Unfollowed"
+    },
+    "applyCV": {
+      "noCVSelected": "Please select a CV",
+      "applied": "Applied successfully",
+      "uploadCVSucess": "CV uploaded successfully.",
+      "noneFileUpload": "Please select a file!"
+    },
+    "post": {
+      "save": {
+        "saved": "Saved successfully",
+        "unsave": "Unsaved successfully"
+      }
+    },
+    "CV": {
+      "permission": {
+        "success": "CV permission updated successfully."
+      },
+      "remove": "CV removed successfully."
+    }
+  },
+  "sidebar": {
+    "jobSeeker": {
+      "manageProfile": "Manage profile",
+      "profile": "Profile",
+      "myCV": "My CVs",
+      "favoriteJobs": "Favorite jobs",
+      "appliedJobs": "Applied jobs",
+      "recruiter": {
+        "label": "Recruiter",
+        "collapse": {
+          "profileViews": "Profile views",
+          "following": "Following"
+        }
+      },
+      "notifications": "Notifications",
+      "settings": "Settings"
+    },
+    "recruiter": {
+      "dashboard": "Dashboard",
+      "managePosts": "Posts",
+      "camping": "Campaigns",
+      "candidate": "Candidates",
+      "interview": "Interview",
+      "account": {
+        "label": "Account",
+        "collapse": {
+          "accountInfo": "Account Information",
+          "businessInfo": "Business Information"
+        }
+      },
+      "logout": "Log out"
+    },
+    "admin": {
+      "dashboard": "Dashboard",
+      "managePosts": {
+        "label": "Posts",
+        "collapse": {
+          "allPosts": "All posts",
+          "pendingPosts": "Pending",
+          "openningPosts": "Opening",
+          "expriedPosts": "Expried",
+          "blockedPosts": "Blocked"
+        }
+      },
+      "recruiter": {
+        "label": "Recruiters",
+        "collapse": {
+          "allAccounts": "All accounts",
+          "pendingAccounts": "Pending"
+        }
+      },
+      "jobSeeker": {
+        "label": "JobSeekers",
+        "collapse": {
+          "allAccounts": "All accounts",
+          "pendingAccounts": "Pending"
+        }
+      },
+      "business": {
+        "label": "Businesses",
+        "collapse": {
+          "allBusinesses": "All accounts",
+          "pendingBusinesses": "Pending",
+          "aprrovedBusinesses": "Approved",
+          "rejectedBusinesses": "Rejected"
+        }
+      },
+      "setting": {
+        "label": "Settings",
+        "collapse": {
+          "category": "Categories",
+          "industry": "Industry",
+          "benefitAndLevel": "Benefits and Levels"
+        }
+      },
+      "account": {
+        "label": "Account",
+        "collapse": {
+          "changePassword": "Change pasword",
+          "logout": "Log out"
+        }
+      }
+    }
+  },
+
+  "home": {
+    "welcome": {
+      "title": "Jobnet - Welcome {{name}}",
+      "subtitle": "We will help you connect with top employers and find the most suitable job.",
+      "emphasis": "Let us help you do it! 😄",
+      "searchBar": {
+        "button": "Search",
+        "placeholder": "Enter search keywords"
+      }
+    },
+    "exploration": {
+      "title": "The job is right for you",
+      "subtitle": "Access 40,000+ job recruitment postings every day from thousands of reputable businesses in Vietnam.",
+      "search": "Search for jobs",
+      "apply": "Submit application",
+      "notify": "Receive notification",
+      "category": "View job categories"
+    },
+    "topLeadingBusinesses": {
+      "title": "Top leading businesses",
+      "totalPosts": "{{total}} jobs available",
+      "button": {
+        "follow": "Follow",
+        "unfollow": "Unfollow"
+      }
+    },
+    "categories": {
+      "title": "Categories",
+      "totalPosts": "{{total}} jobs available"
+    },
+    "toast": {
+      "search": {
+        "error": "Please enter search keywords!"
+      }
+    }
+  },
+
+  "posts": {
+    "input": {
+      "search": {
+        "label": "Search for keyword",
+        "placeholder": "Enter title or keyword"
+      },
+      "salary": {
+        "label": "Salary (VND)",
+        "placeholder": {
+          "min": "From",
+          "max": "To"
+        }
+      }
+    },
+    "select": {
+      "category": {
+        "label": "Category",
+        "placeholder": "Select category"
+      },
+      "profession": {
+        "label": "Profession",
+        "placeholder": "Select profession"
+      },
+      "location": {
+        "label": "Location",
+        "placeholder": "Select location"
+      },
+      "workingFormat": {
+        "label": "Working format",
+        "placeholder": "Select working format"
+      },
+      "sortBy": {
+        "label": "Sort by:",
+        "placeholder": "Select sort",
+        "option": {
+          "latest": "Latest",
+          "highestSalary": "Highest salary"
+        }
+      }
+    },
+    "button": {
+      "search": "Search"
+    },
+    "results": {
+      "total": "Total results:",
+      "jobs": "jobs."
+    }
+  },
+
+  "jsProfile": {
+    "title": "Profile",
+    "completion": {
+      "label": "Completion level:",
+      "incomplete": "Incomplete",
+      "warning": "Please complete your profile!"
+    },
+    "button": {
+      "uploadImage": "Upload image",
+      "deleteImage": "Delete image",
+      "upgradeAccount": "Upgrade account"
+    },
+    "personalInfo": {
+      "title": "Personal information",
+      "items": {
+        "fullname": "Full name:",
+        "email": "Email:",
+        "phone": "Phone:",
+        "nation": "Nation:"
+      }
+    },
+    "careerInfo": {
+      "title": "Career information",
+      "items": {
+        "salary": "Salary:",
+        "workingFormat": "Working format:",
+        "profession": "Profession:",
+        "workplace": "Workplace:"
+      }
+    },
+    "modal": {
+      "profileImageUpload": {
+        "title": "Upload image",
+        "subtitle": "JPG, GIF or PNG. Maximum size 800K."
+      },
+      "delete": {
+        "title": "Are you sure you want to delete this image?",
+        "button": {
+          "sure": "Sure",
+          "cancel": "Cancel"
+        }
+      },
+      "personalInfo": {
+        "title": "Update personal information",
+        "inputs": {
+          "fullName": {
+            "title": "Full name:",
+            "placeholder": "Enter your full name"
+          },
+          "email": {
+            "title": "Email:",
+            "placeholder": "Enter your email"
+          },
+          "phone": {
+            "title": "Phone:",
+            "placeholder": "Enter your phone"
+          },
+          "nation": {
+            "title": "Nation:",
+            "placeholder": "Enter your nation"
+          }
+        }
+      },
+      "professionInfo": {
+        "title": "Update profession information",
+        "inputs": {
+          "salary": {
+            "title": "Salary:",
+            "placeholder": "Enter desired $ salary"
+          },
+          "workingFormat": {
+            "title": "Working format:",
+            "placeholder": "Enter working format"
+          },
+          "profession": {
+            "title": "Profession:",
+            "placeholder": "Enter desired profession"
+          },
+          "location": {
+            "title": "Location:",
+            "placeholder": "Please enter location"
+          }
+        },
+        "button": {
+          "update": "Update",
+          "cancel": "Cancel"
+        }
+      }
+    }
+  },
+  "postDetails": {
+    "BusinessInfor": {
+      "scale": {
+        "title": "Scale",
+        "total": "{{total}} employees"
+      },
+      "address": "Location",
+      "viewDetailBusiness": "View Business Details"
+    },
+    "aboutJob": {
+      "industry": "Industry",
+      "experience": "Experience",
+      "salary": "Salary",
+      "numberApply": "Number of Applications",
+      "appDeadline": "Application Deadline: {{deadline}}",
+      "button": {
+        "apply": {
+          "js": {
+            "applied": "Applied",
+            "notApply": "Apply Now"
+          }
+        },
+        "save": "Save Post",
+        "unsave": "Unsave"
+      }
+    },
+    "requirements": {
+      "title": "General Information",
+      "degree": "Degree",
+      "level": "Level",
+      "workForm": "Work Form",
+      "contact": "Contact Information",
+      "location": "Work Location",
+      "detail": "Recruitment Details",
+      "instructApply": {
+        "title": "How to Apply",
+        "subTitle": "Simply click on 'Apply Now' button below and follow the instructions"
+      },
+      "sameJob": "Similar Jobs",
+      "job": "jobs",
+      "sort": {
+        "title": "Sort",
+        "createAt": "Most Recent",
+        "salary": "Highest Salary"
+      }
+    },
+    "modal": {
+      "applyJob": {
+        "title": "Apply for Job",
+        "selectCV": {
+          "selected": "Selected CV",
+          "choseYourCV": "Choose your CV",
+          "createCV": {
+            "title": "Create a New CV",
+            "requirements": "JPG or PNG. Maximum size: 800K"
+          },
+          "isSelected": "You have selected CV {{index}}",
+          "isNotSelected": "No CV selected"
+        },
+        "button": {
+          "choseAvaiableCV": "Choose from Available CVs",
+          "createCV": "Create Another CV",
+          "submit": "Submit CV",
+          "cancel": "Cancel",
+          "viewCV": "See",
+          "choseCV": "Choose"
+        },
+        "table": {
+          "createdAt": "Creation Date",
+          "action": "Action"
+        }
+      }
+    }
+  },
+  "favoritePost": {
+    "header": {
+      "title": "Favorite Jobs"
+    },
+    "filter": {
+      "title": "Total results",
+      "totalResult": "{{total}} jobs",
+      "sort": {
+        "title": "Sort",
+        "recent": "Most Recent",
+        "topSalary": "Highest Salary"
+      }
+    },
+    "post": {
+      "updatedAt": "Updated",
+      "button": {
+        "detail": "Details",
+        "cancel": "Unsave"
+      }
+    }
+  },
+  "business": {
+    "title": "List of Companies",
+    "subTitle": "Explore 100,000+ Prominent Companies",
+    "desc": "Look up company information and find the best workplaces for you",
+    "searchBar": {
+      "inputHolder": "Enter company name",
+      "button": "Search"
+    },
+    "topBussinesses": "TOP BUSINESSES"
+  },
+  "businessDetail": {
+    "businessInfo": {
+      "type": "Company Type",
+      "scale": {
+        "title": "Scale",
+        "total": "{{total}} employees"
+      },
+      "region": "Country",
+      "foundedYear": "Founded Year",
+      "btnFollow": {
+        "follow": "Follow",
+        "unfollow": "Unfollow"
+      },
+      "toast": {
+        "success": ""
+      },
+      "descBusiness": "Company Description",
+      "contact": {
+        "title": "Contact Information",
+        "phone": "Phone Number",
+        "address": "Address"
+      }
+    },
+    "list": "Job Openings",
+    "total": "Total",
+    "count": "{{count}} jobs"
+  },
+  "jobseeker": {
+    "dashboard": {
+      "leftColumn": {
+        "row1": {
+          "button": "My Profile"
+        },
+        "row2": {
+          "contact": "Contact",
+          "phone": "Phone",
+          "email": "Email",
+          "tag": "Modify"
+        },
+        "row3": "Your Profile",
+        "row4": {
+          "title": "COMPLETE THESE STEPS",
+          "setupProfile": "Setup your profile",
+          "button": "Get Started"
+        },
+        "row5": {
+          "title": "UPDATE YOUR PROFILE",
+          "subTitle": "To Recieve More Job Offers from Employers",
+          "button": "UPDATE YOUR PROFILE"
+        },
+        "row6": {
+          "title": "UPDATE YOUR CV",
+          "subTitle": "Sent to Employers with your Job Application",
+          "button": "Upload YOUR CV"
+        }
+      },
+      "rightColumn": {
+        "row1": {
+          "viewProfile": {
+            "title": "EMPLOYERS VIEWS",
+            "desc": "Who Viewed Your Profile"
+          },
+          "application": {
+            "title": "APPLICATIONS",
+            "desc": "Jobs You Applied"
+          },
+          "jobNotify": {
+            "title": "JOB ALERTS",
+            "desc": "Suggessted Jobs"
+          }
+        }
+      }
+    }
+  },
+  "footer": {
+    "support": {
+      "title": "Support",
+      "terms": "Terms of Use",
+      "policy": "Privacy Policy",
+      "aboutUs": "About Us",
+      "ques": "FAQs",
+      "contact": "Contact"
+    },
+    "link": {
+      "title": "Links",
+      "home": "Home",
+      "feature": "Features",
+      "templateCV": "CV Templates"
+    },
+    "newFeature": {
+      "title": "New Features",
+      "notAvaiable": "Temporarily unavailable"
+    },
+    "sologan": "Job search website powered by GPT ✨"
+  },
+  "resumes": {
+    "title": "My CVs",
+    "subtitle": "Manage your CVs.",
+    "uploadedCVs": {
+      "title": "Uploaded CVs",
+      "count": "Maximum {{count}}",
+      "button": {
+        "uploadCV": "Upload CV",
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete"
+      }
+    },
+    "smartCVs": {
+      "title": "Smart CVs",
+      "count": "Maximum {{count}}",
+      "button": {
+        "chooseCV": "Choose CV"
+      }
+    },
+    "table": {
+      "no": "No.",
+      "createdAt": "Created at",
+      "access": "Access permission",
+      "support": "Support permission",
+      "action": "Action"
+    },
+    "modal": {
+      "cvUpload": {
+        "title": "Upload CV",
+        "subtitle": "PDF, DOC or DOCX. Maximum size 1MB."
+      },
+      "permissionUpdate": {
+        "title": "Edit CV permissions",
+        "access": {
+          "title": "Access permission",
+          "private": "Private",
+          "public": "Public",
+          "onlyRegisteredEmployers": "Only registered employers",
+          "onlyVerifiedRecruiters": "Only verified recruiters"
+        },
+        "support": {
+          "title": "Support permission",
+          "enable": "Enable",
+          "disable": "Disable",
+          "underReview": "Under review"
+        },
+        "button": {
+          "update": "Update",
+          "cancel": "Cancel"
+        }
+      }
+    }
+  },
+
+  "recentApplications": {
+    "header": {
+      "title": "Applied Jobs",
+      "subTitle": "Manage information about the jobs you have applied for."
+    },
+    "filter": {
+      "applied": "Applied",
+      "totalApplied": "{{total}} jobs",
+      "sort": {
+        "title": "Sort",
+        "default": "Please select",
+        "mostRecentUpdate": "Most recent update",
+        "mostNeededRecruitment": "Most needed recruitment",
+        "topSalary": "Highest salary"
+      }
+    },
+    "post": {
+      "status": "Status",
+      "applicationDate": "Application Date",
+      "button": {
+        "detail": "Detail",
+        "cancel": "Cancel"
+      },
+      "detailModal": {
+        "title": "Chi tiết hồ sơ ứng tuyển",
+        "personInfo": {
+          "title": "Application Information",
+          "name": "Name",
+          "gender": "Gender",
+          "BirthDate": "Birth Date",
+          "postName": "Job Name",
+          "createdAt": "Created At",
+          "position": "Position",
+          "statusApp": "Application Status"
+        },
+        "recruiterInfo": {
+          "title": "Recruiter Information",
+          "industry": "Industry"
+        },
+        "closeButton": "Close"
+      }
+    }
+  },
+
+  "setting": {
+    "header": {
+      "title": "Account Settings",
+      "subTitle": "Choose the settings you want for your activities and recommendations."
+    },
+    "mail": {
+      "title": "Manage Email Notifications",
+      "subtitle": "Receive emails to find out what's happening when you're offline. You can turn them off.",
+      "events": {
+        "title": "News and Events",
+        "subTitle": "News about app updates and features."
+      },
+      "suggestions": {
+        "title": "Job Suggestions",
+        "subTitle": "Suggestions for job opportunities based on your preferences."
+      },
+      "successSubmitted": {
+        "title": "Successful Job Application",
+        "subTitle": "Receive emails when your job application has been accepted by an employer."
+      },
+      "bussinessFollow": {
+        "title": "Businesses You Follow",
+        "subTitle": "Updates on posts and news from the businesses you follow."
+      },
+      "viewResume": {
+        "title": "Employer Views Resume",
+        "subTitle": "Receive emails when an employer views your resume."
+      }
+    },
+    "notifications": {
+      "title": "Manage App Notifications",
+      "subtitle": "Receive in-app notifications to find out what's happening when you're online. You can turn them off.",
+      "suitableJob": {
+        "title": "Suitable Jobs",
+        "subTitle": "Receive notifications about new job opportunities that match your profile."
+      },
+      "jobApplied": {
+        "title": "Applied Jobs",
+        "subTitle": "Receive notifications about jobs you have applied for."
+      }
+    }
+  },
+  "languageSelector": {
+    "tooltip": "Languages",
+    "code": {
+      "en": "English",
+      "vi": "Vietnamese"
+    },
+    "buttonChange": "Change"
+  },
+  "fileUpload": {
+    "button": {
+      "upload": "Upload",
+      "cancel": "Cancel"
+    }
+  },
+  "infoSection": {
+    "status": {
+      "label": "Status:",
+      "incomplete": "Incomplete",
+      "complete": "Complete"
+    },
+    "button": "Edit"
+  },
+  "emptyTableRow": {
+    "text": "There are no data"
+  },
+  "recruiter": {
+    "home": {
+      "button": {
+        "hiring": "Hiring Now"
+      },
+      "intro": {
+        "title": "We provide the best service experience",
+        "subtitle": "In Vietnam, CareerBuilder is the choice of over 17,000 leading businesses, offering advantages such as efficient access to a multitude of potential candidates through Talent Solution, Talent Driver, Targeted Email Marketing, and Talent Referral solutions. We attract hundreds of thousands of complete and regularly updated candidate profiles."
+      },
+      "features": {
+        "feature1": {
+          "title": "Hiring",
+          "desc": "Building a talented workforce for businesses. Your job posting will be displayed online on Jobnet.vn and our partner websites for 30 days."
+        },
+        "feature2": {
+          "title": "Hiring",
+          "desc": "Building a talented workforce for businesses. Your job posting will be displayed online on Jobnet.vn and our partner websites for 30 days."
+        },
+        "feature3": {
+          "title": "Hiring",
+          "desc": "Building a talented workforce for businesses. Your job posting will be displayed online on Jobnet.vn and our partner websites for 30 days."
+        },
+        "feature4": {
+          "title": "Hiring",
+          "desc": "Building a talented workforce for businesses. Your job posting will be displayed online on Jobnet.vn and our partner websites for 30 days."
+        },
+        "feature5": {
+          "title": "Hiring",
+          "desc": "Building a talented workforce for businesses. Your job posting will be displayed online on Jobnet.vn and our partner websites for 30 days."
+        },
+        "feature6": {
+          "title": "Hiring",
+          "desc": "Building a talented workforce for businesses. Your job posting will be displayed online on Jobnet.vn and our partner websites for 30 days."
+        }
+      },
+      "aboutUs": {
+        "title": "About Us",
+        "desc": "JobNet is a technological product of NewAI Vietnam Joint Stock Company. The products within the JobNet ecosystem are advised and developed by experts with many years of experience in the fields of human resources recruitment, software development, and Artificial Intelligence."
+      },
+      "partners": "Partners, Customers"
+    },
+    "postManagement": {
+      "title": "Job Posting Management",
+      "subTitle": "Control Your Job Postings.",
+      "button": {
+        "createPost": "New Post",
+        "search": "Search"
+      },
+      "action": {
+        "update": {
+          "success": "Update status successfully."
+        }
+      },
+      "inputs": {
+        "search": {
+          "label": "Keywords",
+          "placeholder": "Enter keywords to search"
+        },
+        "fromDate": {
+          "label": "From date"
+        },
+        "toDate": {
+          "label": "To date"
+        }
+      },
+      "tab": {
+        "open": "Opening",
+        "pending": "Pending",
+        "stop": "Paused",
+        "expire": "Expired",
+        "all": "All"
+      },
+      "noData": "No Data",
+      "jobItem": {
+        "button": {
+          "custom": "Custom"
+        },
+        "dropdown": {
+          "stop": "Pause Posting",
+          "continue": "Continue Posting"
+        },
+        "status": "Status",
+        "view": "Views",
+        "apply": "Applications",
+        "createAt": "Date Posted",
+        "applicationDeadline": "Expiration Date"
+      }
+    },
+    "postCreation": {
+      "title": "Recruitment Information",
+      "subtitle": "Start create a new post.",
+      "button": {
+        "generatePost": "Generate description",
+        "preview": "Preview",
+        "submit": "Submit",
+        "close": "Close"
+      },
+      "file": {
+        "title": "Provide JD File",
+        "notFound": "No uploaded files found"
+      },
+      "sessions": {
+        "general": "General Information",
+        "detail": "Detail Information",
+        "requirement": "Requirement Information",
+        "additional": "Additional Information",
+        "setup": "Post Setup"
+      },
+      "inputs": {
+        "title": {
+          "label": "Title",
+          "placeholder": "Enter title"
+        },
+        "profession": {
+          "label": "Profession"
+        },
+        "salary": {
+          "label": "Salary: (VND)",
+          "placeholder": {
+            "min": "Min salary",
+            "max": "Max salary"
+          }
+        },
+        "level": {
+          "label": "Level",
+          "placeholder": "Enter level"
+        },
+        "workingFormat": {
+          "label": "Working format",
+          "options": {
+            "fulltime": "Full-time",
+            "parttime": "Part-time",
+            "intern": "Intern"
+          }
+        },
+        "benefit": {
+          "label": "Benefit",
+          "placeholder": "Enter benefit"
+        },
+        "exp": {
+          "label": "Years of experience",
+          "options": {
+            "option1": "Under 1 year",
+            "option2": "1 - 2 years",
+            "option3": "3 - 5 years",
+            "option4": "5 years and above"
+          }
+        },
+        "degree": {
+          "label": "Degree",
+          "placeholder": "Enter degree",
+          "options": {
+            "option1": "College",
+            "option2": "Bachelor"
+          }
+        },
+        "otherRequirements": {
+          "label": "Other requirements",
+          "placeholder": "Enter other requirements"
+        },
+        "internalContact": {
+          "label": "Internal contact (if any)",
+          "placeholder": "Enter internal contact"
+        },
+        "requisitionNumber": {
+          "label": "Requisition number",
+          "placeholder": "Enter requisition number"
+        },
+        "applicationDeadline": {
+          "label": "Deadline"
+        },
+        "locationInput": {
+          "label": "Address"
+        },
+        "desc": {
+          "label": "Description",
+          "initValue": "<h3>Job Description:</h3><ul><li>&nbsp;</li></ul><h3>Requirements:</h3><ul><li>&nbsp;</li></ul><h3>Benefits:</h3><ul><li>&nbsp;</li></ul>"
+        }
+      },
+      "modals": {
+        "preview": "Preview"
+      },
+      "note": "You need to preview your post before proceeding with the posting",
+      "error": {
+        "fetch": "Error fetch data: "
+      }
+    },
+    "postUpdate": {
+      "title": "Update post information",
+      "buttons": {
+        "back": "Back",
+        "update": "Update",
+        "cancel": "Cancel"
+      },
+      "action": {
+        "success": "Information updated successfully.",
+        "error": {
+          "requireField": "Please enter all required information!"
+        }
+      }
+    },
+    "locationInput": {
+      "select": "Select",
+      "addAddr": "Add address",
+      "preselect": "Preselect",
+      "noAddr": "The address is currently not available",
+      "inputs": {
+        "specificAddress": {
+          "placeholder": "Please enter a specific address"
+        }
+      },
+      "buttons": {
+        "create": "Create new",
+        "close": "Close"
+      }
+    },
+    "profile": {
+      "authenticate": "Authentication level",
+      "title": "Personal information",
+      "status": {
+        "title": "Update status",
+        "completed": "completed",
+        "unCompleted": "uncompleted"
+      },
+      "information": {
+        "labelFullname": "Full name",
+        "labelUsername": "Username",
+        "labelPhonenumber": "Phone number",
+        "labelCountry": "Country"
+      },
+      "update": {
+        "button": "Update information",
+        "modal": {
+          "labelUsername": "Username",
+          "labelPhonenumber": "Phone number",
+          "labelCountry": "Country"
+        },
+        "footerButton": {
+          "update": "Update",
+          "cancel": "Cancel"
+        }
+      },
+      "adminRole": {
+        "lockAccount": "Lock account",
+        "accountStatus": {
+          "label": "Account status",
+          "normal": "Normal",
+          "locked": "Locked"
+        },
+        "informationBusiness": "Business information",
+        "modalBlock": {
+          "business": {
+            "title": "Are you sure you want to block this business?",
+            "confirm": "Yes",
+            "cancel": "Cancel"
+          },
+          "recruiter": {
+            "title": "Are you sure you want to block this recruiter?",
+            "confirm": "Yes",
+            "cancel": "Cancel"
+          }
+        }
+      }
+    },
+    "business": {
+      "updateCoverImg": "Update cover photo",
+      "updatebusinessInfo": "Update business info",
+      "editDescription": "Edit description",
+      "updateContact": "Edit general",
+      "emptyInfo": "Empty infomation!"
+    }
+  },
+  "signin": {
+    "recruiter": {
+      "title": "Welcome back!",
+      "introduction": "Log in to continue searching for candidates that fit your business",
+      "intended": "For recruiter"
+    },
+    "jobSeeker": {
+      "title": "Welcome back!",
+      "introduction": "Log in to continue using our services",
+      "intended": "For job seekers"
+    },
+    "admin": {
+      "title": "System Administration Page",
+      "introduction": "Log in to continue using our services",
+      "intended": "For admin"
+    },
+    "inputs": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      }
+    },
+    "buttons": {
+      "submit": "Log in",
+      "submiting": "Processing...",
+      "signup": "Register Now"
+    },
+    "signup": {
+      "label": "Don't have an account yet?"
+    }
+  },
+  "signup": {
+    "recruiter": {
+      "title": "Register an account to recruit suitable job seeker for your needs.",
+      "intended": "For recruiter"
+    },
+    "jobSeeker": {
+      "title": "Register an account to find a job that suits you.",
+      "intended": "For job seekers"
+    },
+    "inputs": {
+      "name": {
+        "label": "Full name",
+        "placeholder": "Enter your full name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "phone": {
+        "label": "Phone number",
+        "placeholder": "Enter your phone number"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "repassword": {
+        "label": "Confirm password:",
+        "placeholder": "Enter your confirm password"
+      },
+      "business": {
+        "label": "Company",
+        "placeholder": "Enter your company name"
+      },
+      "businessName": {
+        "label": "Company",
+        "placeholder": "Enter your company name"
+      }
+    },
+    "signin": "Do you already have an account?",
+    "buttons": {
+      "submit": "Register",
+      "signin": "Log in now",
+      "createBusiness": "Create a new business",
+      "selectBusiness": "Existing Business",
+      "Cancel": "Cancel",
+      "confirm": "Confirm"
+    },
+    "business": {
+      "modalHeader": "Search for existing Businesses",
+      "session": "Business information"
+    },
+    "businessSearch": {
+      "title": "Search results",
+      "result": "No search results found.",
+      "selected": "The business you've selected"
+    },
+    "require": {
+      "email": "Please use your company email to register an account."
+    }
+  },
+
+  "post": {
+    "button": {
+      "detail": "Detail"
+    },
+    "tag": {
+      "new": "New",
+      "remainingDays": "{{number}} days left to apply"
+    },
+    "updatedOn": "Updated on: {{date}}"
+  },
+
+  "pagination": {
+    "prev": "Prev",
+    "next": "Next"
+  },
+
+  "emptyData": {
+    "title": "Oops! It's Empty",
+    "subtitle": "There are no data found. 😓"
+  }
+}
