@@ -209,7 +209,7 @@
 
   "home": {
     "welcome": {
-      "title": "Jobnet - Welcome {{name}}",
+      "title": "Jobnet - Welcome {name}",
       "subtitle": "We will help you connect with top employers and find the most suitable job.",
       "emphasis": "Let us help you do it! 😄",
       "searchBar": {

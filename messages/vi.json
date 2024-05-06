@@ -207,7 +207,7 @@
   },
   "home": {
     "welcome": {
-      "title": "Jobnet - Chào mừng bạn {{name}}",
+      "title": "Jobnet - Chào mừng bạn {name}",
       "subtitle": "Chúng tôi sẽ giúp bạn kết nối với các nhà tuyển dụng hàng đầu và tìm kiếm được công việc ưng ý nhất.",
       "emphasis": "Hãy để chúng tôi giúp bạn làm điều đó! 😄",
       "searchBar": {

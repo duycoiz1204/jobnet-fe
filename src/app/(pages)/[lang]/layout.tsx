@@ -1,6 +1,11 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@/app/globals.css';
+import Provider from '@/context/Provider';
+import { useSession } from 'next-auth/react';
+import { auth } from '@/auth';
+import { NextIntlClientProvider, useMessages } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,10 +23,18 @@ type Props = Readonly<{
   params: { lang: string };
 }>;
 
-export default function RootLayout({ children, params }: Props) {
+export default async function RootLayout({ children, params }: Props) {
+  const session = await auth()
+  const messages = await getMessages()
+  console.log("Layout FIle: ", params.lang);
+  
   return (
     <html lang={params.lang}>
-      <body className={inter.className}>{children}</body>
+      <Provider session={session}>
+        <NextIntlClientProvider messages={messages} locale={params.lang}>
+          <body className={inter.className}>{children}</body>
+        </NextIntlClientProvider>
+      </Provider>
     </html>
   );
 }
