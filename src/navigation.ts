@@ -6,8 +6,8 @@ export const localePrefix = 'always'; // Default
  
 /**
  * Some function to change locale.
- * Client component: useRouter
- * Server component: Link
+ * Client component: useRouter, usePathname
+ * Server component: redirect, Link
  */
 export const {Link, redirect, usePathname, useRouter} =
   createSharedPathnamesNavigation({locales, localePrefix});

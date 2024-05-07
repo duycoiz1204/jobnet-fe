@@ -1111,6 +1111,18 @@
       "email": "Vui lòng sử dụng email công ty của bạn để đăng kí tài khoản."
     }
   },
+  "verify": {
+    "sentTitle": "Chúng tôi vừa gữi mã OTP tới email",
+    "jobSeeker": {
+      "welcome": "Xác thực tài khoản của bạn để hoàn tất việc tạo tài khoản nhà tuyển dụng",
+      "intended": "Xác thực tài khoản nhà tuyển dụng"
+    },
+    "input": {
+      "label": "OTP",
+      "placeholder": "Nhập mã OTP"
+    },
+    "button": "Xác thực"
+  },
   "post": {
     "button": {
       "detail": "Chi tiết"

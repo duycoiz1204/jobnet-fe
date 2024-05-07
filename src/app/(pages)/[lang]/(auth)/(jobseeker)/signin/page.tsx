@@ -1,5 +1,5 @@
 'use client'
-import { jsLoginAction } from '@/actions/signin'
+import { jsLoginAction } from '@/actions/jsAuth'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
@@ -15,8 +15,6 @@ import { useSearchParams } from 'next/navigation'
 import {TriangleAlert} from "lucide-react"
 
 export default function Signin({ params }: { params: { lang: string } }) {
-    console.log("Params", params.lang);
-    // setLocale(params.lang)
     const t = useTranslations();
     const searchParams = useSearchParams()
     const callbackUrl = searchParams.get("callbackUrl")
@@ -36,7 +34,7 @@ export default function Signin({ params }: { params: { lang: string } }) {
         setError("")
         startTrasition( async () => {
             const response = await jsLoginAction(values, callbackUrl)
-            if(!response){
+        if(!response){
                 return setError("Something wrong!! Please reload page...")
             }
             if (response && response["error"] !== undefined) {

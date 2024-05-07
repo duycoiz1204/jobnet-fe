@@ -1117,6 +1117,18 @@
       "email": "Please use your company email to register an account."
     }
   },
+  "verify": {
+    "sentTitle": "We had sent the OTP code to your email", 
+    "jobSeeker": {
+      "welcome": "Verify your account to complete employer account creation",
+      "intended": "Authenticate employer account"
+    },
+    "input": {
+      "label": "OTP",
+      "placeholder": "Enter OTP code"
+    },
+    "button": "Verify"
+  },
 
   "post": {
     "button": {

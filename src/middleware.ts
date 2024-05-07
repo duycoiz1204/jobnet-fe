@@ -20,16 +20,24 @@ import {
 function getPosition(str: string, target: string, index: number) {
     return str.split(target, index).join(target).length;
 }
+function handleHeaders(req: any) {
+    const response = i18nMiddleware(req)
+    if(!response.headers.get("x-url")){
+        response.headers.set('x-url', req.url);
+        // response.headers.set('x-origin', req.url.origin);
+        response.headers.set('x-pathname', req.nextUrl.pathname);
+    }
+    return response
+}
 export default auth((req) => {
     const {pathname} = req.nextUrl
-    console.log("Come to Auth: ", pathname)
-
+    
     // First check locale already exist on Url or not
     const pathnameHasLocale = locales.some(
         (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
     )
     if(!pathnameHasLocale){
-        return i18nMiddleware(req)
+        return handleHeaders(req)
     }
 
     // console.log("come to auth middleware", pathname);
@@ -41,24 +49,21 @@ export default auth((req) => {
     if(!urlAfterDiscardPrefix){
         urlAfterDiscardPrefix = "/"
     }
-    console.log("urlAfterDiscardPrefix ", urlAfterDiscardPrefix);
     
     const isLoggedIn = !!req.auth
-    console.log("Is loggedIN: ", isLoggedIn);
 
     const isApiAuthRoute = urlAfterDiscardPrefix.startsWith(apiAuthPrefix)
     const isPublicRoute = publicRoutes.includes(urlAfterDiscardPrefix)
     const isAuthRoute = authRoutes.includes(urlAfterDiscardPrefix)
     if (isApiAuthRoute) {
-        return i18nMiddleware(req)
+        return handleHeaders(req)
     }
     if (isAuthRoute) {
-        console.log("isAuthRoute: ", isAuthRoute)
 
         if (isLoggedIn) {
             return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, req.nextUrl)) // Need 2 param to create absolute URL
         }
-        return i18nMiddleware(req)
+        return handleHeaders(req)
     }
     if (!isLoggedIn && !isPublicRoute) {
         // Need to redirect to previous page after login
@@ -66,7 +71,6 @@ export default auth((req) => {
         if (req.nextUrl.search) {
             callBackUrl += req.nextUrl.search
         }
-        console.log("callbackURL: ", callBackUrl);
         
         const encodedCallbackUrl = encodeURIComponent(callBackUrl)
         // Bring CallbackUrl to LoginForm 
@@ -76,7 +80,7 @@ export default auth((req) => {
             req.nextUrl
         ))
     }
-    return i18nMiddleware(req)
+    return handleHeaders(req)
 })
 
 export const config = {
