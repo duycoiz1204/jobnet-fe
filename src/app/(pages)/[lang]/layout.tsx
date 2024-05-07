@@ -6,6 +6,7 @@ import { auth } from '@/auth';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { useSession } from 'next-auth/react';
+import { Toaster } from '@/components/ui/sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,15 +25,16 @@ type Props = Readonly<{
 }>;
 
 export default async function RootLayout({ children, params }: Props) {
-  const session = await auth()
-  const messages = await getMessages()
-  console.log("Layout FIle: ", params.lang);
-  
+  const session = await auth();
+  const messages = await getMessages();
+  console.log('Layout FIle: ', params.lang);
+
   return (
     <html lang={params.lang}>
       <Provider session={session}>
         <NextIntlClientProvider messages={messages} locale={params.lang}>
           <body className={inter.className}>{children}</body>
+          <Toaster />
         </NextIntlClientProvider>
       </Provider>
     </html>

@@ -1,124 +1,117 @@
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
-import React from 'react';
-import {Link} from '@/navigation';
+import { Link } from '@/navigation';
+import { BadgeCheck, Bell, Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import TopBusinessCard from '@/components/card/TopBusinessCard';
+import HomeCarousel from '@/components/HomeCarousel';
+import businessService from '@/services/businessService';
+import { auth } from '@/auth';
 
-type Props = {
-  params: {
-    lang: string;
-  };
-};
+export default async function Home() {
+  const t = await getTranslations();
+  const session = await auth();
+  const topBusinessesElms = (await businessService.getBusinesses()).data.map(
+    (topBusiness) => <TopBusinessCard key={topBusiness.id} data={topBusiness} />
+  );
+  const categoriesElms: any = [];
 
-export default async function Home({ params: { lang } }: Props) {
-  const t = await getTranslations()
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Link href="/" locale="vi">Switch to German</Link>
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          {t('home.welcome.title', {name: "Kien Duy"})}&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="pt-20 pb-12 space-y-8">
+      <div className="grid lg:grid-cols-2 gap-10 lg:gap-0 lg:h-[480px] bg-slate-200 py-10 lg:py-0">
+        <div className="flex flex-col justify-center px-6 sm:px-8 lg:px-10 xl:px-20">
+          <div className="flex flex-col gap-y-6">
+            <div className="flex flex-col gap-y-2">
+              <h2 className="text-2xl font-bold md:text-3xl">
+                {t('home.welcome.title', { name: session?.user?.name })}
+              </h2>
+              <p className="mt-2 text-lg font-semibold md:text-xl text-slate-500">
+                {t('home.welcome.subtitle')}
+              </p>
+            </div>
+            <p className="font-semibold text-medium">
+              {t('home.welcome.emphasis')}
+            </p>
+          </div>
+          <div className="inline-flex items-center max-w-lg mt-6 bg-white rounded-full md:px-4 h-14">
+            <div className="flex items-center flex-1">
+              <div className="text-xl text-emerald-500">
+                <Search />
+              </div>
+              <input
+                className="w-full ml-2 bg-transparent outline-none md:ml-4 placeholder:text-slate-400"
+                placeholder={t('home.welcome.searchBar.placeholder')}
+                // value={search}
+                // onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            <Button
+              className="rounded-full ml-auto translate-x-[6px] bg-emerald-500 hover:bg-emerald-700"
+              color="emerald"
+              // onClick={handleJobsSearch}
+            >
+              {t('home.welcome.searchBar.button')}
+            </Button>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center">
+          <Image src="/home.png" width={400} height={371} alt="Home image" />
         </div>
       </div>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className="grid gap-8 px-6 sm:px-10 lg:grid-cols-2">
+        <div className="p-4 border-2 rounded sm:p-8 border-slate-300 bg-slate-50 min-h-[406px]">
+          <h2 className="text-2xl font-bold md:text-3xl">
+            {t('home.exploration.title')}
+          </h2>
+          <p className="h-20 border-l-4 border-emerald-500 xl:w-[480px] mt-4 pl-6">
+            {t('home.exploration.subtitle')}
+          </p>
+          <div className="flex items-center mt-4">
+            <div className="text-xl">
+              <Search />
+            </div>
+            <span className="ml-4">{t('home.exploration.search')}</span>
+          </div>
+          <div className="flex items-center mt-4">
+            <div className="text-xl">
+              <BadgeCheck />
+            </div>
+            <span className="ml-4">{t('home.exploration.apply')}</span>
+          </div>
+          <div className="flex items-center mt-4">
+            <div className="text-xl">
+              <Bell />
+            </div>
+            <span className="ml-4">{t('home.exploration.notify')}</span>
+          </div>
+          <Link href="#" className="block mt-6">
+            <Button
+              className="bg-emerald-500 hover:bg-emerald-700"
+              size="lg"
+              // onClick={() => navigate('./categories')}
+            >
+              {t('home.exploration.category')}
+            </Button>
+          </Link>
+        </div>
+
+        <div className="flex items-center justify-center p-4 sm:p-8 border-2 rounded border-slate-300 bg-slate-50 min-h-[406px]">
+          <Image
+            src="/home_second.png"
+            width={360}
+            height={360}
+            alt="Home second image"
+          />
+        </div>
       </div>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <HomeCarousel
+        title={t('home.topLeadingBusinesses.title')}
+        elms={topBusinessesElms}
+      />
+      <HomeCarousel title={t('home.categories.title')} elms={categoriesElms} />
+    </div>
   );
 }
