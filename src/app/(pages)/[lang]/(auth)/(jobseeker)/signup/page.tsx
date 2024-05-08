@@ -11,7 +11,10 @@ import { TriangleAlert } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import registrationService from '@/services/registrationService';
-import { redirect, useRouter } from '@/navigation';
+import { useRouter } from '@/navigation';
+import envConfig from '@/config';
+import { jsRegisterAction } from '@/actions/jsAuth';
+import UserType from '@/types/user';
 
 type Props = {
   
@@ -30,7 +33,6 @@ export default function page({ }: Props) {
     }
   })
   const [isPending, startTrasition] = useTransition()
-
   const onSubmit = (values: z.infer<typeof jsRegisterSchema>) => {
     setError("")
     startTrasition(async () => {
@@ -39,11 +41,13 @@ export default function page({ }: Props) {
       if (!validatedField.success) {
         setError("Invalid Credentials.")
       }else{
-        const user = await registrationService.registerJobSeeker(values)
-        router.push(`/account/verify?userId=${user.id}&email=${user.email}`, {locale: 'de'})
+        console.log("Values: ", values);
+        
+        const user = await jsRegisterAction(values) as UserType
+        if (user ) router.push(`/account/verify?userId=${user.id}&email=${user.email}`)
       }
     })
-  }
+  } 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>

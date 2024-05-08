@@ -5,6 +5,8 @@ import UserType from "@/types/user";
 class RegistrationService extends BaseService {
   private apiBaseUrl = `${envConfig.VITE_API_BASE_URL}/api/registration`
   async registerJobSeeker(req: object) {
+    console.log("URLasds: ", this.apiBaseUrl);
+    
     const res = await fetch(
       `${this.apiBaseUrl}/jobSeeker`,
       {
@@ -12,6 +14,7 @@ class RegistrationService extends BaseService {
         headers: {
           'Content-Type': 'application/json',
         },
+        method: "POST"
       }
     )
 
@@ -26,6 +29,7 @@ class RegistrationService extends BaseService {
         headers: {
           'Content-Type': 'application/json',
         },
+        method: "POST"
       }
     )
 

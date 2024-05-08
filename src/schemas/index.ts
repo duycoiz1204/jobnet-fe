@@ -14,8 +14,6 @@ export const LoginSchema = z.object({
 export const jsRegisterSchema = z.object({
     name: z.string({
         invalid_type_error: "Must be a string"
-    }).email({
-        message: "Name is required"
     }),
     email: z.string({
         invalid_type_error: "Must be a string"
