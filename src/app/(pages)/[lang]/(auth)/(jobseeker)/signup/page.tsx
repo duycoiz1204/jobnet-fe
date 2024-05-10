@@ -3,21 +3,19 @@ import React, { useState, useTransition } from 'react'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import { jsRegisterSchema } from '@/schemas';
+import { jsRegisterSchema } from '@/schemas/authSchema';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { TriangleAlert } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import registrationService from '@/services/registrationService';
 import { useRouter } from '@/navigation';
-import envConfig from '@/config';
 import { jsRegisterAction } from '@/actions/jsAuth';
 import UserType from '@/types/user';
 
 type Props = {
-  
+
 }
 
 export default function page({ }: Props) {
@@ -40,14 +38,14 @@ export default function page({ }: Props) {
       const validatedField = jsRegisterSchema.safeParse(values)
       if (!validatedField.success) {
         setError("Invalid Credentials.")
-      }else{
+      } else {
         console.log("Values: ", values);
-        
+
         const user = await jsRegisterAction(values) as UserType
-        if (user ) router.push(`/account/verify?userId=${user.id}&email=${user.email}`)
+        if (user) router.push(`/account/verify?userId=${user.id}&email=${user.email}`)
       }
     })
-  } 
+  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>

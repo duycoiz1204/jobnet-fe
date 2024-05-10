@@ -1,12 +1,11 @@
-import { configSchema } from "@/schemas";
+import { configSchema } from "@/schemas/authSchema";
 
 const configProject = configSchema.safeParse({
-    AUTH_SECRET: process.env.AUTH_SECRET,
-    VITE_API_BASE_URL: process.env.VITE_API_BASE_URL,
-    VITE_API_ELASTIC: process.env.VITE_API_ELASTIC
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+    NEXT_PUBLIC_ELASTIC: process.env.NEXT_PUBLIC_ELASTIC
 })
 
-if (!configProject.success){    
+if (!configProject.success) {
     console.error(configProject.error.issues);
     throw new Error("Some enviroment invalid.")
 }

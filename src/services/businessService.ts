@@ -2,9 +2,10 @@ import BaseService from './baseService';
 
 import BusinessType, { EBusinessStatus } from '@/types/business';
 import PaginationType from '../types/pagination';
+import envConfig from '@/config';
 
 class BusinessService extends BaseService {
-  private apiBaseUrl = `${process.env.VITE_API_BASE_URL}/api/businesses`;
+  private apiBaseUrl = `${envConfig.NEXT_PUBLIC_BASE_URL}/api/businesses`;
 
   async getBusinesses(props?: {
     page?: number;
@@ -32,7 +33,8 @@ class BusinessService extends BaseService {
     const url = params.toString().length
       ? `${this.apiBaseUrl}?${params.toString()}`
       : this.apiBaseUrl;
-
+    console.log("URL SEARCH: ", url);
+    
     const res = await fetch(url);
 
     this.checkResponseNotOk(res);

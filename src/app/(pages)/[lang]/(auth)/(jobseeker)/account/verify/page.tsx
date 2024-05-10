@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { jsVerifySchema } from '@/schemas'
+import { jsVerifySchema } from '@/schemas/authSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import React, { useState, useTransition } from 'react'
@@ -23,6 +23,9 @@ type Props = {
 export default function page({ searchParams }: Props) {
     const userId = searchParams.userId as string
     const email = searchParams.email
+    const baseUrl = searchParams.baseUrl || ""
+    console.log("baseUrl: ", baseUrl);
+    
     const router = useRouter()
     const t = useTranslations()
     const [value, setValue] = useState("")
@@ -40,7 +43,7 @@ export default function page({ searchParams }: Props) {
             const validatedField = jsVerifySchema.safeParse(data)
             if (validatedField.success) {
                 await jsVerifyAction(data, userId)
-                router.push(`/signin?type=success&message=Account verified successfull.`)
+                router.push(`${baseUrl}/signin?type=success&message=Account verified successfull.`)
             }
         })
     }

@@ -51,7 +51,7 @@ const rcSignUpLayout = {
     intendedFor: 'signup.recruiter.intended',
     padding: 'py-4',
     backgroundImage: '/recruiter-auth.png',
-    layoutSize: 'lg',
+    layoutSize: 'lg', 
     verify: false
 }
 const adSignInLayout = {
@@ -68,8 +68,8 @@ export default function layout({ children }: Props) {
     const header = headers()
     console.log("URL: ", header.get("x-pathname"));
     const pathname = header.get("x-pathname")
-    const {welcome, introduction, intendedFor, padding, backgroundImage} = 
-        (pathname?.includes("recuiter")) ? (
+    const {welcome, introduction, intendedFor, padding, backgroundImage, layoutSize} = 
+        (pathname?.includes("recruiter")) ? (
             (pathname?.includes("signin"))? rcSignInLayout : rcSignUpLayout 
         ) : (
             pathname?.includes("admin") ? adSignInLayout : (
@@ -78,7 +78,8 @@ export default function layout({ children }: Props) {
                 ) 
             )
         )
-
+    console.log({welcome, introduction, intendedFor, padding, backgroundImage});
+    
     return (
         <AuthenticateLayout
             welcome={welcome}
@@ -86,6 +87,7 @@ export default function layout({ children }: Props) {
             intendedFor={intendedFor}
             padding={padding}
             backgroundImage={backgroundImage}
+            layoutSize={layoutSize as LayoutSize} 
         >
             {children}
         </AuthenticateLayout>

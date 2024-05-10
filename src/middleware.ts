@@ -63,6 +63,7 @@ export default auth((req) => {
         if (isLoggedIn) {
             return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, req.nextUrl)) // Need 2 param to create absolute URL
         }
+        // need to Hanle role
         return handleHeaders(req)
     }
     if (!isLoggedIn && !isPublicRoute) {

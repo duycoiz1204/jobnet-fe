@@ -15,7 +15,9 @@ export const publicRoutes = [
 export const authRoutes = [
     "/signin",
     "/signup",
-    "/account/verify"
+    "/account/verify",
+    "/recruiter/signin",
+    "/recruiter/signup"
 ]
 
 /**
@@ -29,4 +31,4 @@ export const apiAuthPrefix = "/api/auth"
  * The default redirect URL after logging in
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT = "/profile"
+export const DEFAULT_LOGIN_REDIRECT = "/"
