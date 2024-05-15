@@ -2,7 +2,6 @@
 import Dropdown from "@/components/Dropdown"
 import { NavLink } from "@/components/NavLink"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import UserSessionType from "@/types/next-auth"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip"
 import { IconBaseProps, IconType } from "react-icons"

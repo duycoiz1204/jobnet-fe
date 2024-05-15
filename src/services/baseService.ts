@@ -1,16 +1,20 @@
-import ErrorType from "@/types/error"
+import ErrorType from '@/types/error';
 class BaseService {
-    protected checkResponseNotOk(res: Response) {
-        if (res.status < 200 || res.status >= 300) {
-            return res.json().then(response => { 
-                throw response as ErrorType
-            })
-        }
+  protected checkResponseNotOk(res: Response) {
+    if (res.status < 200 || res.status >= 300) {
+      return res.json().then((response) => {
+        throw response as ErrorType;
+      });
     }
+  }
 
-    protected getResponseData<T>(res: Response) {        
-        return res.json() as T
-    }
+  protected getResponseData<T>(res: Response) {
+    return res.json() as T;
+  }
+
+  protected getResponseBlob(res: Response) {
+    return res.blob();
+  }
 }
 
-export default BaseService
+export default BaseService;
