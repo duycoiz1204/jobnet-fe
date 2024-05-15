@@ -19,6 +19,8 @@ import { rcRegisterSchema } from '@/schemas/authSchema';
 import registrationService from '@/services/registrationService';
 import { useRouter } from '@/navigation';
 import { TriangleAlert } from 'lucide-react';
+import Modal from '@/components/modal/Modal';
+import useModal from '@/hooks/useModal';
 
 type Props = {}
 type IntentType = 'registerWithNewBusiness' | 'registerWithSelectedBusiness'
@@ -28,7 +30,7 @@ export default function RcSignUpForm({ }: Props) {
     const [error, setError] = useState<string | undefined>("")
     const t = useTranslations();
     const [isPending, startTrasition] = useTransition()
-    const [openDialogTrigger, setOpenDialogTrigger] = useState(false)
+    const { modal, openModal, closeModal } = useModal()
     const [recruiterSignUp, setRecruiterSignUp] = useState({
         intent: 'registerWithNewBusiness' as IntentType,
         selectedBusiness: undefined as Business | undefined,
@@ -205,23 +207,12 @@ export default function RcSignUpForm({ }: Props) {
                                 {t('signup.buttons.createBusiness')}
                             </Button>
                         ) : (
-                            <Dialog open={openDialogTrigger} onOpenChange={setOpenDialogTrigger}>
-                                <DialogTrigger asChild>
-                                    <Button
-                                        size={'sm'}
-                                    >
-                                        {t('signup.buttons.selectBusiness')}
-                                    </Button>
-                                </DialogTrigger>
-                                <DialogContent className="min-w-fit" onOpenAutoFocus={(e) => e.preventDefault()}>
-                                    <BusinessSearch
-                                        // key={recruiterSignUp.selectedBusiness?.id as string}
-                                        openDialog={setOpenDialogTrigger}
-                                        selectedBusiness={recruiterSignUp.selectedBusiness}
-                                        onBusinessChange={handleBusinessChange}
-                                    />
-                                </DialogContent>
-                            </Dialog>
+                            <Button
+                                size={'sm'}
+                                onClick={() => openModal('business-search-modal')}
+                            >
+                                {t('signup.buttons.selectBusiness')}
+                            </Button>
                         )}
                     </div>
 
@@ -285,17 +276,32 @@ export default function RcSignUpForm({ }: Props) {
                     </div>
                 </form>
             </Form>
-
+            <Modal
+                id="business-search-modal"
+                show={modal === 'business-search-modal'}
+                onClose={closeModal}
+                size="2xl"
+            >
+                <Modal.Header>{t('signup.business.modalHeader')}</Modal.Header>
+                <Modal.Body>
+                    <BusinessSearch
+                        key={recruiterSignUp.selectedBusiness?.id}
+                        closeModal={closeModal}
+                        selectedBusiness={recruiterSignUp.selectedBusiness}
+                        onBusinessChange={handleBusinessChange}
+                    />
+                </Modal.Body>
+            </Modal>
         </div>
     )
 }
 
 function BusinessSearch({
-    openDialog,
+    closeModal,
     selectedBusiness,
     onBusinessChange,
 }: {
-    openDialog: (trigger: boolean) => void;
+    closeModal: () => void,
     selectedBusiness?: Business
     onBusinessChange: (business: Business) => void
 }): React.ReactElement {
@@ -361,7 +367,7 @@ function BusinessSearch({
         businessSearch?.selectedBusiness &&
             onBusinessChange(businessSearch.selectedBusiness)
 
-        openDialog(false)
+        closeModal()
     }
 
     const businessSearchElms = businessSearch.results.map((business) => (
@@ -424,7 +430,7 @@ function BusinessSearch({
                 <Button color="emerald" type='submit' onClick={handleConfirmClick}>
                     {t('signup.buttons.confirm')}
                 </Button>
-                <Button color="red" onClick={() => openDialog(false)}>
+                <Button color="red" onClick={closeModal}>
                     {t('signup.buttons.Cancel')}
                 </Button>
             </div>

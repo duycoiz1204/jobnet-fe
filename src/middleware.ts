@@ -24,7 +24,6 @@ function handleHeaders(req: any) {
     const response = i18nMiddleware(req)
     if(!response.headers.get("x-url")){
         response.headers.set('x-url', req.url);
-        // response.headers.set('x-origin', req.url.origin);
         response.headers.set('x-pathname', req.nextUrl.pathname);
     }
     return response
@@ -53,7 +52,16 @@ export default auth((req) => {
     const isLoggedIn = !!req.auth
 
     const isApiAuthRoute = urlAfterDiscardPrefix.startsWith(apiAuthPrefix)
-    const isPublicRoute = publicRoutes.includes(urlAfterDiscardPrefix)
+    let isPublicRoute = false
+    publicRoutes.forEach((value) => {
+        if(value == urlAfterDiscardPrefix) {isPublicRoute = true}
+        else if (value.includes("**")){
+            const pathBeforeLastSlash = value.substring(0, value.lastIndexOf("/"))
+            if (urlAfterDiscardPrefix.startsWith(pathBeforeLastSlash)){
+                isPublicRoute = true
+            }
+        } 
+    })
     const isAuthRoute = authRoutes.includes(urlAfterDiscardPrefix)
     if (isApiAuthRoute) {
         return handleHeaders(req)
@@ -66,6 +74,7 @@ export default auth((req) => {
         // need to Hanle role
         return handleHeaders(req)
     }
+    
     if (!isLoggedIn && !isPublicRoute) {
         // Need to redirect to previous page after login
         let callBackUrl = req.nextUrl.pathname

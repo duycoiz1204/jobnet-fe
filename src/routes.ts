@@ -5,6 +5,8 @@
  */
 export const publicRoutes = [
     "/", 
+    "/posts/**",
+    "/businesses/**"
 ]
 
 /**
@@ -17,7 +19,7 @@ export const authRoutes = [
     "/signup",
     "/account/verify",
     "/recruiter/signin",
-    "/recruiter/signup"
+    "/recruiter/signup",
 ]
 
 /**

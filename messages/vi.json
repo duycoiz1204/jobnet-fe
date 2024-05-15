@@ -225,7 +225,7 @@
     },
     "topLeadingBusinesses": {
       "title": "Top công ty hàng đầu",
-      "totalPosts": "{{total}} việc làm",
+      "totalPosts": "{total} việc làm",
       "button": {
         "follow": "Theo dõi",
         "unfollow": "Bỏ theo dõi"
@@ -233,7 +233,7 @@
     },
     "categories": {
       "title": "Phân loại",
-      "totalPosts": "{{total}} việc làm"
+      "totalPosts": "{total} việc làm"
     },
     "toast": {
       "search": {
@@ -383,7 +383,7 @@
     "BusinessInfor": {
       "scale": {
         "title": "Quy mô",
-        "total": "{{total}} nhân viên"
+        "total": "{total} nhân viên"
       },
       "address": "Địa điểm",
       "viewDetailBusiness": "Xem trang chi tiết doanh nghiệp"
@@ -393,7 +393,7 @@
       "experience": "Kinh nghiệm",
       "salary": "Mức lương",
       "numberApply": "Số lượng tuyển",
-      "appDeadline": "Hạn nộp hồ sơ: {{deadline}}",
+      "appDeadline": "Hạn nộp hồ sơ: {deadline}",
       "button": {
         "apply": {
           "js": {
@@ -435,7 +435,7 @@
             "title": "Tạo CV mới",
             "requirements": "JPG hoặc PNG. Kích thước tối đa 800K"
           },
-          "isSelected": "Bạn đã chọn CV {{index}}",
+          "isSelected": "Bạn đã chọn CV {index}",
           "isNotSelected": "Hiện chưa chọn CV nào"
         },
         "button": {
@@ -459,7 +459,7 @@
     },
     "filter": {
       "title": "Tổng số kết quả",
-      "totalResult": "{{total}} công việc",
+      "totalResult": "{total} công việc",
       "sort": {
         "title": "Sắp xếp",
         "recent": "Cập nhật gần nhất",
@@ -489,7 +489,7 @@
       "type": "Loại công ty",
       "scale": {
         "title": "Quy mô",
-        "total": "{{total}} nhân viên"
+        "total": "{total} nhân viên"
       },
       "region": "Quốc gia",
       "foundedYear": "Năm thành lập",
@@ -509,7 +509,7 @@
     },
     "list": "Công việc đang tuyển dụng",
     "total": "Tổng số",
-    "count": "{{count}} công việc"
+    "count": "{count} công việc"
   },
   "jobseeker": {
     "dashboard": {
@@ -584,7 +584,7 @@
     "subtitle": "Quản lý hồ sơ của bạn.",
     "uploadedCVs": {
       "title": "CV đã tải lên",
-      "count": "Tối đa {{count}}",
+      "count": "Tối đa {count}",
       "button": {
         "uploadCV": "Tải lên hồ sơ",
         "view": "Xem",
@@ -594,7 +594,7 @@
     },
     "smartCVs": {
       "title": "Smart CVs",
-      "count": "Tối đa {{count}}",
+      "count": "Tối đa {count}",
       "button": {
         "chooseCV": "Chọn hồ sơ"
       }
@@ -640,7 +640,7 @@
     },
     "filter": {
       "applied": "Đã ứng tuyển",
-      "totalApplied": "{{total}} công việc",
+      "totalApplied": "{total} công việc",
       "sort": {
         "title": "Sắp xếp",
         "default": "Vui lòng chọn",
@@ -1129,9 +1129,9 @@
     },
     "tag": {
       "new": "Mới",
-      "remainingDays": "Còn {{number}} ngày để nộp đơn"
+      "remainingDays": "Còn {number} ngày để nộp đơn"
     },
-    "updatedOn": "Cập nhật: {{date}}"
+    "updatedOn": "Cập nhật: {date}"
   },
   "pagination": {
     "prev": "Trước",

@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@/app/globals.css';
-import Provider from '@/context/Provider';
 import { auth } from '@/auth';
-import { NextIntlClientProvider, useMessages } from 'next-intl';
+import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { useSession } from 'next-auth/react';
 import { Toaster } from '@/components/ui/sonner';
+import SessionsProvider from '@/context/SessionProvider';
+import { ReduxProvider } from '@/context/ReduxProvider';
+import JSHeader from '@/components/header/JSHeader';
+import Footer from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,16 +29,23 @@ type Props = Readonly<{
 export default async function RootLayout({ children, params }: Props) {
   const session = await auth();
   const messages = await getMessages();
-  console.log('Layout FIle: ', params.lang);
 
   return (
     <html lang={params.lang}>
-      <Provider session={session}>
-        <NextIntlClientProvider messages={messages} locale={params.lang}>
-          <body className={inter.className}>{children}</body>
-          <Toaster />
-        </NextIntlClientProvider>
-      </Provider>
+      <ReduxProvider>
+        <SessionsProvider session={session}>
+          <NextIntlClientProvider messages={messages} locale={params.lang}>
+
+            <body className={inter.className}>
+              <JSHeader />
+              {children}
+              {/* @ts-expect-error Async Server Component */}
+              <Footer />
+            </body>
+            <Toaster />
+          </NextIntlClientProvider>
+        </SessionsProvider>
+      </ReduxProvider>
     </html>
   );
 }

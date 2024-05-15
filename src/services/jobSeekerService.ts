@@ -1,10 +1,11 @@
+import envConfig from '@/config';
 import BaseService from './baseService';
 
 import JobSeekerType from '@/types/jobSeeker';
 import PaginationType from '@/types/pagination';
 
 class JobSeekerService extends BaseService {
-  private apiBaseUrl = `${process.env.VITE_API_BASE_URL}/api/jobSeekers`;
+  private apiBaseUrl = `${envConfig.NEXT_PUBLIC_BASE_URL}/api/jobSeekers`;
 
   async getJobSeekers(props?: {
     page?: number;

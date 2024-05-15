@@ -8,7 +8,7 @@ class BaseService {
         }
     }
 
-    protected getResponseData<T>(res: Response) {
+    protected getResponseData<T>(res: Response) {        
         return res.json() as T
     }
 }

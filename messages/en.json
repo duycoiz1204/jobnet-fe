@@ -227,7 +227,7 @@
     },
     "topLeadingBusinesses": {
       "title": "Top leading businesses",
-      "totalPosts": "{{total}} jobs available",
+      "totalPosts": "{total} jobs available",
       "button": {
         "follow": "Follow",
         "unfollow": "Unfollow"
@@ -235,7 +235,7 @@
     },
     "categories": {
       "title": "Categories",
-      "totalPosts": "{{total}} jobs available"
+      "totalPosts": "{total} jobs available"
     },
     "toast": {
       "search": {
@@ -387,7 +387,7 @@
     "BusinessInfor": {
       "scale": {
         "title": "Scale",
-        "total": "{{total}} employees"
+        "total": "{total} employees"
       },
       "address": "Location",
       "viewDetailBusiness": "View Business Details"
@@ -397,7 +397,7 @@
       "experience": "Experience",
       "salary": "Salary",
       "numberApply": "Number of Applications",
-      "appDeadline": "Application Deadline: {{deadline}}",
+      "appDeadline": "Application Deadline: {deadline}",
       "button": {
         "apply": {
           "js": {
@@ -439,7 +439,7 @@
             "title": "Create a New CV",
             "requirements": "JPG or PNG. Maximum size: 800K"
           },
-          "isSelected": "You have selected CV {{index}}",
+          "isSelected": "You have selected CV {index}",
           "isNotSelected": "No CV selected"
         },
         "button": {
@@ -463,7 +463,7 @@
     },
     "filter": {
       "title": "Total results",
-      "totalResult": "{{total}} jobs",
+      "totalResult": "{total} jobs",
       "sort": {
         "title": "Sort",
         "recent": "Most Recent",
@@ -493,7 +493,7 @@
       "type": "Company Type",
       "scale": {
         "title": "Scale",
-        "total": "{{total}} employees"
+        "total": "{total} employees"
       },
       "region": "Country",
       "foundedYear": "Founded Year",
@@ -513,7 +513,7 @@
     },
     "list": "Job Openings",
     "total": "Total",
-    "count": "{{count}} jobs"
+    "count": "{count} jobs"
   },
   "jobseeker": {
     "dashboard": {
@@ -588,7 +588,7 @@
     "subtitle": "Manage your CVs.",
     "uploadedCVs": {
       "title": "Uploaded CVs",
-      "count": "Maximum {{count}}",
+      "count": "Maximum {count}",
       "button": {
         "uploadCV": "Upload CV",
         "view": "View",
@@ -598,7 +598,7 @@
     },
     "smartCVs": {
       "title": "Smart CVs",
-      "count": "Maximum {{count}}",
+      "count": "Maximum {count}",
       "button": {
         "chooseCV": "Choose CV"
       }
@@ -645,7 +645,7 @@
     },
     "filter": {
       "applied": "Applied",
-      "totalApplied": "{{total}} jobs",
+      "totalApplied": "{total} jobs",
       "sort": {
         "title": "Sort",
         "default": "Please select",
@@ -1136,9 +1136,9 @@
     },
     "tag": {
       "new": "New",
-      "remainingDays": "{{number}} days left to apply"
+      "remainingDays": "{number} days left to apply"
     },
-    "updatedOn": "Updated on: {{date}}"
+    "updatedOn": "Updated on: {date}"
   },
 
   "pagination": {

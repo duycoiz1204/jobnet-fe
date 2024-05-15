@@ -1,5 +1,5 @@
 export default interface LocationType {
-  provinceCode: string;
+  // provinceCode: string;
   provinceName: string;
   specificAddress: string;
 }

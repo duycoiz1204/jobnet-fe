@@ -18,11 +18,11 @@ export default interface PostType {
   id: string;
   title: string;
   profession: ProfessionType | undefined;
-  minSalary: string;
+  minSalary: string | number;
   minSalaryString: string;
-  maxSalary: string;
+  maxSalary: string | number; 
   maxSalaryString: string;
-  levels: Array<LevelType>;
+  level: LevelType;
   locations: Array<LocationType>;
   workingFormat: string;
   benefits: Array<BenefitType>;
@@ -33,8 +33,8 @@ export default interface PostType {
   requisitionNumber: number;
   // internalContact: string
   applicationDeadline: string;
-  jdId: string;
-  recruiter: RecruiterType;
+  jdId: string | null;
+  recruiterId: RecruiterType | null;
   business: BusinessPostType;
   activeStatus: PostActiveStatus;
   totalViews: number;

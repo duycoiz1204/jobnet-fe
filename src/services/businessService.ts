@@ -33,7 +33,6 @@ class BusinessService extends BaseService {
     const url = params.toString().length
       ? `${this.apiBaseUrl}?${params.toString()}`
       : this.apiBaseUrl;
-    console.log("URL SEARCH: ", url);
     
     const res = await fetch(url);
 

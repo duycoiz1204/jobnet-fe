@@ -1,39 +1,34 @@
-'use client';
+'use client'
+import { FaHeart, FaRegHeart } from 'react-icons/fa6'
+import { differenceInDays, parse } from 'date-fns'
+import useIsInWishlist from '@/hooks/useIsInWishlist'
 
-import { differenceInDays, parse } from 'date-fns';
-import { useSession } from 'next-auth/react';
 
-import useIsInWishlist from '@/hooks/useIsInWishlist';
-
-import Tag from '@/components/Tag';
-
-import type PostType from '../types/post';
-import businessService from '../services/businessService';
-import { Button } from './ui/button';
-import { useTranslations } from 'next-intl';
-import { Heart, HeartOff } from 'lucide-react';
-import { Link, useRouter } from '@/navigation';
+import type PostType from '@/types/post'
+import businessService from '@/services/businessService'
+import { useTranslations } from 'next-intl'
+import { Link, redirect, usePathname, useRouter } from '@/navigation'
+import { Button } from '@/components/ui/button'
+import Tag from '@/components/Tag'
+import { useSession } from 'next-auth/react'
 
 export default function Post({
   post,
   navigateTo,
 }: {
-  post: PostType;
-  navigateTo: string;
+  post: PostType
+  navigateTo: string
 }): JSX.Element {
-  const t = useTranslations();
-
-  const session = useSession();
-  const role = session?.data?.user?.role;
-
-  const { isInWishlist, addToWishlist } = useIsInWishlist(post.id);
-  const router = useRouter();
-
+  const t = useTranslations()
+  const session = useSession().data
+  const role = session?.user?.role || ""
   const remainingApplicationDays = differenceInDays(
     new Date(parse(post.applicationDeadline, 'dd/MM/yyyy', new Date())),
     new Date()
-  );
-
+  )
+  const router = useRouter()
+  const navigateToDetailPost = `${usePathname()}/${navigateTo}`
+  
   return (
     <div className="px-4 py-6 space-y-6 transition rounded md:space-y-4 md:px-6 bg-slate-100 hover:bg-slate-200">
       <div className="flex flex-col gap-4 md:gap-6 md:flex-row">
@@ -70,15 +65,8 @@ export default function Post({
               <div className="font-semibold">
                 {post.minSalaryString} - {post.maxSalaryString}
               </div>
-              {role === 'JobSeeker' && (
-                <div
-                  className="text-xl transition cursor-pointer text-rose-500 hover:text-rose-700"
-                  onClick={addToWishlist}
-                >
-                  {isInWishlist ? <Heart /> : <HeartOff />}
-                </div>
-              )}
-              <Button onClick={() => router.push(navigateTo)} size="sm">
+              {role === 'JobSeeker' && <HanleWishlist id={post.id}/> }
+              <Button onClick={() => router.push(navigateToDetailPost)} size="sm">
                 {t('post.button.detail')}
               </Button>
             </div>
@@ -88,6 +76,7 @@ export default function Post({
             <Link
               href={`/businesses/${post.business.id}`}
               className="hover:text-emerald-500 hover:underline opacity-80 hover:opacity-100"
+              // preventScrollReset={true}
             >
               {post.business.name}
             </Link>
@@ -97,8 +86,8 @@ export default function Post({
 
       <div className="flex flex-col items-center justify-between gap-2 md:gap-0 sm:flex-row">
         <div className="flex flex-wrap justify-start gap-2 md:gap-4">
-          {post.locations.map((location) => (
-            <Tag key={location.provinceCode}>{location.provinceName}</Tag>
+          {post.locations.map((location, index) => (
+            <Tag key={index}>{location.provinceName}</Tag>
           ))}
           <Tag>{t('post.tag.new')}</Tag>
           <Tag>
@@ -111,5 +100,17 @@ export default function Post({
         </div>
       </div>
     </div>
-  );
+  )
+}
+
+function HanleWishlist({id}: {id: string}): JSX.Element {
+  const { isInWishlist, addToWishlist } = useIsInWishlist(id)
+  return (
+    <div
+      className="text-xl transition cursor-pointer text-rose-500 hover:text-rose-700"
+      onClick={addToWishlist}
+    >
+      {isInWishlist ? <FaHeart /> : <FaRegHeart />}
+    </div>
+  )
 }

@@ -2,7 +2,7 @@
 import registrationService from '@/services/registrationService';
 import * as z from "zod"
 import { LoginSchema, jsRegisterSchema, jsVerifySchema } from "@/schemas/authSchema"
-import { signIn } from "@/auth"
+import { signIn, signOut } from "@/auth"
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { AuthError } from 'next-auth';
 
@@ -45,5 +45,9 @@ export const jsRegisterAction = async (values: z.infer<typeof LoginSchema>) => {
 export const jsVerifyAction = async (values: z.infer<typeof jsVerifySchema>, userId: string) => {
     const validatedField = jsVerifySchema.safeParse(values).data
     return await registrationService.verifyUser({ userId, otpToken: validatedField!!.otpToken })
+}
+
+export const logoutAction = async () => {
+    await signOut()
 }
 
