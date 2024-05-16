@@ -6,7 +6,7 @@ export const localePrefix = 'always'; // Default
  
 /**
  * Some function to change locale.
- * Client component: useRouter, usePathname
+ * Client component: useRouter, usePathname, Link
  * Server component: redirect, Link
  */
 export const {Link, redirect, usePathname, useRouter} =

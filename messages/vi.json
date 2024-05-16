@@ -119,6 +119,9 @@
         "success": "Cập nhật quyền cho CV thành công."
       },
       "remove": "Xóa CV thành công."
+    },
+    "signin": {
+      "clickedButton": "Bạn cần phải đăng nhập trước !!!"
     }
   },
   "sidebar": {

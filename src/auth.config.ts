@@ -15,7 +15,6 @@ export default {
     
             // logic to verify if user exists
             const {email, password} = credentials
-            console.log({email, password});
             
             let response = await fetch("http://localhost:8080/api/auth/login", {
               method: "POST",

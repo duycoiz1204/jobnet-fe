@@ -4,7 +4,7 @@ import authConfig from "@/auth.config"
 
 export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   callbacks: {
-    async session({session, token, user}){
+    async session({ session, token, user }) {
       return {
         ...session,
         user: {
@@ -15,9 +15,8 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
         refreshToken: token.refreshToken
       }
     },
-    async jwt({token, user, session, trigger}){ // only return user signIn
-      
-      if(trigger === "update" && session){
+    async jwt({ token, user, session, trigger }) { // only return user signIn
+      if (trigger === "update" && session) {
         return {
           ...token,
           ...session,
@@ -29,22 +28,32 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
           email: (session.user?.email ? session.user?.email : token.email)
         }
       }
-      if(user){        
+      if (user) {
+        console.log({
+          ...token,
+          user: {
+            id: user.id,
+            email: user.email,
+            role: user.role,
+            name: user.name
+          }
+        });
+        
         return {
           ...token,
           user: {
             id: user.id,
             email: user.email,
             role: user.role,
-            name: user.name 
+            name: user.name
           },
           accessToken: user.accessToken,
           refreshToken: user.refreshToken
-        }  
+        }
       }
       return token
     }
   },
-  session: {strategy: "jwt"},
+  session: { strategy: "jwt" },
   ...authConfig
 })

@@ -6,8 +6,13 @@ import envConfig from '@/config';
 class ResumeService extends BaseService {
   private apiBaseUrl = `${envConfig.NEXT_PUBLIC_BASE_URL}/api/resumes`;
 
-  async getResumesByAuth() {
-    const res = await fetch(this.apiBaseUrl);
+  async getResumesByAuth(accessToken: string) {
+    const res = await fetch(this.apiBaseUrl, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
 
     this.checkResponseNotOk(res);
     return this.getResponseData<Array<ResumeType>>(res);

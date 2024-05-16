@@ -12,25 +12,33 @@ import type { IconType } from 'react-icons'
 import { FaSearch } from 'react-icons/fa'
 
 import LanguageSelector from '@/components/LanguageSelector'
-import { Link } from '@/navigation'
+import { Link, usePathname } from '@/navigation'
 import { NavLink } from '@/components/NavLink'
 import Dropdown from '@/components/Dropdown'
 import { Button } from '@/components/ui/button'
 import AuthRightControls from '@/components/header/AuthRightControls'
 import { useTranslations } from 'next-intl'
 import { useSession } from 'next-auth/react'
-import { useTransition } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { logoutAction } from '@/actions/jsAuth'
+import { Session } from 'next-auth'
 
-export default function JSHeader(): JSX.Element {
+interface JSHeaderProps{
+}
+
+export default function JSHeader({}: JSHeaderProps): JSX.Element {
+
   const t = useTranslations()
   const [isPending, startTrasition] = useTransition()
-  const session = useSession()
-  const user = session?.data?.user
+  const initSession = useSession().data?.user
+
+  const user = initSession
+
 
   const handleLogout = () => {
     startTrasition(async () => {
       await logoutAction()
+      location.reload()
     })
   }
 
@@ -146,9 +154,12 @@ function NoAuthRightControls({
 }: {
   t: any
 }): JSX.Element {
+  let callBackUrl = usePathname()
+
+  const encodedCallbackUrl = encodeURIComponent(callBackUrl)
   return (
     <>
-      <Link href="signin">
+      <Link href={`/signin?callbackUrl=${encodedCallbackUrl}`}>
         <Button
           color="empty"
           className="border border-emerald-500 text-emerald-500 hover:bg-slate-100"
@@ -156,7 +167,7 @@ function NoAuthRightControls({
           {t('header.jobSeeker.unRegister.login')}
         </Button>
       </Link>
-      <Link href="signup">
+      <Link href="/signup">
         <Button>
           {t('header.jobSeeker.unRegister.register')}
         </Button>

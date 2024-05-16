@@ -7,10 +7,11 @@ import useIsInWishlist from '@/hooks/useIsInWishlist'
 import type PostType from '@/types/post'
 import businessService from '@/services/businessService'
 import { useTranslations } from 'next-intl'
-import { Link, redirect, usePathname, useRouter } from '@/navigation'
+import { Link, useRouter } from '@/navigation'
 import { Button } from '@/components/ui/button'
 import Tag from '@/components/Tag'
 import { useSession } from 'next-auth/react'
+import { Session } from 'next-auth'
 
 export default function Post({
   post,
@@ -27,7 +28,6 @@ export default function Post({
     new Date()
   )
   const router = useRouter()
-  const navigateToDetailPost = `${usePathname()}/${navigateTo}`
   
   return (
     <div className="px-4 py-6 space-y-6 transition rounded md:space-y-4 md:px-6 bg-slate-100 hover:bg-slate-200">
@@ -65,8 +65,8 @@ export default function Post({
               <div className="font-semibold">
                 {post.minSalaryString} - {post.maxSalaryString}
               </div>
-              {role === 'JobSeeker' && <HanleWishlist id={post.id}/> }
-              <Button onClick={() => router.push(navigateToDetailPost)} size="sm">
+              {role === 'JobSeeker' && <HanleWishlist id={post.id} session={session!!}/> }
+              <Button onClick={() => router.push(`/posts/${navigateTo}`)} size="sm">
                 {t('post.button.detail')}
               </Button>
             </div>
@@ -103,8 +103,8 @@ export default function Post({
   )
 }
 
-function HanleWishlist({id}: {id: string}): JSX.Element {
-  const { isInWishlist, addToWishlist } = useIsInWishlist(id)
+function HanleWishlist({id, session}: {id: string, session: Session}): JSX.Element {
+  const { isInWishlist, addToWishlist } = useIsInWishlist(id, session!!.accessToken)
   return (
     <div
       className="text-xl transition cursor-pointer text-rose-500 hover:text-rose-700"

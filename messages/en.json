@@ -120,6 +120,9 @@
         "success": "CV permission updated successfully."
       },
       "remove": "CV removed successfully."
+    },
+    "signin": {
+      "clickedButton": "You need to signin first !!!"
     }
   },
   "sidebar": {

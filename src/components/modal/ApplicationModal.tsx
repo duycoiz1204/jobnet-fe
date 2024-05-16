@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useAppDispatch } from '@/lib/hooks';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
-import { setLoading } from '@/lib/features/loading/loadingSlice';
 import resumeService from '@/services/resumeService';
 import ErrorType from '@/types/error';
 import applicationService from '@/services/applicationService';
@@ -16,12 +15,14 @@ import PostType from '@/types/post';
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { setLoading } from '@/features/loading/loadingSlice';
+import { useSession } from 'next-auth/react';
+import { usePathname } from '@/navigation';
 
 export default function ApplicationModal({
   modal,
@@ -34,8 +35,11 @@ export default function ApplicationModal({
   closeModal: () => void;
   post: PostType;
 }): React.ReactElement {
+  const session = useSession()
   const t = useTranslations();
   const dispatch = useAppDispatch();
+  console.log(usePathname());
+  
 
   const [{ resumes, dialog, selectedResumeIndex, file }, setApplicationModal] =
     useState({
@@ -47,7 +51,7 @@ export default function ApplicationModal({
 
   useEffect(() => {
     (async () => {
-      const _resumes = await resumeService.getResumesByAuth();
+      const _resumes = await resumeService.getResumesByAuth(session.data!!.accessToken!!);
       setApplicationModal((prev) => ({ ...prev, resumes: _resumes }));
     })();
   }, []);

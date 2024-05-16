@@ -27,18 +27,26 @@ class WishlistService extends BaseService {
     return this.getResponseData<PaginationType<WishlistType>>(res)
   }
 
-  async existsWishlist(postId: string) {
+  async existsWishlist(postId: string, accessToken: string) {
     const params = new URLSearchParams()
     params.append('postId', postId)
 
     const url = `${this.apiBaseUrl}/exists?${params.toString()}`
-    const res = await fetch(url)
+    const res = await fetch(
+      url,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        },
+      }
+    )
 
     this.checkResponseNotOk(res)
     return this.getResponseData<boolean>(res)
   }
 
-  async createWishlist(postId: string) {
+  async createWishlist(postId: string, accessToken: string) {
     const res = await fetch(
       this.apiBaseUrl,
       {
@@ -46,6 +54,7 @@ class WishlistService extends BaseService {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
         },
       }
     )
@@ -54,11 +63,12 @@ class WishlistService extends BaseService {
     return this.getResponseData<WishlistType>(res)
   }
 
-  async deleteWishlist(postId: string) {
+  async deleteWishlist(postId: string, accessToken: string) {
     const res = await fetch(this.apiBaseUrl, {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
       },
       body: JSON.stringify(postId),
     })

@@ -10,8 +10,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useState, useTransition } from 'react'
-import { useSearchParams } from 'next/navigation'
+import {  useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { useSession } from 'next-auth/react'
+import { useRouter } from '@/navigation'
 
 type LoginProps = {
 
@@ -41,6 +43,9 @@ export default function LoginForm({ }: LoginProps) {
             }
             if (response && response["error"] !== undefined) {
                 setError(response.error)
+            }else{
+                window.location.href = response["url"]
+                // console.log("Session Data: ", status);
             }
         })
     }

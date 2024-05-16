@@ -2,9 +2,10 @@
 import registrationService from '@/services/registrationService';
 import * as z from "zod"
 import { LoginSchema, jsRegisterSchema, jsVerifySchema } from "@/schemas/authSchema"
-import { signIn, signOut } from "@/auth"
+import { auth, signIn, signOut, unstable_update } from "@/auth"
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { AuthError } from 'next-auth';
+import { redirect } from 'next/navigation';
 
 
 export const LoginAction = async (values: z.infer<typeof LoginSchema>, callbackUrl?: string | null) => {
@@ -15,11 +16,12 @@ export const LoginAction = async (values: z.infer<typeof LoginSchema>, callbackU
     const { email, password } = validatedField.data
 
     try {
-        await signIn("credentials", {
-            email, password, redirectTo: callbackUrl ||
-                DEFAULT_LOGIN_REDIRECT
+        const urlRedirect = await signIn("credentials", {
+            email, password, redirect: false,
+            redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT
         })
-        return { success: "Login successfully" }
+        return { success: "Login successfully", url: urlRedirect }
+       
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
@@ -49,5 +51,7 @@ export const jsVerifyAction = async (values: z.infer<typeof jsVerifySchema>, use
 
 export const logoutAction = async () => {
     await signOut()
+    // unstable_update({})
+
 }
 

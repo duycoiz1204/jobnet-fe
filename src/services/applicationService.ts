@@ -81,10 +81,15 @@ class ApplicationService extends BaseService {
     return this.getResponseData<ApplicationType>(res);
   }
 
-  async isSubmitted(postId: string) {
+  async isSubmitted(postId: string, accessToken: string) {
     const params = new URLSearchParams({ postId });
     const url = `${this.apiBaseUrl}/isSubmitted?${params.toString()}`;
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
 
     this.checkResponseNotOk(res);
     return this.getResponseData<boolean>(res);

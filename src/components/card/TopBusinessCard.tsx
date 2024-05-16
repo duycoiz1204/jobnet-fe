@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Business from '@/types/business';
+import BusinessType from '@/types/business';
 import { useTranslations } from 'next-intl';
 import { useSession } from 'next-auth/react';
 import postService from '@/services/postService';
@@ -16,7 +16,7 @@ import { toast } from 'sonner';
 export default function TopBusinessCard({
   data,
 }: {
-  data: Business;
+  data: BusinessType;
 }): React.ReactElement {
   const t = useTranslations();
 

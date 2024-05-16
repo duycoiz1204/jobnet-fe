@@ -4,7 +4,7 @@ export type EBusinessType = 'Product' | 'Outsource';
 
 export type EBusinessStatus = 'Pending' | 'Approved' | 'Rejected';
 
-export default interface Business {
+export default interface BusinessType {
   id: string;
   name: string;
   type: EBusinessType;

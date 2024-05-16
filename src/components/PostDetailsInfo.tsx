@@ -23,6 +23,9 @@ import { Link } from '@/navigation';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import useIsInWishlist from '@/hooks/useIsInWishlist';
+import { useSession } from 'next-auth/react';
+import { Session } from 'next-auth';
+import { toast } from 'sonner';
 
 export default function PostDetailsInfo({
   type = 'View',
@@ -43,8 +46,7 @@ export default function PostDetailsInfo({
 }): React.ReactElement {
   const [business, setBusiness] = useState<Business>();
   const t = useTranslations();
-
-  const { isInWishlist, addToWishlist } = useIsInWishlist(post.id);
+  const { data: session } = useSession()
 
   useEffect(() => {
     void (async () => {
@@ -154,7 +156,13 @@ export default function PostDetailsInfo({
                   <Button
                     disabled={isSubmitted}
                     className="flex-1"
-                    onClick={() => openModal('application-modal')}
+                    onClick={() => {
+                      if(session?.user.id){
+                        openModal('application-modal')
+                      }else{
+                        toast(t("toast.signin.clickedButton"))
+                      }
+                    }}
                   >
                     {isSubmitted
                       ? t('postDetails.aboutJob.button.apply.js.applied')
@@ -184,22 +192,7 @@ export default function PostDetailsInfo({
                     </Button>
                   )}
 
-                {type === 'View' && (
-                  <Button
-                    className={cn('border flex-2', {
-                      'text-white bg-rose-500 hover:border-rose-600':
-                        isInWishlist,
-                      'border-emerald-500 hover:border-emerald-600 hover:bg-slate-100':
-                        !isInWishlist,
-                    })}
-                    color="empty"
-                    onClick={addToWishlist}
-                  >
-                    {!isInWishlist
-                      ? t('postDetails.aboutJob.button.save')
-                      : t('postDetails.aboutJob.button.unsave')}
-                  </Button>
-                )}
+                {type === 'View' && <WishlistHanleCpm session={session} postId={post.id} /> }
               </div>
             )}
           </div>
@@ -235,12 +228,7 @@ export default function PostDetailsInfo({
             <ItemPostHeading
               icon={<Star />}
               title={t('postDetails.requirements.level')}
-              content={post.levels?.map((item, index) => (
-                <span key={index}>
-                  {item.name}
-                  {/* {index !== post.degrees.length - 1 && ', '} */}
-                </span>
-              ))}
+              content={post.level.name}
             />
             <ItemPostHeading
               icon={<BriefcaseBusiness />}
@@ -259,10 +247,10 @@ export default function PostDetailsInfo({
               icon={<LocateFixed />}
               title={t('postDetails.requirements.location')}
               content={post.locations.map((location, index) => (
-                <li key={index}>
+                <span key={index}>
                   {`${location.specificAddress}, ${location.provinceName}`}
                   {index !== post.locations.length - 1 && <br />}
-                </li>
+                </span>
               ))}
             />
           </div>
@@ -300,16 +288,22 @@ export default function PostDetailsInfo({
                 </div>
                 <p>{t('postDetails.requirements.instructApply.subTitle')}</p>
                 <div className="flex items-center gap-x-2">
-                  <Button>
-                    {t('postDetails.aboutJob.button.apply.js.notApply')}
-                  </Button>
-
-                  <Button
-                    className="border flex-2 border-emerald-500 hover:border-emerald-600 hover:bg-slate-100"
-                    color="empty"
+                <Button
+                    disabled={isSubmitted}
+                    onClick={() => {
+                      if(session?.user.id){
+                        openModal('application-modal')
+                      }else{
+                        toast(t("toast.signin.clickedButton"))
+                      }
+                    }}
                   >
-                    {t('postDetails.aboutJob.button.save')}
+                    {isSubmitted
+                      ? t('postDetails.aboutJob.button.apply.js.applied')
+                      : t('postDetails.aboutJob.button.apply.js.notApply')}
                   </Button>
+                  <WishlistHanleCpm session={session} postId={post.id}/> 
+                  
                 </div>
               </div>
             )}
@@ -382,4 +376,38 @@ export function ItemPostHeading({
       </div>
     </div>
   );
+}
+
+function WishlistHanleCpm({ postId, session }: { postId: string, session: Session | null }) {
+  const userId = session?.user?.id
+  const t = useTranslations()
+  if (userId) {
+    const { isInWishlist, addToWishlist } = useIsInWishlist(postId, session.accessToken)
+    return (
+      <Button
+        className={cn('border flex-2', {
+          'text-white bg-rose-500 hover:border-rose-600':
+            isInWishlist,
+          'border-emerald-500 hover:border-emerald-600 hover:bg-slate-100':
+            !isInWishlist,
+        })}
+        color="empty"
+        onClick={addToWishlist}
+      >
+        {!isInWishlist
+          ? t('postDetails.aboutJob.button.save')
+          : t('postDetails.aboutJob.button.unsave')}
+      </Button>
+    )
+  } else {
+    return (
+      <Button
+        className='border-emerald-500 hover:border-emerald-600 hover:bg-slate-100'
+        color="empty"
+        onClick={() => {toast(t("toast.signin.clickedButton"))}}
+      >
+        {t('postDetails.aboutJob.button.save')}
+      </Button>
+    )
+  }
 }

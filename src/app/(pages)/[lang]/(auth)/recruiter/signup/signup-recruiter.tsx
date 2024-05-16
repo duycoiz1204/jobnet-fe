@@ -6,9 +6,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogTrigger } from '@radix-ui/react-dialog';
-import { DialogContent } from '@/components/ui/dialog';
-import Business, { BusinessPostType } from '@/types/business';
+import BusinessType from '@/types/business';
 import { useTranslations } from 'next-intl';
 import useDebounce from '@/hooks/useDebounce';
 import businessService from '@/services/businessService';
@@ -33,7 +31,7 @@ export default function RcSignUpForm({ }: Props) {
     const { modal, openModal, closeModal } = useModal()
     const [recruiterSignUp, setRecruiterSignUp] = useState({
         intent: 'registerWithNewBusiness' as IntentType,
-        selectedBusiness: undefined as Business | undefined,
+        selectedBusiness: undefined as BusinessType | undefined,
     })
     const form = useForm<z.infer<typeof rcRegisterSchema>>({
         resolver: zodResolver(rcRegisterSchema),
@@ -55,7 +53,7 @@ export default function RcSignUpForm({ }: Props) {
         })
     }
 
-    const handleBusinessChange = (business: Business) => {
+    const handleBusinessChange = (business: BusinessType) => {
         console.log("Confirm 2: ", recruiterSignUp);
 
         setRecruiterSignUp({
@@ -302,12 +300,12 @@ function BusinessSearch({
     onBusinessChange,
 }: {
     closeModal: () => void,
-    selectedBusiness?: Business
-    onBusinessChange: (business: Business) => void
+    selectedBusiness?: BusinessType
+    onBusinessChange: (business: BusinessType) => void
 }): React.ReactElement {
     const [businessSearch, setBusinessSearch] = useState({
         search: '',
-        results: [] as Business[],
+        results: [] as BusinessType[],
         selectedBusiness: selectedBusiness,
         isFocus: false,
     })
@@ -350,7 +348,7 @@ function BusinessSearch({
         return () => window.removeEventListener('click', disableFocus)
     }, [])
 
-    const handleItemClick = (business: Business) => {
+    const handleItemClick = (business: BusinessType) => {
         setBusinessSearch((prev) => ({
             ...prev,
             selectedBusiness: business,
@@ -443,7 +441,7 @@ function BusinessSearchItem({
     onClick,
     className,
 }: {
-    business: Business
+    business: BusinessType
     onClick?: () => void
     className?: string
 }): React.ReactElement {

@@ -34,7 +34,6 @@ export default function AuthRightControls({
     function FaAddressCard(props: IconBaseProps): Element {
         throw new Error("Function not implemented.")
     }
-    const [openDialogTrigger, setOpenDialogTrigger] = useState(false)
     const { modal, openModal, closeModal } = useModal()
     return (
         <>
@@ -53,7 +52,6 @@ export default function AuthRightControls({
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
-
             <Dropdown
                 render={
                     <img

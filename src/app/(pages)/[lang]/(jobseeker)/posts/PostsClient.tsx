@@ -1,5 +1,5 @@
 'use client'
-import Selection, { SelectChangeEvent } from '@/components/Selection'
+import Selection, { SelectChangeEvent } from '@/components/select/Selection'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { setLoading } from '@/features/loading/loadingSlice'
@@ -28,6 +28,7 @@ type Props = {
 export default function PostsClient({
     paginationPosts, categories, professions
 }: Props) {
+    console.log("Reload posts page client");
     const t = useTranslations()
     const dispatch = useAppDispatch()
     const { pagination, setPagination, scrollIntoView, scrollIntoViewRef } = usePagination(paginationPosts)
