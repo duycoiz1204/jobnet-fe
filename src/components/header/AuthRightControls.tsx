@@ -2,7 +2,6 @@
 import Dropdown from "@/components/Dropdown"
 import { NavLink } from "@/components/NavLink"
 import { Button } from "@/components/ui/button"
-import UserSessionType from "@/types/next-auth"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip"
 import { IconBaseProps, IconType } from "react-icons"
 import { BsBoxArrowRight } from "react-icons/bs"
@@ -21,6 +20,7 @@ import {
 import { useState } from "react"
 import Modal from "@/components/modal/Modal"
 import useModal from "@/hooks/useModal"
+import { UserSessionType } from "@/types/user"
 
 export default function AuthRightControls({
     t,
@@ -126,13 +126,13 @@ export default function AuthRightControls({
                             {t('header.jobSeeker.modal.logout.title')}
                         </h3>
                         <div className="flex justify-center gap-4">
-                            <Button color="emerald" onClick={() => {
+                            <Button onClick={() => {
                                 logout()
                                 closeModal()
                             }}>
                                 {t('header.jobSeeker.modal.logout.button.logout')}
                             </Button>
-                            <Button color="red" onClick={closeModal}>
+                            <Button variant="red" onClick={closeModal}>
                                 {t('header.jobSeeker.modal.logout.button.cancel')}
                             </Button>
                         </div>

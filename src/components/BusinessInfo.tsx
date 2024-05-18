@@ -145,12 +145,12 @@ export default function BusinessInfo({
               {mode === 'view' && (
                 <div className="flex gap-4">
                   {!follow ? (
-                    <Button onClick={() => handleFollowClick()}>
+                    <Button variant={"emerald"} onClick={() => handleFollowClick()}>
                       <FaPlusCircle className="w-5 h-5 mr-2" />
                       {t('businessDetail.businessInfo.btnFollow.follow')}
                     </Button>
                   ) : (
-                    <Button color={'red'} onClick={() => handleUnFollowClick()}>
+                    <Button variant={"red"} onClick={() => handleUnFollowClick()}>
                       <FaPlusCircle className="w-5 h-5 mr-2" />
                       {t('businessDetail.businessInfo.btnFollow.unfollow')}
                     </Button>

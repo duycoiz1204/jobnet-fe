@@ -51,7 +51,7 @@ export default function LoginForm({ }: LoginProps) {
     }
     return (
         <Form {...form}>
-            <form className='space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
+            <form className='space-y-6 h-full' onSubmit={form.handleSubmit(onSubmit)}>
                 <div className="flex flex-col gap-4 pt-8">
                     <FormField control={form.control}
                         name='email'
@@ -92,7 +92,7 @@ export default function LoginForm({ }: LoginProps) {
                     }
                     <Button
                         className="mt-4"
-                        color="emerald"
+                        variant={"emerald"}
                         size="lg"
                         type="submit"
                         disabled={isPending}

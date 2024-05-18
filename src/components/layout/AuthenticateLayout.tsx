@@ -26,7 +26,7 @@ export default function AuthenticateLayout({
   return (
     <div
       className={`flex items-start justify-center ${
-        layoutSize === 'lg' ? 'py-6 h-auto' : 'h-screen md:pt-14 '
+        layoutSize === 'lg' ? 'py-8 mx-auto h-[90%]  p-10' : 'h-full pb-5 md:pt-14 '
       } md:px-2 lg:px-0 md:bg-slate-200`}
     >
       <div
@@ -38,7 +38,7 @@ export default function AuthenticateLayout({
             : layoutSize === 'md'
             ? 'max-w-[1050px]'
             : layoutSize === 'lg'
-            ? 'max-w-[1440px]'
+            ? 'max-w-[1440px] w-[90%]'
             : ''
         } w-full md:shadow-md h-full md:h-min bg-white md:grid md:gap-6 lg:gap-8 ${
           verify ? 'grid-cols-1' : 'grid-cols-2'

@@ -23,10 +23,7 @@ export default function BusinessCmp({ data }: Props) {
 
     const dispatch = useAppDispatch()
 
-    const {data: data1} = useSession()
-
     const { pagination, setPagination, scrollIntoView, scrollIntoViewRef } = usePagination(data)
-
     const [search, setSearch] = useState('')
 
     const businessesElms = pagination.data.map((business) => (
@@ -88,7 +85,7 @@ export default function BusinessCmp({ data }: Props) {
                         </div>
                         <Button
                             className="mr-1 leading-none rounded-full lg:ml-4 lg:mr-0"
-                            color="emerald"
+                            variant={"emerald"}
                             onClick={handleSearchBusiness}
                         >
                             {t('business.searchBar.button')}

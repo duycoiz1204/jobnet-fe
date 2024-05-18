@@ -146,7 +146,7 @@ export default function PostDetailsInfo({
               </span>
             </span>
             {type === 'Update' && (
-              <Button className="ml-auto" onClick={handleClickUpdateHeading}>
+              <Button className="ml-auto" variant={"emerald"} onClick={handleClickUpdateHeading}>
                 Cập nhật
               </Button>
             )}
@@ -391,7 +391,7 @@ function WishlistHanleCpm({ postId, session }: { postId: string, session: Sessio
           'border-emerald-500 hover:border-emerald-600 hover:bg-slate-100':
             !isInWishlist,
         })}
-        color="empty"
+        variant={"empty"}
         onClick={addToWishlist}
       >
         {!isInWishlist
@@ -403,7 +403,7 @@ function WishlistHanleCpm({ postId, session }: { postId: string, session: Sessio
     return (
       <Button
         className='border-emerald-500 hover:border-emerald-600 hover:bg-slate-100'
-        color="empty"
+        variant={"empty"}
         onClick={() => {toast(t("toast.signin.clickedButton"))}}
       >
         {t('postDetails.aboutJob.button.save')}

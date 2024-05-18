@@ -5,7 +5,6 @@ import { LoginSchema, jsRegisterSchema, jsVerifySchema } from "@/schemas/authSch
 import { auth, signIn, signOut, unstable_update } from "@/auth"
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { AuthError } from 'next-auth';
-import { redirect } from 'next/navigation';
 
 
 export const LoginAction = async (values: z.infer<typeof LoginSchema>, callbackUrl?: string | null) => {
@@ -50,8 +49,8 @@ export const jsVerifyAction = async (values: z.infer<typeof jsVerifySchema>, use
 }
 
 export const logoutAction = async () => {
-    await signOut()
-    // unstable_update({})
+    await signOut({redirect: false})
+    // unstable_update({})  
 
 }
 

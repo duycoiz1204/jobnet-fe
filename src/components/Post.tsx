@@ -66,7 +66,7 @@ export default function Post({
                 {post.minSalaryString} - {post.maxSalaryString}
               </div>
               {role === 'JobSeeker' && <HanleWishlist id={post.id} session={session!!}/> }
-              <Button onClick={() => router.push(`/posts/${navigateTo}`)} size="sm">
+              <Button variant={"emerald"} onClick={() => router.push(`/posts/${navigateTo}`)} size="sm">
                 {t('post.button.detail')}
               </Button>
             </div>

@@ -201,12 +201,13 @@ export default function RcSignUpForm({ }: Props) {
                             {t('signup.business.session')}
                         </h2>
                         {recruiterSignUp.selectedBusiness ? (
-                            <Button size={'sm'} onClick={handleBusinessCreateClick}>
+                            <Button size={'sm'} variant={"emerald"}  onClick={handleBusinessCreateClick}>
                                 {t('signup.buttons.createBusiness')}
                             </Button>
                         ) : (
                             <Button
                                 size={'sm'}
+                                variant={"emerald"}
                                 onClick={() => openModal('business-search-modal')}
                             >
                                 {t('signup.buttons.selectBusiness')}
@@ -257,7 +258,7 @@ export default function RcSignUpForm({ }: Props) {
                         name="intent"
                         value={recruiterSignUp.intent}
                         className="w-full translate-y-4"
-                        color="emerald"
+                        variant={"emerald"}
                         size="lg"
                     >
                         {t('signup.buttons.submit')}
@@ -425,10 +426,10 @@ function BusinessSearch({
                 </div>
             )}
             <div className="flex justify-end gap-4">
-                <Button color="emerald" type='submit' onClick={handleConfirmClick}>
+                <Button variant={"emerald"} type='submit' onClick={handleConfirmClick}>
                     {t('signup.buttons.confirm')}
                 </Button>
-                <Button color="red" onClick={closeModal}>
+                <Button variant={"red"} onClick={closeModal}>
                     {t('signup.buttons.Cancel')}
                 </Button>
             </div>

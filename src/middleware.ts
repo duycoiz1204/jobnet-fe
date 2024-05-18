@@ -29,6 +29,8 @@ function handleHeaders(req: any) {
     return response
 }
 export default auth((req) => {
+    console.log("Middleware");
+    
     const {pathname} = req.nextUrl
     
     // First check locale already exist on Url or not

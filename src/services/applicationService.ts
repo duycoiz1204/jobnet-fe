@@ -3,6 +3,9 @@ import BaseService from './baseService';
 import ApplicationType, { ApplicationStatus } from '@/types/application';
 import PaginationType from '../types/pagination';
 import envConfig from '@/config';
+import { getSession, useSession } from 'next-auth/react';
+import { getToken } from 'next-auth/jwt';
+import { auth } from '@/auth';
 
 class ApplicationService extends BaseService {
   private apiBaseUrl = `${envConfig.NEXT_PUBLIC_BASE_URL}/api/applications`;
@@ -84,13 +87,13 @@ class ApplicationService extends BaseService {
   async isSubmitted(postId: string, accessToken: string) {
     const params = new URLSearchParams({ postId });
     const url = `${this.apiBaseUrl}/isSubmitted?${params.toString()}`;
-    const res = await fetch(url, {
+    const res = await fetch(url , {
+      method: "GET",
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
-      },
-    });
-
+      }
+    })
     this.checkResponseNotOk(res);
     return this.getResponseData<boolean>(res);
   }

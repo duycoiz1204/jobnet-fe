@@ -19,9 +19,9 @@ import { Button } from '@/components/ui/button'
 import AuthRightControls from '@/components/header/AuthRightControls'
 import { useTranslations } from 'next-intl'
 import { useSession } from 'next-auth/react'
-import { useEffect, useState, useTransition } from 'react'
+import { useTransition } from 'react'
 import { logoutAction } from '@/actions/jsAuth'
-import { Session } from 'next-auth'
+import { useRouter } from '@/navigation'
 
 interface JSHeaderProps{
 }
@@ -31,14 +31,12 @@ export default function JSHeader({}: JSHeaderProps): JSX.Element {
   const t = useTranslations()
   const [isPending, startTrasition] = useTransition()
   const initSession = useSession().data?.user
-
   const user = initSession
-
 
   const handleLogout = () => {
     startTrasition(async () => {
       await logoutAction()
-      location.reload()
+      location.href = "/"
     })
   }
 
@@ -161,7 +159,7 @@ function NoAuthRightControls({
     <>
       <Link href={`/signin?callbackUrl=${encodedCallbackUrl}`}>
         <Button
-          color="empty"
+          variant="empty"
           className="border border-emerald-500 text-emerald-500 hover:bg-slate-100"
         >
           {t('header.jobSeeker.unRegister.login')}
