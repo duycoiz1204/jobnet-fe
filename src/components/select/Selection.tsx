@@ -1,32 +1,32 @@
-'use client'
+'use client';
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState, useEffect } from 'react'
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa6'
-import { IconType } from 'react-icons'
-import clsx from 'clsx'
-import { useTranslations } from 'next-intl'
+import { useState, useEffect } from 'react';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa6';
+import { IconType } from 'react-icons';
+import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 interface OptionType {
-  id: string
-  name?: string
+  id: string;
+  name?: string;
 }
 
 export interface SelectChangeEvent {
   target: {
-    name: string
-    value: string
-  }
+    name: string;
+    value: string;
+  };
 }
 
 interface SelectionProps<T>
   extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  label?: string
-  options?: Array<T>
-  onSelectChange?: (e: SelectChangeEvent) => void
+  label?: string;
+  options?: Array<T>;
+  onSelectChange?: (e: SelectChangeEvent) => void;
 }
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
-export default function Selection<T>({
+function Selection<T>({
   id,
   className,
   label,
@@ -35,13 +35,15 @@ export default function Selection<T>({
   value,
   onSelectChange = () => undefined,
 }: SelectionProps<T>) {
-  const placeholder = useTranslations()('recentApplications.filter.sort.default')
+  const placeholder = useTranslations()(
+    'recentApplications.filter.sort.default'
+  );
   const [select, setSelect] = useState({
     options: [{ id: '', name: placeholder }, ...options] as Array<OptionType>,
     selectedIndex: 0,
     isFocus: false,
-  })
-  const selectedOption = select.options[select.selectedIndex]
+  });
+  const selectedOption = select.options[select.selectedIndex];
 
   useEffect(() => {
     JSON.stringify(options) !== JSON.stringify(select.options.slice(1)) &&
@@ -52,16 +54,16 @@ export default function Selection<T>({
           ...options,
         ] as Array<OptionType>,
         selectedIndex: 0,
-      }))
-  }, [options, select.options, placeholder])
+      }));
+  }, [options, select.options, placeholder]);
 
   useEffect(() => {
     value !== undefined &&
       setSelect((prev) => ({
         ...prev,
         selectedIndex: prev.options.findIndex((o) => o.id === value),
-      }))
-  }, [value])
+      }));
+  }, [value]);
 
   useEffect(() => {
     const disableFocus = (e: MouseEvent) => {
@@ -69,37 +71,37 @@ export default function Selection<T>({
         setSelect((prev) => ({
           ...prev,
           isFocus: false,
-        }))
-    }
-    window.addEventListener('click', disableFocus)
+        }));
+    };
+    window.addEventListener('click', disableFocus);
 
-    return () => window.removeEventListener('click', disableFocus)
-  }, [id])
+    return () => window.removeEventListener('click', disableFocus);
+  }, [id]);
 
   const handleSelectClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation()
+    e.stopPropagation();
     !(e.target as HTMLDivElement).closest(`[data-options=${id}]`) &&
       setSelect((prev) => ({
         ...prev,
         isFocus: !select.isFocus,
-      }))
-  }
+      }));
+  };
 
   const handleOptionClick = (i: number) => {
     setSelect((prev) => ({
       ...prev,
       selectedIndex: i,
       isFocus: false,
-    }))
+    }));
     onSelectChange({
       target: {
         name: name as string,
         value: select.options[i].id,
       },
-    })
-  }
+    });
+  };
 
-  const Icon = (select.isFocus ? FaChevronUp : FaChevronDown) as IconType
+  const Icon = (select.isFocus ? FaChevronUp : FaChevronDown) as IconType;
   const optionElms = select.options.map((option, i) => (
     <div
       key={option.id}
@@ -110,7 +112,7 @@ export default function Selection<T>({
     >
       {option.name || option.id}
     </div>
-  ))
+  ));
 
   return (
     <div className={clsx(className, 'flex flex-col gap-2 rounded-lg')}>
@@ -138,5 +140,7 @@ export default function Selection<T>({
       </div>
       <input type="hidden" name={name} value={selectedOption?.id} />
     </div>
-  )
+  );
 }
+
+export default Selection;

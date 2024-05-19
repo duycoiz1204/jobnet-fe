@@ -17,7 +17,7 @@ interface PaginationButtonProps extends React.HTMLAttributes<HTMLDivElement> {
   disabled: boolean;
 }
 
-export default function Pagination({
+function Pagination({
   currentPage,
   totalPages,
   onPageChange,
@@ -75,6 +75,8 @@ export default function Pagination({
     </>
   );
 }
+
+export default Pagination;
 
 function PaginationItem({
   value,

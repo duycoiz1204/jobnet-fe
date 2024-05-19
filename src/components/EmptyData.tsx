@@ -1,14 +1,13 @@
+import { useTranslations } from 'next-intl';
 
-import { useTranslations } from 'next-intl'
-
-export default function EmptyData({
+function EmptyData({
   title,
   subtitle,
 }: {
-  title?: string
-  subtitle?: string
+  title?: string;
+  subtitle?: string;
 }): React.ReactElement {
-  const t = useTranslations()
+  const t = useTranslations();
 
   return (
     <div className="flex flex-col items-center gap-2">
@@ -20,5 +19,7 @@ export default function EmptyData({
         {subtitle || t('emptyData.subtitle')}
       </div>
     </div>
-  )
+  );
 }
+
+export default EmptyData;
