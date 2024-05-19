@@ -1,6 +1,6 @@
 export type UserRoleType = 'Admin' | 'Recruiter' | 'JobSeeker'
 
-export interface UserType {
+export default interface UserType {
   id: string
   email: string
   name: string
