@@ -1,4 +1,4 @@
-export default function useSlider() {
+function useSlider() {
   const moveToNextSlide = (sliderRef: React.RefObject<HTMLDivElement>) => {
     const slider = sliderRef.current;
     if (slider) {
@@ -27,3 +27,5 @@ export default function useSlider() {
     moveToPrevSlide,
   };
 }
+
+export default useSlider;

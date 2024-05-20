@@ -83,7 +83,7 @@ const ModalContext = createContext<{
   onClose?: () => void;
 }>({});
 
-export default function Modal({
+function Modal({
   show = false,
   size = 'md',
   position = 'center',
@@ -160,3 +160,5 @@ Modal.Footer = function Footer({ className, children }: ModalFooterProps) {
 
   return <div className={footerUtils}>{children}</div>;
 };
+
+export default Modal;

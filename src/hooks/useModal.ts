@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function useModal() {
+function useModal() {
   const [modal, setModal] = useState<string | undefined>(undefined);
 
   const openModal = (id: string) => setModal(id);
@@ -12,3 +12,5 @@ export default function useModal() {
     closeModal,
   };
 }
+
+export default useModal;
