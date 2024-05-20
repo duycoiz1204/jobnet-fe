@@ -1,15 +1,16 @@
+'use client'
 import { useState, useEffect } from 'react';
 
-import Selection, { SelectChangeEvent } from '../select/Selection';
+import Selection, { SelectChangeEvent } from '@/components/select/Selection';
 
 import locationService from '@/services/locationService';
 
-import LocationType from '../../types/location';
+import LocationType from '@/types/location';
 import { FaXmark } from 'react-icons/fa6';
 import { useTranslations } from 'next-intl';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
 
-const mappedLocations = (await locationService.getLocations()).map(
+const mappedLocations = locationService.getLocations().map(
   (location) => ({
     id: location.code,
     name: location.name,
@@ -32,7 +33,7 @@ interface LocationInputProps {
   sendData?: ((data: LocationType[]) => void) | undefined;
 }
 
-function LocationInput({
+export default function LocationInput({
   label = 'Địa chỉ:',
   hints = [],
   values = [],
@@ -251,5 +252,3 @@ function LocationInput({
     </div>
   );
 }
-
-export default LocationInput;

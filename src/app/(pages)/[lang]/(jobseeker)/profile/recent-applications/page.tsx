@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 
-import { useAppDispatch } from '@/lib/hooks';
 import { setLoading } from '@/features/loading/loadingSlice';
 import usePagination from '@/hooks/usePagination';
 import useModal from '@/hooks/useModal';
@@ -25,6 +24,7 @@ import Selection from '@/components/select/Selection';
 
 import ErrorType from '@/types/error';
 import ApplicationType from '@/types/application';
+import { useAppDispatch } from '@/hooks/useRedux';
 
 export default function RecentApplications() {
   const [business, setBusiness] = useState<BusinessType>();

@@ -1,6 +1,5 @@
 'use client';
 import { useState, useEffect, useLayoutEffect } from 'react';
-import { useAppDispatch } from '@/lib/hooks';
 import postService from '@/services/postService';
 import {
     Breadcrumb,
@@ -23,6 +22,7 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import PaginationType from '@/types/pagination';
 import Selection from '@/components/select/Selection';
 import { useSession } from 'next-auth/react';
+import { useAppDispatch } from '@/hooks/useRedux';
 
 type PostDetailsProps = {
     _similarPostsPaginationData: PaginationType<PostType>,

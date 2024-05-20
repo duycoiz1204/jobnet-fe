@@ -5,7 +5,6 @@ import { useSession } from 'next-auth/react';
 import { Link, useRouter } from '@/navigation';
 import { useTranslations } from 'next-intl';
 import { differenceInDays } from 'date-fns';
-import { useAppDispatch } from '@/lib/hooks';
 import { setLoading } from '@/features/loading/loadingSlice';
 import usePagination from '@/hooks/usePagination';
 
@@ -22,6 +21,7 @@ import { FileSearch } from 'lucide-react';
 import EmptyData from '@/components/EmptyData';
 import Pagination from '@/components/Pagination';
 import WishlistType from '@/types/wishlist';
+import { useAppDispatch } from '@/hooks/useRedux';
 
 export default function FavoritePosts(): React.ReactElement {
   const t = useTranslations();

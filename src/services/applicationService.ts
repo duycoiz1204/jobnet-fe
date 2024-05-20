@@ -10,11 +10,12 @@ import { auth } from '@/auth';
 class ApplicationService extends BaseService {
   private apiBaseUrl = `${envConfig.NEXT_PUBLIC_BASE_URL}/api/applications`;
 
-  async getApplications(props?: {
+  async getApplications(props: {
     jobSeekerId?: string | undefined;
     page?: number;
     pageSize?: number;
     status?: ApplicationStatus;
+    accessToken: string
   }) {
     const params = new URLSearchParams();
     props?.jobSeekerId && params.append('jobSeekerId', props.jobSeekerId);
@@ -25,7 +26,13 @@ class ApplicationService extends BaseService {
     const url = params.toString().length
       ? `${this.apiBaseUrl}?${params.toString()}`
       : this.apiBaseUrl;
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${props.accessToken}`
+      }
+    });
 
     this.checkResponseNotOk(res);
     return this.getResponseData<PaginationType<ApplicationType>>(res);

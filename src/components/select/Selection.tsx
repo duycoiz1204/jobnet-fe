@@ -23,21 +23,22 @@ interface SelectionProps<T>
   label?: string;
   options?: Array<T>;
   onSelectChange?: (e: SelectChangeEvent) => void;
+  placeholder?: string
 }
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
-function Selection<T>({
+export default function Selection<T>({
   id,
   className,
   label,
   name,
   options = [],
   value,
+  placeholder = useTranslations()(
+    'recentApplications.filter.sort.default'
+  ), 
   onSelectChange = () => undefined,
 }: SelectionProps<T>) {
-  const placeholder = useTranslations()(
-    'recentApplications.filter.sort.default'
-  );
   const [select, setSelect] = useState({
     options: [{ id: '', name: placeholder }, ...options] as Array<OptionType>,
     selectedIndex: 0,
@@ -143,4 +144,3 @@ function Selection<T>({
   );
 }
 
-export default Selection;

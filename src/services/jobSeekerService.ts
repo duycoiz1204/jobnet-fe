@@ -49,23 +49,24 @@ class JobSeekerService extends BaseService {
     return this.getResponseData<JobSeekerType>(res);
   }
 
-  async updateJobSeekerPersonalInfo(id: string, req: object) {
+  async updateJobSeekerPersonalInfo(id: string, req: object, accessToken: string) {
     const url = `${this.apiBaseUrl}/${id}/personalInfo`;
 
-    return this.updateJobSeekerInfo(url, req);
+    return this.updateJobSeekerInfo(url, req, accessToken);
   }
 
-  async updateJobSeekerProfessionInfo(id: string, req: object) {
+  async updateJobSeekerProfessionInfo(id: string, req: object, accessToken: string) {
     const url = `${this.apiBaseUrl}/${id}/professionInfo`;
 
-    return this.updateJobSeekerInfo(url, req);
+    return this.updateJobSeekerInfo(url, req, accessToken);
   }
 
-  private async updateJobSeekerInfo(url: string, req: object) {
+  private async updateJobSeekerInfo(url: string, req: object, accessToken: string) {
     const res = await fetch(url, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
       },
       body: JSON.stringify(req),
     });
@@ -88,6 +89,8 @@ class JobSeekerService extends BaseService {
 
   getJobSeekerProfileImage(id: string) {
     const url = `${this.apiBaseUrl}/${id}/profileImage`;
+    console.log("Come to get Image");
+    
     return url;
   }
 

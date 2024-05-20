@@ -1,5 +1,5 @@
-import envConfig from '@/config';
-import BaseService from './baseService';
+import BaseService from "@/services/baseService";
+import locations from '../../public/data/locations.json'
 
 export interface APILocationType {
   id?: string;
@@ -12,15 +12,9 @@ export interface APILocationType {
 }
 
 class LocationService extends BaseService {
-  private apiBaseUrl = `${envConfig.NEXT_PUBLIC_BASE_URL}/api/location`;
-
-  async getLocations() {
-    const res = await fetch(`${this.apiBaseUrl}/provinces`);
-    this.checkResponseNotOk(res);
-    return this.getResponseData<APILocationType[]>(res);
-  }
+    getLocations() {
+        return locations
+    }
 }
 
-const locationService = new LocationService();
-
-export default locationService;
+export default new LocationService()
