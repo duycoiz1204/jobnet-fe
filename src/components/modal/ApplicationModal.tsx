@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useAppDispatch } from '@/lib/hooks';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import resumeService from '@/services/resumeService';
@@ -23,6 +22,7 @@ import {
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useSession } from 'next-auth/react';
 import { usePathname } from '@/navigation';
+import { useAppDispatch } from '@/hooks/useRedux';
 
 export default function ApplicationModal({
   modal,

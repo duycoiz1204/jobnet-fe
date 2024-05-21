@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useState, useEffect, createContext, useContext } from 'react';
 import { Button } from './ui/button';
-import Checkbox from './input/Checkbox';
+import Checkbox from '@/components/input/Checkbox';
 
 interface InfoSectionContextProps {
   isCompleted: boolean;
