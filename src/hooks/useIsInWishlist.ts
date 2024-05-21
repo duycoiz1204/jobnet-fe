@@ -1,41 +1,45 @@
-import wishlistService from '@/services/wishlistService'
-import { useTranslations } from 'next-intl'
-import { useState, useEffect } from 'react'
-import { toast } from 'sonner'
+import wishlistService from '@/services/wishlistService';
+import { useTranslations } from 'next-intl';
+import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 
-export default function useIsInWishlist(postId: string, accessToken: string) {
+function useIsInWishlist(postId: string, accessToken: string) {
+  const t = useTranslations();
 
-  const t = useTranslations()
-
-  const [isInWishlist, setIsInWishlist] = useState(false)
+  const [isInWishlist, setIsInWishlist] = useState(false);
 
   useEffect(() => {
     void (async () => {
       try {
-        const isExist = await wishlistService.existsWishlist(postId, accessToken)
-        setIsInWishlist(isExist)
+        const isExist = await wishlistService.existsWishlist(
+          postId,
+          accessToken
+        );
+        setIsInWishlist(isExist);
       } catch (err) {
-        console.error('Wishlist service unavailable.')
+        console.error('Wishlist service unavailable.');
       }
-    })()
-  }, [postId])
+    })();
+  }, [postId]);
 
   const addToWishlist = () => {
     void (async () => {
       try {
         if (!isInWishlist) {
-          await wishlistService.createWishlist(postId, accessToken)
-          toast(t('toast.post.save.saved'))
+          await wishlistService.createWishlist(postId, accessToken);
+          toast(t('toast.post.save.saved'));
         } else {
-          await wishlistService.deleteWishlist(postId, accessToken)
-          toast(t('toast.post.save.unsave'))
+          await wishlistService.deleteWishlist(postId, accessToken);
+          toast(t('toast.post.save.unsave'));
         }
-        setIsInWishlist((prev) => !prev)
+        setIsInWishlist((prev) => !prev);
       } catch (err) {
-        console.error('Wishlist service unavailable.')
+        console.error('Wishlist service unavailable.');
       }
-    })()
-  }
+    })();
+  };
 
-  return { isInWishlist, addToWishlist }
+  return { isInWishlist, addToWishlist };
 }
+
+export default useIsInWishlist;

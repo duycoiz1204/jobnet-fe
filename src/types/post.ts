@@ -66,7 +66,7 @@ export interface PostPreviewType {
   description: string;
   profession: ProfessionType | undefined;
 }
-export interface postInputs {
+export interface PostInputs {
   minSalary: string | undefined;
   maxSalary: string | undefined;
   otherRequirements: string | undefined;

@@ -27,7 +27,7 @@ import { useSession } from 'next-auth/react';
 import { Session } from 'next-auth';
 import { toast } from 'sonner';
 
-export default function PostDetailsInfo({
+function PostDetailsInfo({
   type = 'View',
   post,
   isSubmitted,
@@ -46,7 +46,7 @@ export default function PostDetailsInfo({
 }): React.ReactElement {
   const [business, setBusiness] = useState<Business>();
   const t = useTranslations();
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
   useEffect(() => {
     void (async () => {
@@ -146,7 +146,11 @@ export default function PostDetailsInfo({
               </span>
             </span>
             {type === 'Update' && (
-              <Button className="ml-auto" variant={"emerald"} onClick={handleClickUpdateHeading}>
+              <Button
+                className="ml-auto"
+                variant={'emerald'}
+                onClick={handleClickUpdateHeading}
+              >
                 Cập nhật
               </Button>
             )}
@@ -157,10 +161,10 @@ export default function PostDetailsInfo({
                     disabled={isSubmitted}
                     className="flex-1"
                     onClick={() => {
-                      if(session?.user.id){
-                        openModal('application-modal')
-                      }else{
-                        toast(t("toast.signin.clickedButton"))
+                      if (session?.user.id) {
+                        openModal('application-modal');
+                      } else {
+                        toast(t('toast.signin.clickedButton'));
                       }
                     }}
                   >
@@ -192,7 +196,9 @@ export default function PostDetailsInfo({
                     </Button>
                   )}
 
-                {type === 'View' && <WishlistHanleCpm session={session} postId={post.id} /> }
+                {type === 'View' && (
+                  <WishlistHanleCpm session={session} postId={post.id} />
+                )}
               </div>
             )}
           </div>
@@ -288,13 +294,13 @@ export default function PostDetailsInfo({
                 </div>
                 <p>{t('postDetails.requirements.instructApply.subTitle')}</p>
                 <div className="flex items-center gap-x-2">
-                <Button
+                  <Button
                     disabled={isSubmitted}
                     onClick={() => {
-                      if(session?.user.id){
-                        openModal('application-modal')
-                      }else{
-                        toast(t("toast.signin.clickedButton"))
+                      if (session?.user.id) {
+                        openModal('application-modal');
+                      } else {
+                        toast(t('toast.signin.clickedButton'));
                       }
                     }}
                   >
@@ -302,8 +308,7 @@ export default function PostDetailsInfo({
                       ? t('postDetails.aboutJob.button.apply.js.applied')
                       : t('postDetails.aboutJob.button.apply.js.notApply')}
                   </Button>
-                  <WishlistHanleCpm session={session} postId={post.id}/> 
-                  
+                  <WishlistHanleCpm session={session} postId={post.id} />
                 </div>
               </div>
             )}
@@ -318,6 +323,8 @@ export default function PostDetailsInfo({
     </div>
   );
 }
+
+export default PostDetailsInfo;
 
 export function PostDetailsSection({
   children,
@@ -378,36 +385,42 @@ export function ItemPostHeading({
   );
 }
 
-function WishlistHanleCpm({ postId, session }: { postId: string, session: Session | null }) {
-  const userId = session?.user?.id
-  const t = useTranslations()
-  if (userId) {
-    const { isInWishlist, addToWishlist } = useIsInWishlist(postId, session.accessToken)
-    return (
-      <Button
-        className={cn('border flex-2', {
-          'text-white bg-rose-500 hover:border-rose-600':
-            isInWishlist,
-          'border-emerald-500 hover:border-emerald-600 hover:bg-slate-100':
-            !isInWishlist,
-        })}
-        variant={"empty"}
-        onClick={addToWishlist}
-      >
-        {!isInWishlist
-          ? t('postDetails.aboutJob.button.save')
-          : t('postDetails.aboutJob.button.unsave')}
-      </Button>
-    )
-  } else {
-    return (
-      <Button
-        className='border-emerald-500 hover:border-emerald-600 hover:bg-slate-100'
-        variant={"empty"}
-        onClick={() => {toast(t("toast.signin.clickedButton"))}}
-      >
-        {t('postDetails.aboutJob.button.save')}
-      </Button>
-    )
-  }
+function WishlistHanleCpm({
+  postId,
+  session,
+}: {
+  postId: string;
+  session: Session | null;
+}) {
+  const t = useTranslations();
+  const { isInWishlist, addToWishlist } = useIsInWishlist(
+    postId,
+    session?.accessToken!
+  );
+
+  return isInWishlist ? (
+    <Button
+      className={cn('border flex-2', {
+        'text-white bg-rose-500 hover:border-rose-600': isInWishlist,
+        'border-emerald-500 hover:border-emerald-600 hover:bg-slate-100':
+          !isInWishlist,
+      })}
+      variant={'empty'}
+      onClick={addToWishlist}
+    >
+      {!isInWishlist
+        ? t('postDetails.aboutJob.button.save')
+        : t('postDetails.aboutJob.button.unsave')}
+    </Button>
+  ) : (
+    <Button
+      className="border-emerald-500 hover:border-emerald-600 hover:bg-slate-100"
+      variant={'empty'}
+      onClick={() => {
+        toast(t('toast.signin.clickedButton'));
+      }}
+    >
+      {t('postDetails.aboutJob.button.save')}
+    </Button>
+  );
 }

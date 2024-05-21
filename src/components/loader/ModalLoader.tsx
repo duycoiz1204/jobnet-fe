@@ -2,9 +2,8 @@
 
 import { HashLoader } from 'react-spinners';
 
-import { useAppSelector } from '@/lib/hooks';
-
 import Modal from '@/components/modal/Modal';
+import { useAppSelector } from '@/hooks/useRedux';
 
 export default function ModalLoader() {
   const loading = useAppSelector((state) => state.loading);

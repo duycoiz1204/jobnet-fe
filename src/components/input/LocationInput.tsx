@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState, useEffect } from 'react';
 
 import Selection, { SelectChangeEvent } from '@/components/select/Selection';
@@ -10,12 +10,10 @@ import { FaXmark } from 'react-icons/fa6';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 
-const mappedLocations = locationService.getLocations().map(
-  (location) => ({
-    id: location.code,
-    name: location.name,
-  })
-);
+const mappedLocations = locationService.getLocations().map((location) => ({
+  id: location.code,
+  name: location.name,
+}));
 
 export interface LocationInputChangeEvent {
   target: {
@@ -33,7 +31,7 @@ interface LocationInputProps {
   sendData?: ((data: LocationType[]) => void) | undefined;
 }
 
-export default function LocationInput({
+function LocationInput({
   label = 'Địa chỉ:',
   hints = [],
   values = [],
@@ -252,3 +250,5 @@ export default function LocationInput({
     </div>
   );
 }
+
+export default LocationInput;
