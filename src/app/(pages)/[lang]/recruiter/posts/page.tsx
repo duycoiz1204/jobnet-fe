@@ -118,7 +118,7 @@ export default function PostManagement(): JSX.Element {
     })();
   };
 
-  const postElms = pagination.data.map((post: PostType) => (
+  const postElms = pagination?.data.map((post: PostType) => (
     <JobItem
       key={post.id}
       post={post}
@@ -201,7 +201,7 @@ export default function PostManagement(): JSX.Element {
         />
       </Tabs>
       <div className="grid w-full grid-cols-2 gap-5">
-        {postElms.length ? (
+        {postElms?.length ? (
           postElms
         ) : (
           <div className="pl-4 text-2xl">
@@ -210,8 +210,8 @@ export default function PostManagement(): JSX.Element {
         )}
       </div>
       <Pagination
-        currentPage={pagination.currentPage}
-        totalPages={pagination.totalPages}
+        currentPage={pagination?.currentPage}
+        totalPages={pagination?.totalPages}
         onPageChange={handlePageChange}
       />
     </main>

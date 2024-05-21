@@ -77,7 +77,7 @@ export default function RecruiterHome() {
             </p>
           </div>
           <div className="h-full">
-            <img className="h-full" src="Coding2.jpg" alt="logo" />
+            <img className="h-full" src="/Coding2.jpg" alt="logo" />
           </div>
         </div>
 
@@ -106,7 +106,7 @@ export default function RecruiterHome() {
                 >
                   <img
                     className="h-[100px] w-[100px] "
-                    src="square.png"
+                    src="/square.png"
                     alt="logo"
                   />
                 </div>
