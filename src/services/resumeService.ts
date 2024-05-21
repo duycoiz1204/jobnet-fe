@@ -18,15 +18,25 @@ class ResumeService extends BaseService {
     return this.getResponseData<Array<ResumeType>>(res);
   }
 
-  async getResumesById(id: string) {
-    const res = await fetch(`${this.apiBaseUrl}/${id}`);
+  async getResumesById(id: string, accessToken: string) {
+    const res = await fetch(`${this.apiBaseUrl}/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
 
     this.checkResponseNotOk(res);
     return this.getResponseData<ResumeType>(res);
   }
 
-  async getResumeFile(id: string) {
-    const res = await fetch(`${this.apiBaseUrl}/${id}/file`);
+  async getResumeFile(id: string, accessToken: string) {
+    const res = await fetch(`${this.apiBaseUrl}/${id}/file`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
 
     this.checkResponseNotOk(res);
     return this.getResponseBlob(res);

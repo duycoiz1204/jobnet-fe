@@ -37,7 +37,7 @@ export default function JsSidebar({ }: Props) {
                             {t('sidebar.jobSeeker.myCV')}
                         </Sidebar.Item>
                         <Sidebar.Item
-                            to="/profile/favorite-posts"
+                            to="/profile/favourite-posts"
                             icon={FaPenToSquare as IconType}
                         >
                             {t('sidebar.jobSeeker.favoriteJobs')}

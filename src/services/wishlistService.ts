@@ -11,6 +11,7 @@ class WishlistService extends BaseService {
     page?: number
     pageSize?: number
     sortBy?: string
+    accessToken: string
   }) {
     const params = new URLSearchParams()
     props.page && params.append('page', props.page.toString())
@@ -21,7 +22,13 @@ class WishlistService extends BaseService {
       ? `${this.apiBaseUrl}?${params.toString()}`
       : this.apiBaseUrl
 
-    const res = await fetch(url)
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${props.accessToken}`
+      },
+    })
 
     this.checkResponseNotOk(res)
     return this.getResponseData<PaginationType<WishlistType>>(res)

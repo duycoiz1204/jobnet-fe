@@ -67,10 +67,10 @@ export default function AuthRightControls({
                     <div className="text-sm font-semibold">{auth?.email}</div>
                 </Dropdown.Header>
                 <Dropdown.Divider />
-                <Dropdown.Item to="jobseeker" icon={FaRegUser as IconType}>
+                <Dropdown.Item to="/profile/dashboard" icon={FaRegUser as IconType}>
                     {t('header.jobSeeker.user.dropdown.account')}
                 </Dropdown.Item>
-                <Dropdown.Item to="jobseeker/settings" icon={FaGear as IconType}>
+                <Dropdown.Item to="/profile/settings" icon={FaGear as IconType}>
                     {t('header.jobSeeker.user.dropdown.settings')}
                 </Dropdown.Item>
                 <Dropdown.Divider />

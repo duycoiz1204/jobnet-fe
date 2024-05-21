@@ -16,7 +16,7 @@ class ProfessionService extends BaseService {
     const res = await fetch(url)
 
     this.checkResponseNotOk(res)
-    return this.getResponseData<Array<ProfessionType>>(res)
+    return this.getResponseData<ProfessionType[]>(res)
   }
 
   async createProfession(name: string, category: string) {
