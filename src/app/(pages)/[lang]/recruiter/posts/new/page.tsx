@@ -36,6 +36,7 @@ import PostDetailsInfo from '@/components/PostDetailsInfo';
 import ProfessionType from '@/types/profession';
 import professionService from '@/services/professionService';
 import createPost, { ToastTypes } from '@/actions/createPost';
+import LabelSection from '@/components/LabelSection';
 
 import { useFormState } from 'react-dom';
 
@@ -236,7 +237,9 @@ export default function PostCreation() {
         otherRequirements: temp.get('otherRequirements') as string,
         requisitionNumber: Number(temp.get('requisitionNumber')) || 0,
         minSalaryString: temp.get('minSalaryString') as string,
+        minSalary: 0,
         maxSalaryString: temp.get('maxSalaryString') as string,
+        maxSalary: 0,
         // internalContact: temp.get('internalContact') as string,
         yearsOfExperience: temp.get('yearsOfExperience') as string,
         workingFormat: temp.get('workingFormat') as string,
@@ -633,23 +636,6 @@ function PostDetailSection({
       <div className="grid grid-cols-1 gap-6 mt-4 lg:grid-cols-2 sm:grid-cols-1">
         {children}
       </div>
-    </div>
-  );
-}
-
-export function LabelSection({
-  className,
-  label,
-  children,
-}: {
-  className: string;
-  label: string;
-  children: React.ReactNode;
-}): JSX.Element {
-  return (
-    <div className={`${className} flex flex-col`}>
-      <h4>{label}</h4>
-      {children}
     </div>
   );
 }
