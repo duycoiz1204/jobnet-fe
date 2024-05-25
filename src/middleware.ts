@@ -1,3 +1,4 @@
+import { DEFAULT_LOGIN_RECRUITER_REDIRECT, adminRoutes, recruiterRoutes } from './routes';
 import { NextRequest, NextResponse } from 'next/server';
 import { locales, defaultLocale, localePrefix } from '@/navigation';
 import createMiddleware from 'next-intl/middleware';
@@ -12,9 +13,9 @@ const i18nMiddleware = createMiddleware({
 import { auth } from "@/auth"
 import {
     apiAuthPrefix,
-    publicRoutes,
     authRoutes,
-    DEFAULT_LOGIN_JOBSEEKER_REDIRECT
+    DEFAULT_LOGIN_JOBSEEKER_REDIRECT,
+    jobSeekerRoutes
 } from "@/routes"
 
 function getPosition(str: string, target: string, index: number) {
@@ -32,11 +33,41 @@ function handleHeaders(req: any) {
     }
     return response
 }
+
+function checkPrivateRoute(pathname: string){
+    
+    if (checkRouteIsIncludes(jobSeekerRoutes, pathname)) {
+        return {isPrivate: true, role: "JobSeeker" }
+
+    }else if (checkRouteIsIncludes(recruiterRoutes, pathname)) {
+        return {isPrivate: true, role: "Recruiter" }
+
+    }else if (checkRouteIsIncludes(adminRoutes, pathname)){
+        return {isPrivate: true, role: "Admin" }
+
+    }
+    return {isPrivate: false, role: undefined}
+}
+
+function checkRouteIsIncludes(list: string[], route: string){
+
+    let isIncluded = false
+    list.forEach((value) => {
+        if (value == route) return true
+        else if (value.includes("**")){
+            const pathBeforeLastSlash = value.substring(0, value.lastIndexOf("/"))
+            
+            if (route.startsWith(pathBeforeLastSlash)) {
+                isIncluded = true   
+                return
+            }
+        }
+    })
+    return isIncluded
+}
+
 export default auth((req) => {
-
-
     const { pathname } = req.nextUrl
-    console.log("Middleware: ", pathname);
 
     // First check locale already exist on Url or not
     const pathnameHasLocale = locales.some(
@@ -49,40 +80,39 @@ export default auth((req) => {
     // console.log("come to auth middleware", pathname);
     const secondSlashIdx = getPosition(pathname, "/", 2)
     const locale = pathname.substring(1, secondSlashIdx)
-    let urlAfterDiscardPrefix = pathname.substring(
+    let urlWithLocaleRemoved = pathname.substring(
         secondSlashIdx
     )
-    if (!urlAfterDiscardPrefix) {
-        urlAfterDiscardPrefix = "/"
+    if (!urlWithLocaleRemoved) {
+        urlWithLocaleRemoved = "/"
     }
 
     const isLoggedIn = !!req.auth
 
-    const isApiAuthRoute = urlAfterDiscardPrefix.startsWith(apiAuthPrefix)
-    let isPublicRoute = false
-    publicRoutes.forEach((value) => {
-        if (value == urlAfterDiscardPrefix) { isPublicRoute = true }
-        else if (value.includes("**")) {
-            const pathBeforeLastSlash = value.substring(0, value.lastIndexOf("/"))
-            if (urlAfterDiscardPrefix.startsWith(pathBeforeLastSlash)) {
-                isPublicRoute = true
-            }
-        }
-    })
-    const isAuthRoute = authRoutes.includes(urlAfterDiscardPrefix)
+    const isApiAuthRoute = urlWithLocaleRemoved.startsWith(apiAuthPrefix)
+
+    const isAuthRoute = authRoutes.includes(urlWithLocaleRemoved)
     if (isApiAuthRoute) {
         return handleHeaders(req)
     }
+
     if (isAuthRoute) {
 
         if (isLoggedIn) {
-            return Response.redirect(new URL(DEFAULT_LOGIN_JOBSEEKER_REDIRECT, req.nextUrl)) // Need 2 param to create absolute URL
+            return Response.redirect(new URL( 
+                (req.auth!!.user.role == "JobSeeker") ? DEFAULT_LOGIN_JOBSEEKER_REDIRECT : (
+                    (req.auth!!.user.role == "Recruiter") ? DEFAULT_LOGIN_RECRUITER_REDIRECT : "ADMIN HERE"
+                )
+                , req.nextUrl
+            )) // Need 2 param to create absolute URL
         }
-        // need to Hanle role
         return handleHeaders(req)
     }
 
-    if (!isLoggedIn && !isPublicRoute) {
+    const {isPrivate: isPrivateRoute, role: roleReq} = checkPrivateRoute(urlWithLocaleRemoved)
+    
+    // Check If use not loggedIn yet and try to access Private route
+    if (!isLoggedIn && isPrivateRoute) {
         // Need to redirect to previous page after login
         let callBackUrl = req.nextUrl.pathname
         if (req.nextUrl.search) {
@@ -97,6 +127,18 @@ export default auth((req) => {
             req.nextUrl
         ))
     }
+
+    // Hanle authorization
+    if (isPrivateRoute && isLoggedIn) {
+        if ( req.auth!!.user.role != roleReq ) {
+            // AccessDenied
+            return Response.redirect(new URL(
+                `/${locale}/accessDenied`,
+                req.nextUrl
+            ))
+        }
+    }
+
     return handleHeaders(req)
 })
 

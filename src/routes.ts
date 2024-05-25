@@ -1,5 +1,5 @@
 /**
- * An array of routes that are accessible to public
+ * An array of routes that are accessible to public - Removed
  * These route not required authentication
  * @type {string[]}
  */
@@ -9,7 +9,35 @@ export const publicRoutes = [
     "/businesses/**",
     "/categories",
     "/recruiter",
+    "/accessDenied",
     "/test"
+]
+
+/**
+ * An array of routes that are accessible to jobSeeker route
+ * These route required authentication
+ * @type {string[]}
+ */
+export const jobSeekerRoutes = [
+    "/profile/**"
+]
+
+/**
+ * An array of routes that are accessible to recruiter route
+ * These route required authentication
+ * @type {string[]}
+ */
+export const recruiterRoutes = [
+    "/recruiter/profile"
+]
+
+/**
+ * An array of routes that are accessible to admin route
+ * These route required authentication
+ * @type {string[]}
+ */
+export const adminRoutes = [
+    ""
 ]
 
 /**

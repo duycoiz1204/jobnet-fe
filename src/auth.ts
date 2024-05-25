@@ -7,7 +7,6 @@ import authService from "@/services/authService";
 export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   callbacks: {
     async session({ session, token, user }) {
-      console.log("Session Callback");
       return {
         ...session,
         user: {
@@ -19,8 +18,6 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
       }
     },
     async jwt({ token, user, session, trigger }) { // only return user signIn
-      console.log("JWT Callback");
-      console.log(token["accessToken"] !== undefined ? token["accessToken"] : '');
       
       if (token["accessToken"] !== undefined) {
         if(Date.now() > JSON.parse(Buffer.from(token["accessToken"].split('.')[1], 'base64').toString())["exp"] * 1000 ){
