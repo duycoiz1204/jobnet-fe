@@ -375,12 +375,12 @@ interface CheckBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
-export function CheckboxItem({
+export const CheckboxItem = ({
   label,
   className,
   id = '',
   ...props
-}: CheckBoxProps): JSX.Element {
+}: CheckBoxProps) => {
   return (
     <div className="w-[auto] inline-block px-1">
       <div className="flex items-center">
@@ -399,4 +399,4 @@ export function CheckboxItem({
       </div>
     </div>
   );
-}
+};
