@@ -15,7 +15,7 @@ class ApplicationService extends BaseService {
     page?: number;
     pageSize?: number;
     status?: ApplicationStatus;
-    accessToken: string
+    accessToken: string;
   }) {
     const params = new URLSearchParams();
     props?.jobSeekerId && params.append('jobSeekerId', props.jobSeekerId);
@@ -27,24 +27,25 @@ class ApplicationService extends BaseService {
       ? `${this.apiBaseUrl}?${params.toString()}`
       : this.apiBaseUrl;
     const res = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${props.accessToken}`
-      }
+        Authorization: `Bearer ${props.accessToken}`,
+      },
     });
 
     this.checkResponseNotOk(res);
     return this.getResponseData<PaginationType<ApplicationType>>(res);
   }
 
-  async getApplicationsByRecruiterId(props?: {
+  async getApplicationsByRecruiterId(props: {
     page?: number;
     pageSize?: number;
     sortBy?: string;
     applicationStatuses?: Array<ApplicationStatus>;
     fromDate?: string;
     toDate?: string;
+    accessToken: string;
   }) {
     const params = new URLSearchParams();
     props?.page && params.append('page', props.page.toString());
@@ -61,7 +62,11 @@ class ApplicationService extends BaseService {
       ? `${this.apiBaseUrl}/recruiter?${params.toString()}`
       : `${this.apiBaseUrl}/recruiter`;
 
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${props.accessToken}`,
+      },
+    });
 
     this.checkResponseNotOk(res);
     return this.getResponseData<PaginationType<ApplicationType>>(res);
@@ -94,13 +99,13 @@ class ApplicationService extends BaseService {
   async isSubmitted(postId: string, accessToken: string) {
     const params = new URLSearchParams({ postId });
     const url = `${this.apiBaseUrl}/isSubmitted?${params.toString()}`;
-    const res = await fetch(url , {
-      method: "GET",
+    const res = await fetch(url, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
-      }
-    })
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     this.checkResponseNotOk(res);
     return this.getResponseData<boolean>(res);
   }

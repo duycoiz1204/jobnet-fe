@@ -82,7 +82,7 @@ export default function PostUpdate() {
       const _professions = await professionService.getProfessions();
       setProfessions(_professions);
     })();
-  }, []);
+  }, [params.id]);
 
   const handleLevelsSearch = async (name: string) => {
     const levels = await levelService.getLevels({ search: name });
