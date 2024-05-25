@@ -28,7 +28,7 @@ export const jobSeekerRoutes = [
  * @type {string[]}
  */
 export const recruiterRoutes = [
-    "/recruiter/profile"
+    "/recruiter/**"
 ]
 
 /**
