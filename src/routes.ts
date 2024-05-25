@@ -4,10 +4,11 @@
  * @type {string[]}
  */
 export const publicRoutes = [
-    "/", 
+    "/",
     "/posts/**",
     "/businesses/**",
-    "/categories", 
+    "/categories",
+    "/recruiter",
     "/test"
 ]
 
@@ -35,4 +36,5 @@ export const apiAuthPrefix = "/api/auth"
  * The default redirect URL after logging in
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT = "/"
+export const DEFAULT_LOGIN_JOBSEEKER_REDIRECT = "/"
+export const DEFAULT_LOGIN_RECRUITER_REDIRECT = "/recruiter"

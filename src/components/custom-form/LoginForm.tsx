@@ -13,7 +13,8 @@ import { useState, useTransition } from 'react'
 import {  useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useSession } from 'next-auth/react'
-import { useRouter } from '@/navigation'
+import { usePathname, useRouter } from '@/navigation'
+import { DEFAULT_LOGIN_JOBSEEKER_REDIRECT, DEFAULT_LOGIN_RECRUITER_REDIRECT } from '@/routes'
 
 type LoginProps = {
 
@@ -32,6 +33,7 @@ export default function LoginForm({ }: LoginProps) {
             password: ""
         }
     })
+    const pathname = usePathname()
     const [isPending, startTrasition] = useTransition()
 
     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
@@ -44,7 +46,11 @@ export default function LoginForm({ }: LoginProps) {
             if (response && response["error"] !== undefined) {
                 setError(response.error)
             }else{
-                window.location.href = response["url"]
+                let url = callbackUrl
+                if (!url){
+                    url = (pathname.includes("recruiter")) ? DEFAULT_LOGIN_RECRUITER_REDIRECT : DEFAULT_LOGIN_JOBSEEKER_REDIRECT
+                }
+                window.location.href = url
                 // console.log("Session Data: ", status);
             }
         })

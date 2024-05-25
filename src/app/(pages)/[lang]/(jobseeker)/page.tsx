@@ -7,6 +7,7 @@ import TopBusinessCard from '@/components/card/TopBusinessCard';
 import HomeCarousel from '@/components/HomeCarousel';
 import businessService from '@/services/businessService';
 import { auth } from '@/auth';
+import '@/app/globals.css';
 
 export default async function Home() {
   const t = await getTranslations();

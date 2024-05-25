@@ -3,7 +3,7 @@ import registrationService from '@/services/registrationService';
 import * as z from "zod"
 import { LoginSchema, jsRegisterSchema, jsVerifySchema } from "@/schemas/authSchema"
 import { auth, signIn, signOut, unstable_update } from "@/auth"
-import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
+import { DEFAULT_LOGIN_JOBSEEKER_REDIRECT } from '@/routes';
 import { AuthError } from 'next-auth';
 
 
@@ -16,11 +16,10 @@ export const LoginAction = async (values: z.infer<typeof LoginSchema>, callbackU
 
     try {
         const urlRedirect = await signIn("credentials", {
-            email, password, redirect: false,
-            redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT
+            email, password, redirect: false
         })
         return { success: "Login successfully", url: urlRedirect }
-       
+
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
@@ -49,7 +48,7 @@ export const jsVerifyAction = async (values: z.infer<typeof jsVerifySchema>, use
 }
 
 export const logoutAction = async () => {
-    await signOut({redirect: false})
+    await signOut({ redirect: false })
     // unstable_update({})  
 
 }

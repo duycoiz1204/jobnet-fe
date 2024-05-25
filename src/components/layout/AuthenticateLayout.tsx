@@ -26,7 +26,7 @@ export default function AuthenticateLayout({
   return (
     <div
       className={`flex items-start justify-center ${
-        layoutSize === 'lg' ? 'py-8 mx-auto h-[90%]  p-10' : 'h-full pb-5 md:pt-14 '
+        layoutSize === 'lg' ? 'py-8 mx-auto h-[90%]' : 'h-full pb-5 md:pt-10 '
       } md:px-2 lg:px-0 md:bg-slate-200`}
     >
       <div

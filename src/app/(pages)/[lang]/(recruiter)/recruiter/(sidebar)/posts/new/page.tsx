@@ -39,6 +39,7 @@ import createPost, { ToastTypes } from '@/actions/createPost';
 import LabelSection from '@/components/LabelSection';
 
 import { useFormState } from 'react-dom';
+import Radio from '@/components/input/Radio';
 
 export default function PostCreation() {
   const t = useTranslations();
@@ -377,51 +378,35 @@ export default function PostCreation() {
               )} :`}
             >
               <div className="grid grid-cols-3">
-                <div>
-                  <Input
+                <Radio
                     id="full-time"
-                    type="radio"
                     name="workingFormat"
-                    className="mr-2"
-                    value="full-time"
-                    defaultChecked={inputs?.workType === 'full-time'}
-                  />
-                  <label htmlFor="full-time">
-                    {t(
-                      'recruiter.postCreation.inputs.workingFormat.options.fulltime'
-                    )}
-                  </label>
-                </div>
-                <div>
-                  <Input
-                    id="part-time"
-                    type="radio"
-                    name="workingFormat"
-                    className="mr-2"
-                    value="part-time"
-                    defaultChecked={inputs?.workType === 'part-time'}
-                  />
-                  <label htmlFor="part-time">
-                    {t(
-                      'recruiter.postCreation.inputs.workingFormat.options.parttime'
-                    )}
-                  </label>
-                </div>
-                <div>
-                  <Input
-                    id="intern"
-                    type="radio"
-                    name="workingFormat"
-                    className="mr-2"
+                    className='mr-2'
+                    label={t('recruiter.postCreation.inputs.workingFormat.options.fulltime')}
                     value="intern"
-                    defaultChecked={inputs?.workType === 'intern-time'}
+                    checked={inputs?.workType === 'full-time'}
+                    // onChange={handlePermissionChange}
                   />
-                  <label htmlFor="intern">
-                    {t(
-                      'recruiter.postCreation.inputs.workingFormat.options.intern'
-                    )}
-                  </label>
-                </div>
+            
+                <Radio
+                    id="part-time"
+                    name="workingFormat"
+                    className='mr-2'
+                    label={t('recruiter.postCreation.inputs.workingFormat.options.parttime')}
+                    value="intern"
+                    checked={inputs?.workType === 'part-time'}
+                    // onChange={handlePermissionChange}
+                  />
+                  <Radio
+                    id="intern"
+                    name="workingFormat"
+                    className='mr-2'
+                    label={t('recruiter.postCreation.inputs.workingFormat.options.intern')}
+                    value="intern"
+                    checked={inputs?.workType === 'intern-time'}
+                    // onChange={handlePermissionChange}
+                  />
+                  
               </div>
             </LabelSection>
             <TagsInput
@@ -448,12 +433,12 @@ export default function PostCreation() {
                 !inputs.yearExp
                   ? ''
                   : inputs.yearExp < 1
-                  ? 'Dưới 1 năm'
-                  : inputs.yearExp <= 2
-                  ? '1 - 2 năm'
-                  : inputs.yearExp <= 5
-                  ? '3 - 5 năm'
-                  : '5 năm trở lên'
+                    ? 'Dưới 1 năm'
+                    : inputs.yearExp <= 2
+                      ? '1 - 2 năm'
+                      : inputs.yearExp <= 5
+                        ? '3 - 5 năm'
+                        : '5 năm trở lên'
               }
               options={[
                 {

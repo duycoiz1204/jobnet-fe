@@ -151,7 +151,7 @@ function LocationInput({
         {hint.provinceName} - {hint.specificAddress}
       </li>
       <Button
-        size="lg"
+        size="xs"
         color="slate"
         disabled={locations.some(
           (location) => JSON.stringify(location) === JSON.stringify(hint)
@@ -186,11 +186,11 @@ function LocationInput({
       <div className="flex items-baseline justify-between">
         <div>{label}</div>
         <div className="flex gap-2">
-          <Button size="lg" onClick={() => handleDialogShow(!isDialogShow)}>
+          <Button size="xs" onClick={() => handleDialogShow(!isDialogShow)}>
             {t('recruiter.locationInput.addAddr')}
           </Button>
           {hints.length > 0 && (
-            <Button size="lg" color="cyan" onClick={handleHintsShow}>
+            <Button size="sm" color="cyan" onClick={handleHintsShow}>
               {t('recruiter.locationInput.preselect')}
             </Button>
           )}
@@ -234,12 +234,12 @@ function LocationInput({
           </div>
 
           <div className="flex justify-end gap-2">
-            <Button size="lg" onClick={() => handleLocationCreate(input)}>
+            <Button size="sm" onClick={() => handleLocationCreate(input)}>
               {t('recruiter.locationInput.buttons.create')}
             </Button>
             <Button
               color="rose"
-              size="lg"
+              size="sm"
               onClick={() => handleDialogShow(false)}
             >
               {t('recruiter.locationInput.buttons.close')}

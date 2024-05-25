@@ -1,12 +1,21 @@
 import AuthenticateLayout from '@/components/layout/AuthenticateLayout';
 import { usePathname } from '@/navigation';
+import '@/app/globals.css';
 import { headers } from 'next/headers';
 import React from 'react'
+import { ReduxProvider } from '@/context/ReduxProvider';
+import SessionsProvider from '@/context/SessionProvider';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { auth } from '@/auth';
+import { Toaster } from 'sonner';
+import { Inter } from 'next/font/google';
 
 type LayoutSize = 'xs' | 'sm' | 'md' | 'lg'
 
-type Props =  Readonly<{
+type Props = Readonly<{
     children: React.ReactNode;
+    params: { lang: string };
 }>;
 
 const jsSignInLayout = {
@@ -51,7 +60,7 @@ const rcSignUpLayout = {
     intendedFor: 'signup.recruiter.intended',
     padding: 'py-4',
     backgroundImage: '/recruiter-auth.png',
-    layoutSize: 'lg', 
+    layoutSize: 'lg',
     verify: false
 }
 const adSignInLayout = {
@@ -63,33 +72,48 @@ const adSignInLayout = {
     layoutSize: 'sm',
     verify: false
 }
+const inter = Inter({ subsets: ['latin'] });
 
-export default function layout({ children }: Props) {
+export default async function RootLayout({ children, params }: Props) {
+    const session = await auth();
+    const messages = await getMessages();
     const header = headers()
     console.log("URL: ", header.get("x-pathname"));
     const pathname = header.get("x-pathname")
-    const {welcome, introduction, intendedFor, padding, backgroundImage, layoutSize} = 
+    const { welcome, introduction, intendedFor, padding, backgroundImage, layoutSize } =
         (pathname?.includes("recruiter")) ? (
-            (pathname?.includes("signin"))? rcSignInLayout : rcSignUpLayout 
+            (pathname?.includes("signin")) ? rcSignInLayout : rcSignUpLayout
         ) : (
             pathname?.includes("admin") ? adSignInLayout : (
-                (pathname?.includes("verify"))? jsVerifyLayout : (
-                    (pathname?.includes("signin"))? jsSignInLayout : jsSignUpLayout 
-                ) 
+                (pathname?.includes("verify")) ? jsVerifyLayout : (
+                    (pathname?.includes("signin")) ? jsSignInLayout : jsSignUpLayout
+                )
             )
         )
-    console.log({welcome, introduction, intendedFor, padding, backgroundImage});
-    
+    console.log({ welcome, introduction, intendedFor, padding, backgroundImage });
+
     return (
-        <AuthenticateLayout
-            welcome={welcome}
-            introduction={introduction}
-            intendedFor={intendedFor}
-            padding={padding}
-            backgroundImage={backgroundImage}
-            layoutSize={layoutSize as LayoutSize} 
-        >
-            {children}
-        </AuthenticateLayout>
+        <html lang={params.lang}>
+            <ReduxProvider>
+                <SessionsProvider session={session}>
+                    <NextIntlClientProvider messages={messages} locale={params.lang}>
+
+                        <body className={inter.className}>
+                            <AuthenticateLayout
+                                welcome={welcome}
+                                introduction={introduction}
+                                intendedFor={intendedFor}
+                                padding={padding}
+                                backgroundImage={backgroundImage}
+                                layoutSize={layoutSize as LayoutSize}
+                            >
+                                {children}
+                            </AuthenticateLayout>
+                        </body>
+                        <Toaster />
+                    </NextIntlClientProvider>
+                </SessionsProvider>
+            </ReduxProvider>
+        </html>
     )
 }

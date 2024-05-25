@@ -21,7 +21,6 @@ import { useTranslations } from 'next-intl'
 import { useSession } from 'next-auth/react'
 import { useTransition } from 'react'
 import { logoutAction } from '@/actions/jsAuth'
-import { useRouter } from '@/navigation'
 
 interface JSHeaderProps{
 }
@@ -32,11 +31,12 @@ export default function JSHeader({}: JSHeaderProps): JSX.Element {
   const [isPending, startTrasition] = useTransition()
   const initSession = useSession().data?.user
   const user = initSession
+  const pathname = usePathname()
 
   const handleLogout = () => {
     startTrasition(async () => {
       await logoutAction()
-      location.href = "/"
+      window.location.href = pathname
     })
   }
 
@@ -134,7 +134,7 @@ export default function JSHeader({}: JSHeaderProps): JSX.Element {
         )}{' '}
         {!user && (
           <Link
-            href={'recruiter'}
+            href={'/recruiter'}
             className="px-4 py-2 font-semibold text-white transition-all rounded-lg bg-slate-400 hover:bg-slate-500"
           >
             {t('header.jobSeeker.unRegister.recruiter')}
