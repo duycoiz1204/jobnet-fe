@@ -28,25 +28,23 @@ import { useAppDispatch } from '@/hooks/useRedux';
 import PaginationType from '@/types/pagination';
 
 interface RecentAppCpn {
-    _applications: PaginationType<ApplicationType>
+  _applications: PaginationType<ApplicationType>;
 }
 
-export default function RecentAppCpn({ _applications } : RecentAppCpn) {
+export default function RecentAppCpn({ _applications }: RecentAppCpn) {
   const [business, setBusiness] = useState<BusinessType>();
   const t = useTranslations();
   const { data: session } = useSession();
   const jobSeekerId = session?.user.id;
   const dispatch = useAppDispatch();
 
-  const { pagination, setPagination } = usePagination<ApplicationType>(
-    _applications
-  );
+  const { pagination, setPagination } =
+    usePagination<ApplicationType>(_applications);
   const [selectedApplicationId, setSelectedApplicationId] = useState<string>();
   const selectedApplication = pagination.data.find(
     (application) => application.id === selectedApplicationId
   );
   const { modal, openModal, closeModal } = useModal();
-
 
   const handleDetailsClick = (applicationId: string) => {
     setSelectedApplicationId(applicationId);
@@ -79,7 +77,7 @@ export default function RecentAppCpn({ _applications } : RecentAppCpn) {
         const pagination = await applicationService.getApplications({
           page,
           jobSeekerId,
-          accessToken: session!!.accessToken
+          accessToken: session!!.accessToken,
         });
         setPagination(pagination);
       } catch (err) {
@@ -360,7 +358,7 @@ export default function RecentAppCpn({ _applications } : RecentAppCpn) {
 
 type ViewMode = 'Admin' | 'Jobseeker';
 
-export function Application({
+export const Application = ({
   application,
   onDetailsClick,
   type = 'Jobseeker',
@@ -368,7 +366,7 @@ export function Application({
   application: ApplicationType;
   onDetailsClick?: () => void;
   type?: ViewMode;
-}): React.ReactElement {
+}) => {
   const t = useTranslations();
   return (
     <>
@@ -449,7 +447,7 @@ export function Application({
       </div>
     </>
   );
-}
+};
 
 function DetailsFrame({
   title,
