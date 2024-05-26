@@ -72,8 +72,12 @@ class ApplicationService extends BaseService {
     return this.getResponseData<PaginationType<ApplicationType>>(res);
   }
 
-  async createApplication(data: FormData) {
-    const res = await fetch(this.apiBaseUrl, { method: 'POST', body: data });
+  async createApplication(data: FormData, accessToken: string) {
+    const res = await fetch(this.apiBaseUrl, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${accessToken}` },
+      body: data,
+    });
 
     this.checkResponseNotOk(res);
     return this.getResponseData<ApplicationType>(res);
@@ -81,13 +85,15 @@ class ApplicationService extends BaseService {
 
   async updateApplicationStatus(
     id: string,
-    applicationStatus: ApplicationStatus
+    applicationStatus: ApplicationStatus,
+    accessToken: string
   ) {
     const url = `${this.apiBaseUrl}/${id}/applicationStatus`;
     const res = await fetch(url, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ applicationStatus }),
     });

@@ -34,9 +34,9 @@ function BusinessInfo({
 }: BusinessInfoProps) {
   const t = useTranslations();
 
-  const auth = useSession().data;
+  const session = useSession().data;
 
-  const jobSeekerId = (auth?.user?.id as string) || '';
+  const jobSeekerId = (session?.user?.id as string) || '';
   const businessId = business.id;
   const [follow, setFollow] = useState(false);
   if (jobSeekerId) {
@@ -63,10 +63,8 @@ function BusinessInfo({
       }
       const business = await businessService.updateBusinessFollowers(
         businessId,
-        {
-          status: 'FOLLOW',
-          userId: jobSeekerId,
-        }
+        { status: 'FOLLOW', userId: jobSeekerId },
+        session?.accessToken!
       );
       if (business) {
         setFollow(true);
@@ -87,10 +85,8 @@ function BusinessInfo({
       }
       const business = await businessService.updateBusinessFollowers(
         businessId,
-        {
-          status: 'UNFOLLOW',
-          userId: jobSeekerId,
-        }
+        { status: 'UNFOLLOW', userId: jobSeekerId },
+        session?.accessToken!
       );
       if (business) {
         setFollow(false);

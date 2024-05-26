@@ -19,11 +19,12 @@ class BenefitService extends BaseService {
     return this.getResponseData<BenefitType[]>(res);
   }
 
-  async createBenefit(req: object) {
+  async createBenefit(req: object, accessToken: string) {
     const res = await fetch(this.apiBaseUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(req),
     });
@@ -32,11 +33,12 @@ class BenefitService extends BaseService {
     return this.getResponseData<BenefitType>(res);
   }
 
-  async updateBenefit(id: string, req: object) {
+  async updateBenefit(id: string, req: object, accessToken: string) {
     const res = await fetch(`${this.apiBaseUrl}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(req),
     });
@@ -45,8 +47,13 @@ class BenefitService extends BaseService {
     return this.getResponseData<BenefitType>(res);
   }
 
-  async deleteBenefitById(id: string) {
-    const res = await fetch(`${this.apiBaseUrl}/${id}`, { method: 'DELETE' });
+  async deleteBenefitById(id: string, accessToken: string) {
+    const res = await fetch(`${this.apiBaseUrl}/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     this.checkResponseNotOk(res);
   }

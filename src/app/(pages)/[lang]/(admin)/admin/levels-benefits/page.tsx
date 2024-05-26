@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { useAppDispatch } from '@/hooks/useRedux';
 import { setLoading } from '@/features/loading/loadingSlice';
 import useModal from '@/hooks/useModal';
@@ -20,6 +21,7 @@ import BenefitType from '@/types/benefit';
 import LevelType from '@/types/level';
 
 export default function LevelsAndBenefitsManagement() {
+  const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const [benefits, setBenefits] = useState<BenefitType[]>([]);
   const [levels, setLevels] = useState<LevelType[]>([]);
@@ -65,7 +67,10 @@ export default function LevelsAndBenefitsManagement() {
     const desc: HTMLElement | null = document.getElementById('newBenefitDesc');
     if (name instanceof HTMLInputElement && desc instanceof HTMLInputElement) {
       serviceBenefitProcess(
-        benefitService.createBenefit({ name: name.value, desc: desc.value }),
+        benefitService.createBenefit(
+          { name: name.value, desc: desc.value },
+          session?.accessToken!
+        ),
         'Tạo phúc lợi thành công',
         'Tạo phúc lợi không thành công'
       );
@@ -80,10 +85,14 @@ export default function LevelsAndBenefitsManagement() {
     if (name instanceof HTMLInputElement && desc instanceof HTMLInputElement) {
       const id: string = benefitTarget?.id.toString() || '';
       serviceBenefitProcess(
-        benefitService.updateBenefit(id, {
-          name: name.value,
-          description: desc.value,
-        }),
+        benefitService.updateBenefit(
+          id,
+          {
+            name: name.value,
+            description: desc.value,
+          },
+          session?.accessToken!
+        ),
         'Cập nhật phúc lợi thành công',
         'Cập nhật phúc lợi không thành công'
       );
@@ -94,7 +103,7 @@ export default function LevelsAndBenefitsManagement() {
     dispatch(setLoading(true));
     const id: string = benefitTarget?.id.toString() || '';
     serviceBenefitProcess(
-      benefitService.deleteBenefitById(id),
+      benefitService.deleteBenefitById(id, session?.accessToken!),
       'Xóa phúc lợi thành công',
       'Xóa phúc lợi không thành công'
     );

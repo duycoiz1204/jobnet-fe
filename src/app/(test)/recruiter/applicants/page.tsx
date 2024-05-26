@@ -111,7 +111,8 @@ export default function ApplicantManagement(): JSX.Element {
       try {
         await applicationService.updateApplicationStatus(
           applicationId,
-          applicationStatus
+          applicationStatus,
+          session?.accessToken!
         );
         const _pagination =
           await applicationService.getApplicationsByRecruiterId({

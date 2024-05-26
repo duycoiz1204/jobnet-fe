@@ -109,7 +109,10 @@ export default function PostCreation() {
 
   const handleBenefitCreate = async (name: string) => {
     try {
-      const benefit = await benefitService.createBenefit({ name });
+      const benefit = await benefitService.createBenefit(
+        { name },
+        session?.accessToken!
+      );
       return benefit;
     } catch (err) {
       toast.error((err as ErrorType).message);
@@ -379,34 +382,39 @@ export default function PostCreation() {
             >
               <div className="grid grid-cols-3">
                 <Radio
-                    id="full-time"
-                    name="workingFormat"
-                    className='mr-2'
-                    label={t('recruiter.postCreation.inputs.workingFormat.options.fulltime')}
-                    value="intern"
-                    checked={inputs?.workType === 'full-time'}
-                    // onChange={handlePermissionChange}
-                  />
-            
+                  id="full-time"
+                  name="workingFormat"
+                  className="mr-2"
+                  label={t(
+                    'recruiter.postCreation.inputs.workingFormat.options.fulltime'
+                  )}
+                  value="intern"
+                  checked={inputs?.workType === 'full-time'}
+                  // onChange={handlePermissionChange}
+                />
+
                 <Radio
-                    id="part-time"
-                    name="workingFormat"
-                    className='mr-2'
-                    label={t('recruiter.postCreation.inputs.workingFormat.options.parttime')}
-                    value="intern"
-                    checked={inputs?.workType === 'part-time'}
-                    // onChange={handlePermissionChange}
-                  />
-                  <Radio
-                    id="intern"
-                    name="workingFormat"
-                    className='mr-2'
-                    label={t('recruiter.postCreation.inputs.workingFormat.options.intern')}
-                    value="intern"
-                    checked={inputs?.workType === 'intern-time'}
-                    // onChange={handlePermissionChange}
-                  />
-                  
+                  id="part-time"
+                  name="workingFormat"
+                  className="mr-2"
+                  label={t(
+                    'recruiter.postCreation.inputs.workingFormat.options.parttime'
+                  )}
+                  value="intern"
+                  checked={inputs?.workType === 'part-time'}
+                  // onChange={handlePermissionChange}
+                />
+                <Radio
+                  id="intern"
+                  name="workingFormat"
+                  className="mr-2"
+                  label={t(
+                    'recruiter.postCreation.inputs.workingFormat.options.intern'
+                  )}
+                  value="intern"
+                  checked={inputs?.workType === 'intern-time'}
+                  // onChange={handlePermissionChange}
+                />
               </div>
             </LabelSection>
             <TagsInput
@@ -433,12 +441,12 @@ export default function PostCreation() {
                 !inputs.yearExp
                   ? ''
                   : inputs.yearExp < 1
-                    ? 'Dưới 1 năm'
-                    : inputs.yearExp <= 2
-                      ? '1 - 2 năm'
-                      : inputs.yearExp <= 5
-                        ? '3 - 5 năm'
-                        : '5 năm trở lên'
+                  ? 'Dưới 1 năm'
+                  : inputs.yearExp <= 2
+                  ? '1 - 2 năm'
+                  : inputs.yearExp <= 5
+                  ? '3 - 5 năm'
+                  : '5 năm trở lên'
               }
               options={[
                 {

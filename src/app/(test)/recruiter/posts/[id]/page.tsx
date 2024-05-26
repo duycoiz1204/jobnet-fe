@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/navigation';
 import { format, parse } from 'date-fns';
@@ -64,6 +65,7 @@ const initGeneralInfo = (post: PostType) => ({
 });
 
 export default function PostUpdate() {
+  const { data: session } = useSession();
   const t = useTranslations();
   const router = useRouter();
   const params = useParams<{ id: string }>();
@@ -97,7 +99,10 @@ export default function PostUpdate() {
 
   const handleBenefitCreate = async (name: string) => {
     try {
-      const benefit = await benefitService.createBenefit({ name });
+      const benefit = await benefitService.createBenefit(
+        { name },
+        session?.accessToken!
+      );
       return benefit;
     } catch (err) {
       toast.error((err as ErrorType).message);

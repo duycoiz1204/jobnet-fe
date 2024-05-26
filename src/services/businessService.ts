@@ -47,31 +47,52 @@ class BusinessService extends BaseService {
     return this.getResponseData<BusinessType>(res);
   }
 
-  async updateBusinessGeneralInfo(id: string, req: object) {
+  async updateBusinessGeneralInfo(
+    id: string,
+    req: object,
+    accessToken: string
+  ) {
     const url = `${this.apiBaseUrl}/${id}/generalInfo`;
-    return this.updateBusinessInfo(url, req);
+    return this.updateBusinessInfo(url, req, accessToken);
   }
 
-  async updateBusinessIntroductionInfo(id: string, req: object) {
+  async updateBusinessIntroductionInfo(
+    id: string,
+    req: object,
+    accessToken: string
+  ) {
     const url = `${this.apiBaseUrl}/${id}/introductionInfo`;
-    return this.updateBusinessInfo(url, req);
+    return this.updateBusinessInfo(url, req, accessToken);
   }
 
-  async updateBusinessContactInfo(id: string, req: object) {
+  async updateBusinessContactInfo(
+    id: string,
+    req: object,
+    accessToken: string
+  ) {
     const url = `${this.apiBaseUrl}/${id}/contactInfo`;
-    return this.updateBusinessInfo(url, req);
+    return this.updateBusinessInfo(url, req, accessToken);
   }
 
-  async updateBusinessStatus(id: string, status: EBusinessStatus) {
+  async updateBusinessStatus(
+    id: string,
+    status: EBusinessStatus,
+    accessToken: string
+  ) {
     const url = `${this.apiBaseUrl}/${id}/status`;
-    return this.updateBusinessInfo(url, { status });
+    return this.updateBusinessInfo(url, { status }, accessToken);
   }
 
-  private async updateBusinessInfo(url: string, req: object) {
+  private async updateBusinessInfo(
+    url: string,
+    req: object,
+    accessToken: string
+  ) {
     const res = await fetch(url, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(req),
     });
@@ -89,9 +110,12 @@ class BusinessService extends BaseService {
     this.checkResponseNotOk(res);
   }
 
-  async openDeleteBusinessById(id: string | undefined) {
+  async openDeleteBusinessById(id: string | undefined, accessToken: string) {
     const res = await fetch(`${this.apiBaseUrl}/${id}/open`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
 
     this.checkResponseNotOk(res);
@@ -129,12 +153,13 @@ class BusinessService extends BaseService {
     return this.getResponseData<BusinessType>(res);
   }
 
-  async updateBusinessFollowers(id: string, req: object) {
+  async updateBusinessFollowers(id: string, req: object, accessToken: string) {
     const url = `${this.apiBaseUrl}/${id}/follow`;
     const res = await fetch(url, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(req),
     });

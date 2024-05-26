@@ -35,11 +35,10 @@ export default function ApplicationModal({
   closeModal: () => void;
   post: PostType;
 }): React.ReactElement {
-  const session = useSession()
+  const { data: session } = useSession();
   const t = useTranslations();
   const dispatch = useAppDispatch();
   console.log(usePathname());
-  
 
   const [{ resumes, dialog, selectedResumeIndex, file }, setApplicationModal] =
     useState({
@@ -51,7 +50,9 @@ export default function ApplicationModal({
 
   useEffect(() => {
     (async () => {
-      const _resumes = await resumeService.getResumesByAuth(session.data!!.accessToken!!);
+      const _resumes = await resumeService.getResumesByAuth(
+        session?.accessToken!
+      );
       setApplicationModal((prev) => ({ ...prev, resumes: _resumes }));
     })();
   }, []);
@@ -108,7 +109,10 @@ export default function ApplicationModal({
       dispatch(setLoading(true));
 
       try {
-        await applicationService.createApplication(formData);
+        await applicationService.createApplication(
+          formData,
+          session?.accessToken!
+        );
         toast.success(t('toast.applyCV.applied'));
       } catch (err) {
         openModal('application-modal');
@@ -125,7 +129,10 @@ export default function ApplicationModal({
       dispatch(setLoading(true));
 
       try {
-        const pdfBlob = await resumeService.getResumeFile(resumeId);
+        const pdfBlob = await resumeService.getResumeFile(
+          resumeId,
+          session?.accessToken!
+        );
         const pdfBlobURL = URL.createObjectURL(pdfBlob);
         window.open(pdfBlobURL);
       } catch (err) {

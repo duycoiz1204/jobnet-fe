@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { useAppDispatch } from '@/hooks/useRedux';
 import BusinessType, { EBusinessStatus } from '@/types/business';
 import PaginationType from '@/types/pagination';
@@ -30,6 +31,7 @@ type DefaultBusinessPage = {
 };
 
 function ADBusinessTable({ loaderData, ...props }: DefaultBusinessPage) {
+  const { data: session } = useSession();
   const dispatch = useAppDispatch();
 
   const [dataSource, setDataSource] = useState(loaderData);
@@ -83,13 +85,19 @@ function ADBusinessTable({ loaderData, ...props }: DefaultBusinessPage) {
       dispatch(setLoading(true));
       if (!businessTarget.isDeleted)
         serviceProcess(
-          businessService.deleteBusinessById(businessTarget?.id),
+          businessService.deleteBusinessById(
+            businessTarget?.id,
+            session?.accessToken!
+          ),
           'Đã khóa doanh nghiệp',
           'Không thể khóa doanh nghiệp'
         );
       else
         serviceProcess(
-          businessService.openDeleteBusinessById(businessTarget?.id),
+          businessService.openDeleteBusinessById(
+            businessTarget?.id,
+            session?.accessToken!
+          ),
           'Đã mở khóa doanh nghiệp',
           'Không thể mở khóa doanh nghiệp'
         );
@@ -104,7 +112,11 @@ function ADBusinessTable({ loaderData, ...props }: DefaultBusinessPage) {
     void (async () => {
       try {
         closeModal();
-        await businessService.updateBusinessStatus(businessId, status);
+        await businessService.updateBusinessStatus(
+          businessId,
+          status,
+          session?.accessToken!
+        );
         const paramMergeWithDefault: BussinessCriteria = {
           ...params,
           ...props,
