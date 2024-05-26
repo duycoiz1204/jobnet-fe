@@ -33,7 +33,7 @@ class BusinessService extends BaseService {
     const url = params.toString().length
       ? `${this.apiBaseUrl}?${params.toString()}`
       : this.apiBaseUrl;
-    
+
     const res = await fetch(url);
 
     this.checkResponseNotOk(res);
@@ -80,8 +80,11 @@ class BusinessService extends BaseService {
     return this.getResponseData<BusinessType>(res);
   }
 
-  async deleteBusinessById(id: string | undefined) {
-    const res = await fetch(`${this.apiBaseUrl}/${id}`, { method: 'DELETE' });
+  async deleteBusinessById(id: string | undefined, accessToken: string) {
+    const res = await fetch(`${this.apiBaseUrl}/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
 
     this.checkResponseNotOk(res);
   }
