@@ -1,8 +1,7 @@
-import { FaPlusCircle } from 'react-icons/fa'
-import businessService from '../services/businessService'
+import { FaPlusCircle } from 'react-icons/fa';
+import businessService from '../services/businessService';
 
-
-import BusinessType from '../types/business'
+import BusinessType from '../types/business';
 import {
   FaEnvelope,
   FaLink,
@@ -10,57 +9,57 @@ import {
   FaLock,
   FaPhone,
   FaUpload,
-} from 'react-icons/fa6'
-import jobSeekerService from '../services/jobSeekerService'
-import { ReactNode, useState } from 'react'
-import { useSession } from 'next-auth/react'
-import { Link } from '@/navigation'
-import { useTranslations } from 'next-intl'
-import { toast } from 'sonner'
-import clsx from 'clsx'
-import { Button } from '@/components/ui/button'
-import { ItemPostHeading } from '@/components/PostDetailsInfo'
+} from 'react-icons/fa6';
+import jobSeekerService from '../services/jobSeekerService';
+import { ReactNode, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { Link } from '@/navigation';
+import { useTranslations } from 'next-intl';
+import { toast } from 'sonner';
+import clsx from 'clsx';
+import { Button } from '@/components/ui/button';
+import { ItemPostHeading } from '@/components/PostDetailsInfo';
 
 interface BusinessInfoProps extends React.HTMLAttributes<HTMLDivElement> {
-  mode?: 'view' | 'update' | 'admin'
-  business: BusinessType
-  openModal?: (id: string) => void
+  mode?: 'view' | 'update' | 'admin';
+  business: BusinessType;
+  openModal?: (id: string) => void;
 }
 
-export default function BusinessInfo({
+function BusinessInfo({
   className,
   mode = 'view',
   business,
   openModal = () => undefined,
 }: BusinessInfoProps) {
-  const t = useTranslations()
+  const t = useTranslations();
 
-  const auth = useSession().data
+  const auth = useSession().data;
 
-  const jobSeekerId = auth?.user?.id as string || ""
-  const businessId = business.id
-  const [follow, setFollow] = useState(false)
+  const jobSeekerId = (auth?.user?.id as string) || '';
+  const businessId = business.id;
+  const [follow, setFollow] = useState(false);
   if (jobSeekerId) {
     business.followers?.forEach((i) => {
       if (i == jobSeekerId && !follow) {
-        setFollow(true)
+        setFollow(true);
       }
-    })
+    });
   }
 
   const handleFollowClick = () => {
     void (async () => {
       if (!jobSeekerId) {
-        toast.error('Error: You need to Login')
-        return
+        toast.error('Error: You need to Login');
+        return;
       }
       const jobSeekerRes =
         await jobSeekerService.updateJobSeekerBusinessFollowed(jobSeekerId, {
           status: 'FOLLOW',
           businessId: businessId,
-        })
+        });
       if (!jobSeekerRes) {
-        return toast.error('Error: ')
+        return toast.error('Error: ');
       }
       const business = await businessService.updateBusinessFollowers(
         businessId,
@@ -68,13 +67,13 @@ export default function BusinessInfo({
           status: 'FOLLOW',
           userId: jobSeekerId,
         }
-      )
+      );
       if (business) {
-        setFollow(true)
-        toast.success(t('toast.follow.followed'))
+        setFollow(true);
+        toast.success(t('toast.follow.followed'));
       }
-    })()
-  }
+    })();
+  };
 
   const handleUnFollowClick = () => {
     void (async () => {
@@ -82,9 +81,9 @@ export default function BusinessInfo({
         await jobSeekerService.updateJobSeekerBusinessFollowed(jobSeekerId, {
           status: 'UNFOLLOW',
           businessId: businessId,
-        })
+        });
       if (!jobSeekerRes) {
-        return toast.error('Error: ')
+        return toast.error('Error: ');
       }
       const business = await businessService.updateBusinessFollowers(
         businessId,
@@ -92,13 +91,13 @@ export default function BusinessInfo({
           status: 'UNFOLLOW',
           userId: jobSeekerId,
         }
-      )
+      );
       if (business) {
-        setFollow(false)
-        toast.success(t('toast.follow.unfollow'))
+        setFollow(false);
+        toast.success(t('toast.follow.unfollow'));
       }
-    })()
-  }
+    })();
+  };
   return (
     <div className={clsx(className, 'space-y-4')}>
       <div>
@@ -145,12 +144,18 @@ export default function BusinessInfo({
               {mode === 'view' && (
                 <div className="flex gap-4">
                   {!follow ? (
-                    <Button variant={"emerald"} onClick={() => handleFollowClick()}>
+                    <Button
+                      variant={'emerald'}
+                      onClick={() => handleFollowClick()}
+                    >
                       <FaPlusCircle className="w-5 h-5 mr-2" />
                       {t('businessDetail.businessInfo.btnFollow.follow')}
                     </Button>
                   ) : (
-                    <Button variant={"red"} onClick={() => handleUnFollowClick()}>
+                    <Button
+                      variant={'red'}
+                      onClick={() => handleUnFollowClick()}
+                    >
                       <FaPlusCircle className="w-5 h-5 mr-2" />
                       {t('businessDetail.businessInfo.btnFollow.unfollow')}
                     </Button>
@@ -307,5 +312,7 @@ export default function BusinessInfo({
         </div>
       </div>
     </div>
-  )
+  );
 }
+
+export default BusinessInfo;

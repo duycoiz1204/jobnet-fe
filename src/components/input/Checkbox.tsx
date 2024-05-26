@@ -7,7 +7,7 @@ enum Color {
 
 export interface CheckboxProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  color: string;
+  color?: string;
 }
 
 const Checkbox = ({ color = 'emerald', ...props }: CheckboxProps) => {
