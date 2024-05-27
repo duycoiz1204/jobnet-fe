@@ -1,4 +1,4 @@
-import categogyService from '@/services/categogyService'
+import categoryService from '@/services/categoryService'
 import postService from '@/services/postService'
 import professionService from '@/services/professionService'
 import React from 'react'
@@ -26,7 +26,7 @@ export default async function Posts({ }: Props) {
     ...criteria,
     search: ""
   })
-  const categories = await categogyService.getCategories()
+  const categories = await categoryService.getCategories()
   const professions = await professionService.getProfessions()
   return (
     <PostsClient paginationPosts={paginationPosts} categories={categories} professions={professions} />

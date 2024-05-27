@@ -1,5 +1,5 @@
 import CategoriesCpn, { CategoriesCompose } from '@/app/(pages)/[lang]/(common)/categories/CategoriesCpn'
-import categogyService from '@/services/categogyService'
+import categoryService from '@/services/categoryService'
 import professionService from '@/services/professionService'
 import { Metadata } from 'next';
 import React from 'react'
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 type Props = {}
 
 export default async function page({ }: Props) {
-    const categories = await categogyService.getCategories()
+    const categories = await categoryService.getCategories()
     const professions = await professionService.getProfessions()
     const categoriesData = [] as CategoriesCompose[]
     categories.forEach(cate => {

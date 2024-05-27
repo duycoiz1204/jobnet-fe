@@ -29,13 +29,14 @@ export default function Account(): JSX.Element {
   const getRecruiterById = useCallback(async () => {
     try {
       const fetchedData = await recruiterService.getRecruiterById(
-        session?.user.id!!
+        session?.user.id!,
+        session?.accessToken!
       );
       setRecruiterReload(fetchedData);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  }, [session?.user.id]);
+  }, [session?.user.id, session?.accessToken]);
 
   useEffect(() => {
     void getRecruiterById();
@@ -69,8 +70,9 @@ export default function Account(): JSX.Element {
         try {
           setLoading(true);
           await recruiterService.updateRecruiterProfile(
-            session?.user.id!!,
-            formValues
+            session?.user.id!,
+            formValues,
+            session?.accessToken!
           );
           setLoading(false);
           closeModal();
@@ -97,8 +99,9 @@ export default function Account(): JSX.Element {
         formData.append('file', selectedFile);
         try {
           await recruiterService.uploadRecruiterProfileImage(
-            session?.user.id!!,
-            formData
+            session?.user.id!,
+            formData,
+            session?.accessToken!
           );
           setReload((prevReload) => prevReload + 1);
           closeModal();

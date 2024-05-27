@@ -6,25 +6,27 @@ import { auth } from '@/auth';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "JobSeeker Dashboard",
-  description: "Dashboard for JobSeeker in our Jobnet Website",
+  title: 'JobSeeker Dashboard',
+  description: 'Dashboard for JobSeeker in our Jobnet Website',
 };
 
-
 export default async function JSDashboard(): Promise<JSX.Element> {
-  const session = await auth()
-  const accessToken = session!!.accessToken as string
+  const session = await auth();
+  const accessToken = session!!.accessToken as string;
   const _jobSeeker = await jobSeekerService.getJobSeekerById(
-    session?.user.id as string
+    session?.user.id!,
+    session?.accessToken!
   );
   const _application = await applicationService.getApplications({
     jobSeekerId: session?.user.id as string,
-    accessToken: accessToken
+    accessToken: accessToken,
   });
-  const _resumes = await resumeService.getResumesByAuth(
-    session?.accessToken!!
-  );
+  const _resumes = await resumeService.getResumesByAuth(session?.accessToken!!);
   return (
-    <JSDashboardCpn jobSeeker={_jobSeeker} applications={_application} resumes={_resumes} />
+    <JSDashboardCpn
+      jobSeeker={_jobSeeker}
+      applications={_application}
+      resumes={_resumes}
+    />
   );
 }

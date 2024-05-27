@@ -1,60 +1,62 @@
-import BaseService from './baseService'
-import ProfessionType from '../types/profession'
+import BaseService from './baseService';
+import ProfessionType from '../types/profession';
 import envConfig from '@/config';
 
 class ProfessionService extends BaseService {
-  private apiBaseUrl = `${envConfig.NEXT_PUBLIC_BASE_URL}/api/professions`
+  private apiBaseUrl = `${envConfig.NEXT_PUBLIC_BASE_URL}/api/professions`;
 
   async getProfessions(props?: { search?: string; categoryId?: string }) {
-    const params = new URLSearchParams()
-    props?.search && params.append('search', props.search)
-    props?.categoryId && params.append('categoryId', props.categoryId)
+    const params = new URLSearchParams();
+    props?.search && params.append('search', props.search);
+    props?.categoryId && params.append('categoryId', props.categoryId);
 
     const url = params.toString().length
       ? `${this.apiBaseUrl}?${params.toString()}`
-      : this.apiBaseUrl
-    const res = await fetch(url)
+      : this.apiBaseUrl;
+    const res = await fetch(url);
 
-    this.checkResponseNotOk(res)
-    return this.getResponseData<ProfessionType[]>(res)
+    this.checkResponseNotOk(res);
+    return this.getResponseData<ProfessionType[]>(res);
   }
 
-  async createProfession(name: string, category: string) {
-    const res = await fetch(
-      this.apiBaseUrl,
-      {
-        method: "POST",
-        body: JSON.stringify({ name, categoryId: category }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
+  async createProfession(data: object, accessToken: string) {
+    const res = await fetch(this.apiBaseUrl, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
-    this.checkResponseNotOk(res)
-    return this.getResponseData<ProfessionType>(res)
+    this.checkResponseNotOk(res);
+    return this.getResponseData<ProfessionType>(res);
   }
 
-  async updateProfession(id: number, name: string, category: string) {
-    const res = await fetch(
-      `${this.apiBaseUrl}/${id}`,
-      {
-        method: "PUT",
-        body: JSON.stringify({ name: name, categoryId: category }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
+  async updateProfession(id: number, data: object, accessToken: string) {
+    const res = await fetch(`${this.apiBaseUrl}/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(data),
+    });
 
-    this.checkResponseNotOk(res)
-    return this.getResponseData<ProfessionType>(res)
+    this.checkResponseNotOk(res);
+    return this.getResponseData<ProfessionType>(res);
   }
 
-  async deleteProfessionById(id: number) {
-    const res = await fetch(`${this.apiBaseUrl}/${id}`, {method: "DELETE"})
-    this.checkResponseNotOk(res)
+  async deleteProfessionById(id: number, accessToken: string) {
+    const res = await fetch(`${this.apiBaseUrl}/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    this.checkResponseNotOk(res);
   }
 }
 
-export default new ProfessionService()
+const professionService = new ProfessionService();
+export default professionService;

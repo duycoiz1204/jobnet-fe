@@ -10,7 +10,7 @@ class ResumeService extends BaseService {
     const res = await fetch(this.apiBaseUrl, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -22,7 +22,7 @@ class ResumeService extends BaseService {
     const res = await fetch(`${this.apiBaseUrl}/${id}`, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -34,7 +34,7 @@ class ResumeService extends BaseService {
     const res = await fetch(`${this.apiBaseUrl}/${id}/file`, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -42,9 +42,12 @@ class ResumeService extends BaseService {
     return this.getResponseBlob(res);
   }
 
-  async createResume(formData: FormData) {
+  async createResume(formData: FormData, accessToken: string) {
     const res = await fetch(this.apiBaseUrl, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
       body: formData,
     });
 
@@ -52,11 +55,12 @@ class ResumeService extends BaseService {
     return this.getResponseData<ResumeType>(res);
   }
 
-  async updateResume(id: string, req: object) {
+  async updateResume(id: string, req: object, accessToken: string) {
     const res = await fetch(`${this.apiBaseUrl}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(req),
     });
@@ -65,8 +69,13 @@ class ResumeService extends BaseService {
     return this.getResponseData<ResumeType>(res);
   }
 
-  async deleteResumeById(id: string) {
-    const res = await fetch(`${this.apiBaseUrl}/${id}`, { method: 'DELETE' });
+  async deleteResumeById(id: string, accessToken: string) {
+    const res = await fetch(`${this.apiBaseUrl}/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     this.checkResponseNotOk(res);
   }

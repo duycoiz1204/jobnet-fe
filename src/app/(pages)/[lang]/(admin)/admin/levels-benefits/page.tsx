@@ -113,7 +113,7 @@ export default function LevelsAndBenefitsManagement() {
     const name: HTMLElement | null = document.getElementById('newLevelName');
     if (name instanceof HTMLInputElement) {
       serviceLevelProcess(
-        levelService.createLevel({ name: name.value }),
+        levelService.createLevel({ name: name.value }, session!!.accessToken),
         'Tạo vị trí thành công',
         'Tạo vị trí không thành công'
       );
@@ -126,7 +126,11 @@ export default function LevelsAndBenefitsManagement() {
     if (name instanceof HTMLInputElement) {
       const id: string = levelTarget?.id || '';
       serviceLevelProcess(
-        levelService.updateLevel(id, { name: name.value }),
+        levelService.updateLevel(
+          id,
+          { name: name.value },
+          session!!.accessToken
+        ),
         'Cập nhật vị trí thành công',
         'Cập nhật vị trí không thành công'
       );
@@ -136,7 +140,7 @@ export default function LevelsAndBenefitsManagement() {
   const deleteLevel = (): void => {
     const id: string = levelTarget?.id || '';
     serviceLevelProcess(
-      levelService.deleteLevelById(id),
+      levelService.deleteLevelById(id, session!!.accessToken),
       'Xóa vị trí thành công',
       'Xóa vị trí không thành công'
     );

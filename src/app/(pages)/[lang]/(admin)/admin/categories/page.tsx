@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { useAppDispatch } from '@/hooks/useRedux';
 import useModal from '@/hooks/useModal';
 import { toast } from 'sonner';
 
-import categogyService from '@/services/categogyService';
+import categoryService from '@/services/categoryService';
 
 import CategoryType from '@/types/category';
 import { setLoading } from '@/features/loading/loadingSlice';
@@ -17,6 +18,7 @@ import InputWithLabel from '@/components/input/InputWithLabel';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 export default function Categories() {
+  const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
@@ -32,7 +34,7 @@ export default function Categories() {
 
   useEffect(() => {
     async function loadData(): Promise<void> {
-      const categories: CategoryType[] = await categogyService.getCategories();
+      const categories: CategoryType[] = await categoryService.getCategories();
       setCategories(categories);
     }
     loadData().catch(() => {
@@ -44,7 +46,7 @@ export default function Categories() {
     const name: HTMLElement | null = document.getElementById('newCategoryName');
     if (name instanceof HTMLInputElement) {
       serviceProcess(
-        categogyService.createCategory(name.value),
+        categoryService.createCategory(name.value, session?.accessToken!),
         'Tạo lĩnh vực thành công',
         'Tạo lĩnh vực không thành công'
       );
@@ -57,7 +59,7 @@ export default function Categories() {
       const id = categoryTarget?.id;
       id &&
         serviceProcess(
-          categogyService.updateCategory(id, name.value),
+          categoryService.updateCategory(id, name.value, session?.accessToken!),
           'Cập nhật lĩnh vực thành công',
           'Cập nhật lĩnh vực không thành công'
         );
@@ -66,7 +68,7 @@ export default function Categories() {
   const deleteCategory = (): void => {
     const id: string = categoryTarget?.id.toString() || '';
     serviceProcess(
-      categogyService.deleteCategoryById(id),
+      categoryService.deleteCategoryById(id, session?.accessToken!),
       'Xóa lĩnh vực thành công',
       'Xóa lĩnh vực không thành công'
     );
@@ -99,7 +101,7 @@ export default function Categories() {
     void (async () => {
       setParams(param);
       dispatch(setLoading(true));
-      const data = await categogyService.getCategories(param);
+      const data = await categoryService.getCategories(param);
       dispatch(setLoading(false));
       setCategories(data);
     })();

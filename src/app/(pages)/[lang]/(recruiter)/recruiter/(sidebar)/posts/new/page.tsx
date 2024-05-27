@@ -81,14 +81,15 @@ export default function PostCreation() {
   useEffect(() => {
     (async () => {
       const _recruiter = await recruiterService.getRecruiterById(
-        session?.user.id!
+        session?.user.id!,
+        session?.accessToken!
       );
       setRecruiter(_recruiter);
 
       const _professions = await professionService.getProfessions();
       setProfessions(_professions);
     })();
-  }, [session?.user.id]);
+  }, [session?.user.id, session?.accessToken]);
 
   useEffect(() => {
     const toastId = state.type && toast.error(state.message);
@@ -200,13 +201,14 @@ export default function PostCreation() {
   const getRecruiterById = useCallback(async () => {
     try {
       const response = await recruiterService.getRecruiterById(
-        session?.user.id!
+        session?.user.id!,
+        session?.accessToken!
       );
       setRecruiter(response);
     } catch (error) {
       console.error(t('recruiter.postCreation.error.fetch'), error);
     }
-  }, [session?.user.id, t]);
+  }, [session?.user.id, session?.accessToken, t]);
 
   // * Fetch get business
   const getBusinessById = useCallback(async () => {
@@ -390,7 +392,7 @@ export default function PostCreation() {
                   )}
                   value="intern"
                   checked={inputs?.workType === 'full-time'}
-                // onChange={handlePermissionChange}
+                  // onChange={handlePermissionChange}
                 />
 
                 <Radio
@@ -402,7 +404,7 @@ export default function PostCreation() {
                   )}
                   value="intern"
                   checked={inputs?.workType === 'part-time'}
-                // onChange={handlePermissionChange}
+                  // onChange={handlePermissionChange}
                 />
                 <Radio
                   id="intern"
@@ -413,7 +415,7 @@ export default function PostCreation() {
                   )}
                   value="intern"
                   checked={inputs?.workType === 'intern-time'}
-                // onChange={handlePermissionChange}
+                  // onChange={handlePermissionChange}
                 />
               </div>
             </LabelSection>
@@ -441,12 +443,12 @@ export default function PostCreation() {
                 !inputs.yearExp
                   ? ''
                   : inputs.yearExp < 1
-                    ? 'Dưới 1 năm'
-                    : inputs.yearExp <= 2
-                      ? '1 - 2 năm'
-                      : inputs.yearExp <= 5
-                        ? '3 - 5 năm'
-                        : '5 năm trở lên'
+                  ? 'Dưới 1 năm'
+                  : inputs.yearExp <= 2
+                  ? '1 - 2 năm'
+                  : inputs.yearExp <= 5
+                  ? '3 - 5 năm'
+                  : '5 năm trở lên'
               }
               options={[
                 {

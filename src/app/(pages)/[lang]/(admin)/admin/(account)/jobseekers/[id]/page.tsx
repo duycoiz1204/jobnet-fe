@@ -33,7 +33,10 @@ export default function JobSeekerDetail() {
 
   useEffect(() => {
     async function getRecruiter(): Promise<void> {
-      const Jobseeker = await jobSeekerService.getJobSeekerById(id || '');
+      const Jobseeker = await jobSeekerService.getJobSeekerById(
+        id,
+        session?.accessToken!
+      );
       if (!Jobseeker.dateOfBirth)
         Jobseeker.dateOfBirth = 'Ngày sinh chưa cập nhật';
       if (!Jobseeker.gender) Jobseeker.gender = 'Chưa cập nhật';
@@ -44,13 +47,13 @@ export default function JobSeekerDetail() {
     getRecruiter().catch(() => {
       toast.error('Không thể cập nhật dữ liệu');
     });
-  }, [id, updateData]);
+  }, [id, updateData, session?.accessToken]);
 
   const deleteJobseeker = (): void => {
     closeModal();
     dispatch(setLoading(true));
     jobSeekerService
-      .deleteJobSeekerById(id)
+      .deleteJobSeekerById(id, session?.accessToken!)
       .then(() => {
         toast.success('Đã khóa người dùng');
         dispatch(setLoading(false));

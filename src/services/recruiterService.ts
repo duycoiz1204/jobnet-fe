@@ -7,7 +7,7 @@ import envConfig from '@/config';
 class RecruiterService extends BaseService {
   private apiBaseUrl = `${envConfig.NEXT_PUBLIC_BASE_URL}/api/recruiters`;
 
-  async getRecruiters(props?: {
+  async getRecruiters(props: {
     page?: number;
     pageSize?: number;
     sortBy?: string[];
@@ -15,6 +15,7 @@ class RecruiterService extends BaseService {
     name?: string;
     phone?: string;
     business?: string;
+    accessToken: string;
   }) {
     const params = new URLSearchParams();
     props?.page && params.append('page', props.page.toString());
@@ -31,27 +32,37 @@ class RecruiterService extends BaseService {
     const url = params.toString().length
       ? `${this.apiBaseUrl}?${params.toString()}`
       : this.apiBaseUrl;
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${props.accessToken}`,
+      },
+    });
 
     this.checkResponseNotOk(res);
     return this.getResponseData<PaginationType<RecruiterType>>(res);
   }
 
-  async getRecruiterById(id: string) {
-    const res = await fetch(`${this.apiBaseUrl}/${id}`);
+  async getRecruiterById(id: string, accessToken: string) {
+    const res = await fetch(`${this.apiBaseUrl}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     this.checkResponseNotOk(res);
     return this.getResponseData<RecruiterType>(res);
   }
 
   async updateRecruiterProfile(
-    id: string | undefined,
-    data: FormUpdateProfileRCProps
+    id: string,
+    data: FormUpdateProfileRCProps,
+    accessToken: string
   ) {
     const res = await fetch(`${this.apiBaseUrl}/${id}/profile`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(data),
     });
@@ -65,23 +76,41 @@ class RecruiterService extends BaseService {
     return url;
   }
 
-  async uploadRecruiterProfileImage(recruiterId: string, formData: FormData) {
+  async uploadRecruiterProfileImage(
+    recruiterId: string,
+    formData: FormData,
+    accessToken: string
+  ) {
     const url = `${this.apiBaseUrl}/${recruiterId}/profileImage`;
-    const res = await fetch(url, { method: 'POST', body: formData });
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: formData,
+    });
 
     this.checkResponseNotOk(res);
     return this.getResponseData<RecruiterType>(res);
   }
 
-  async deleteRecruiterById(id: string) {
-    const res = await fetch(`${this.apiBaseUrl}/${id}`, { method: 'DELETE' });
+  async deleteRecruiterById(id: string, accessToken: string) {
+    const res = await fetch(`${this.apiBaseUrl}/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     this.checkResponseNotOk(res);
   }
 
-  async openDeleteRecruiterById(id: string) {
+  async openDeleteRecruiterById(id: string, accessToken: string) {
     const res = await fetch(`${this.apiBaseUrl}/${id}/open`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
 
     this.checkResponseNotOk(res);

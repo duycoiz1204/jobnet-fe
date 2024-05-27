@@ -20,11 +20,12 @@ class LevelService extends BaseService {
     return this.getResponseData<LevelType[]>(res);
   }
 
-  async createLevel(req: object) {
+  async createLevel(req: object, accessToken: string) {
     const res = await fetch(this.apiBaseUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(req),
     });
@@ -33,11 +34,12 @@ class LevelService extends BaseService {
     return this.getResponseData<LevelType>(res);
   }
 
-  async updateLevel(id: string, req: object) {
+  async updateLevel(id: string, req: object, accessToken: string) {
     const res = await fetch(`${this.apiBaseUrl}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(req),
     });
@@ -46,8 +48,13 @@ class LevelService extends BaseService {
     return this.getResponseData<LevelType>(res);
   }
 
-  async deleteLevelById(id: string) {
-    const res = await fetch(`${this.apiBaseUrl}/${id}`, { method: 'DELETE' });
+  async deleteLevelById(id: string, accessToken: string) {
+    const res = await fetch(`${this.apiBaseUrl}/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     this.checkResponseNotOk(res);
   }

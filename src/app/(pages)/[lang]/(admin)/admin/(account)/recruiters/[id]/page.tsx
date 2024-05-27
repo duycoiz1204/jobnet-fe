@@ -1,22 +1,27 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import RecruiterType from '@/types/recruiter';
+import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
-import useModal from '@/hooks/useModal';
+import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { useTranslations } from 'next-intl';
-import { useAppDispatch } from '@/hooks/useRedux';
-import recruiterService from '@/services/recruiterService';
 import { toast } from 'sonner';
+import { useAppDispatch } from '@/hooks/useRedux';
+import useModal from '@/hooks/useModal';
+
 import { setLoading } from '@/features/loading/loadingSlice';
-import businessService from '@/services/businessService';
 import { RCAccountComponent } from '@/components/RCAccountComponent';
 import BusinessInfo from '@/components/BusinessInfo';
 import Modal from '@/components/modal/Modal';
-import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { Button } from '@/components/ui/button';
 
+import businessService from '@/services/businessService';
+import recruiterService from '@/services/recruiterService';
+
+import RecruiterType from '@/types/recruiter';
+
 export default function RecuiterDetail() {
+  const { data: session } = useSession();
   const t = useTranslations();
   const dispatch = useAppDispatch();
 
@@ -29,19 +34,22 @@ export default function RecuiterDetail() {
 
   useEffect(() => {
     async function getRecruiter(): Promise<void> {
-      const Recruiter = await recruiterService.getRecruiterById(recruiterId);
+      const Recruiter = await recruiterService.getRecruiterById(
+        recruiterId,
+        session?.accessToken!
+      );
       setRecruiter(Recruiter);
     }
     getRecruiter().catch(() => {
       toast.error('Không thể cập nhật dữ liệu');
     });
-  }, [recruiterId, updateData]);
+  }, [recruiterId, updateData, session?.accessToken]);
 
   const deleteRecruiter = (): void => {
     closeModal();
     dispatch(setLoading(true));
     recruiterService
-      .deleteRecruiterById(recruiterId)
+      .deleteRecruiterById(recruiterId, session?.accessToken!)
       .then(() => {
         toast.success('Đã khóa người dùng');
         dispatch(setLoading(false));
@@ -57,7 +65,10 @@ export default function RecuiterDetail() {
     closeModal();
     dispatch(setLoading(true));
     try {
-      await businessService.deleteBusinessById(recruiter?.business.id);
+      await businessService.deleteBusinessById(
+        recruiter?.business.id,
+        session?.accessToken!
+      );
 
       toast.success('Đã khóa công ty');
       setUpdateData(!updateData);

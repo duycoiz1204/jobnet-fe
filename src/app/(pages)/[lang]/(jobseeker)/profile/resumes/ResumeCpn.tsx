@@ -38,10 +38,10 @@ const initPermission = (resume?: ResumeType) => ({
 });
 
 interface ResumeProps {
-    _resumes: Array<ResumeType>
+  _resumes: Array<ResumeType>;
 }
 
-export default function ResumeCpn({_resumes} : ResumeProps) {
+export default function ResumeCpn({ _resumes }: ResumeProps) {
   const t = useTranslations();
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -53,7 +53,6 @@ export default function ResumeCpn({_resumes} : ResumeProps) {
   const [recruiterViewed, setRecruiterViewed] = useState<Array<any>>();
   const [permission, setPermission] = useState(initPermission());
   const { modal, openModal, closeModal } = useModal();
-
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) =>
     setFile(e.target.files?.[0]);
@@ -72,7 +71,10 @@ export default function ResumeCpn({_resumes} : ResumeProps) {
       dispatch(setLoading(true));
 
       try {
-        const resume = await resumeService.createResume(formData);
+        const resume = await resumeService.createResume(
+          formData,
+          session?.accessToken!
+        );
         setResumes((prev) => [...prev, resume]);
         setFile(undefined);
         toast.success(t('toast.applyCV.uploadCVSucess'));
@@ -123,7 +125,11 @@ export default function ResumeCpn({_resumes} : ResumeProps) {
         dispatch(setLoading(true));
 
         try {
-          const _resume = await resumeService.updateResume(resumeId, req);
+          const _resume = await resumeService.updateResume(
+            resumeId,
+            req,
+            session?.accessToken!
+          );
           setResumes((prev) =>
             prev.map((resume) => (resume.id === _resume.id ? _resume : resume))
           );
@@ -143,7 +149,7 @@ export default function ResumeCpn({_resumes} : ResumeProps) {
       dispatch(setLoading(true));
 
       try {
-        await resumeService.deleteResumeById(resumeId);
+        await resumeService.deleteResumeById(resumeId, session?.accessToken!);
         setResumes((prev) => prev.filter((resume) => resume.id !== resumeId));
         toast.success(t('toast.CV.remove'));
       } catch (err) {
@@ -167,7 +173,10 @@ export default function ResumeCpn({_resumes} : ResumeProps) {
   const handleShowListViewer = (id: string) => {
     openModal('viewed-recruiter-modal');
     void (async () => {
-      const data = await resumeService.getResumesById(id, session!!.accessToken);
+      const data = await resumeService.getResumesById(
+        id,
+        session!!.accessToken
+      );
       setViewerId(data.viewerIds);
     })();
   };
@@ -175,7 +184,10 @@ export default function ResumeCpn({_resumes} : ResumeProps) {
   useEffect(() => {
     const fetchRecruiters = async () => {
       const promises = viewerId?.map(async (item) => {
-        const data = await recruiterService.getRecruiterById(item);
+        const data = await recruiterService.getRecruiterById(
+          item,
+          session?.accessToken!
+        );
         return (
           <RecruiterViewedResumeItem
             key={data.id}
@@ -209,10 +221,7 @@ export default function ResumeCpn({_resumes} : ResumeProps) {
         >
           {t('resumes.uploadedCVs.button.view')}
         </Button>
-        <Button
-          size="lg"
-          onClick={() => handleEditClick(resume.id)}
-        >
+        <Button size="lg" onClick={() => handleEditClick(resume.id)}>
           {t('resumes.uploadedCVs.button.edit')}
         </Button>
         <Button

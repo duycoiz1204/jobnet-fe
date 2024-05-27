@@ -1,5 +1,11 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useAppDispatch } from '@/hooks/useRedux';
+import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import { toast } from 'sonner';
+
 import ColumnsType, { DataField } from '@/components/ColumnsType';
 import Checkbox from '@/components/input/Checkbox';
 import Modal from '@/components/modal/Modal';
@@ -8,13 +14,10 @@ import Table from '@/components/table/Table';
 import { Button } from '@/components/ui/button';
 import { setLoading } from '@/features/loading/loadingSlice';
 import useModal from '@/hooks/useModal';
-import { useAppDispatch } from '@/hooks/useRedux';
+
 import jobSeekerService from '@/services/jobSeekerService';
 import JobSeekerType from '@/types/jobSeeker';
 import PaginationType from '@/types/pagination';
-import { useState, useEffect } from 'react';
-import { HiOutlineExclamationCircle } from 'react-icons/hi';
-import { toast } from 'sonner';
 
 type JobSeekerCriteria = {
   email: string;
@@ -26,6 +29,7 @@ type JobSeekerCriteria = {
 };
 
 export default function ADJobseekerManagement() {
+  const { data: session } = useSession();
   const dispatch = useAppDispatch();
 
   const [dataSource, setDataSource] = useState<PaginationType<JobSeekerType>>(
@@ -43,10 +47,12 @@ export default function ADJobseekerManagement() {
 
   useEffect(() => {
     (async () => {
-      const _jobseekers = await jobSeekerService.getJobSeekers();
+      const _jobseekers = await jobSeekerService.getJobSeekers({
+        accessToken: session?.accessToken!,
+      });
       setDataSource(_jobseekers);
     })();
-  }, []);
+  }, [session?.accessToken]);
 
   const resetParams = () => {
     handleFindJobSeeker({
@@ -63,7 +69,10 @@ export default function ADJobseekerManagement() {
     void (async () => {
       setParams(params);
       dispatch(setLoading(true));
-      const data = await jobSeekerService.getJobSeekers(param);
+      const data = await jobSeekerService.getJobSeekers({
+        ...param,
+        accessToken: session?.accessToken!,
+      });
       dispatch(setLoading(false));
       setDataSource(data);
     })();
@@ -84,13 +93,19 @@ export default function ADJobseekerManagement() {
       dispatch(setLoading(true));
       if (!jobSeekerTarget.locked)
         serviceProcess(
-          jobSeekerService.deleteJobSeekerById(jobSeekerTarget?.id),
+          jobSeekerService.deleteJobSeekerById(
+            jobSeekerTarget?.id,
+            session!!.accessToken
+          ),
           'Đã khóa người dùng',
           'Không thể khóa người dùng'
         );
       else
         serviceProcess(
-          jobSeekerService.openDeleteJobSeekerById(jobSeekerTarget?.id),
+          jobSeekerService.openDeleteJobSeekerById(
+            jobSeekerTarget?.id,
+            session!!.accessToken
+          ),
           'Đã mở khóa người dùng',
           'Không thể mở khóa người dùng'
         );

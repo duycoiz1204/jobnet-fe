@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { useAppDispatch } from '@/hooks/useRedux';
 import { toast } from 'sonner';
 import { setLoading } from '@/features/loading/loadingSlice';
@@ -27,6 +28,7 @@ type RecruiterCriteria = {
 };
 
 export default function ADRecruiterManagement() {
+  const { data: session } = useSession();
   const dispatch = useAppDispatch();
 
   const [dataSource, setDataSource] = useState<PaginationType<RecruiterType>>(
@@ -43,7 +45,9 @@ export default function ADRecruiterManagement() {
 
   useEffect(() => {
     (async () => {
-      const _pagination = await recruiterService.getRecruiters();
+      const _pagination = await recruiterService.getRecruiters({
+        accessToken: session!!.accessToken,
+      });
       setDataSource(_pagination);
     })();
   }, []);
@@ -62,7 +66,10 @@ export default function ADRecruiterManagement() {
     void (async () => {
       setParams(param);
       dispatch(setLoading(true));
-      const data = await recruiterService.getRecruiters(param);
+      const data = await recruiterService.getRecruiters({
+        ...param,
+        accessToken: session!!.accessToken,
+      });
       dispatch(setLoading(false));
       setDataSource(data);
     })();
@@ -83,13 +90,19 @@ export default function ADRecruiterManagement() {
       dispatch(setLoading(true));
       if (!recruiterTarget.locked)
         serviceProcess(
-          recruiterService.deleteRecruiterById(recruiterTarget?.id),
+          recruiterService.deleteRecruiterById(
+            recruiterTarget?.id,
+            session?.accessToken!
+          ),
           'Đã khóa người dùng',
           'Không thể khóa người dùng'
         );
       else
         serviceProcess(
-          recruiterService.openDeleteRecruiterById(recruiterTarget?.id),
+          recruiterService.openDeleteRecruiterById(
+            recruiterTarget?.id,
+            session?.accessToken!
+          ),
           'Đã mở khóa người dùng',
           'Không thể mở khóa người dùng'
         );

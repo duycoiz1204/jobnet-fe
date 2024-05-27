@@ -19,11 +19,12 @@ class CategoryService extends BaseService {
     return this.getResponseData<CategoryType[]>(res);
   }
 
-  async createCategory(name: string) {
+  async createCategory(name: string, accessToken: string) {
     const res = await fetch(this.apiBaseUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ name }),
     });
@@ -32,11 +33,12 @@ class CategoryService extends BaseService {
     return this.getResponseData<CategoryType>(res);
   }
 
-  async updateCategory(id: string, name: string) {
+  async updateCategory(id: string, name: string, accessToken: string) {
     const res = await fetch(`${this.apiBaseUrl}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ name }),
     });
@@ -45,8 +47,13 @@ class CategoryService extends BaseService {
     return this.getResponseData<CategoryType>(res);
   }
 
-  async deleteCategoryById(id: string) {
-    const res = await fetch(`${this.apiBaseUrl}/${id}`, { method: 'DELETE' });
+  async deleteCategoryById(id: string, accessToken: string) {
+    const res = await fetch(`${this.apiBaseUrl}/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     this.checkResponseNotOk(res);
   }

@@ -1,5 +1,5 @@
-import BaseService from "@/services/baseService";
-import locations from '../../public/data/locations.json'
+import BaseService from '@/services/baseService';
+import locations from '../../public/data/locations.json';
 
 export interface APILocationType {
   id?: string;
@@ -12,9 +12,10 @@ export interface APILocationType {
 }
 
 class LocationService extends BaseService {
-    getLocations() {
-        return locations
-    }
+  getLocations() {
+    return locations;
+  }
 }
 
-export default new LocationService()
+const locationService = new LocationService();
+export default locationService;

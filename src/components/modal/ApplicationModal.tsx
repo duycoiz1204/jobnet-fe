@@ -77,7 +77,10 @@ export default function ApplicationModal({
       dispatch(setLoading(true));
 
       try {
-        const resume = await resumeService.createResume(formData);
+        const resume = await resumeService.createResume(
+          formData,
+          session?.accessToken!
+        );
         setApplicationModal((prev) => ({
           ...prev,
           resumes: [...prev.resumes!, resume],

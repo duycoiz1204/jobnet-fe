@@ -1,14 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import CategoryType from '@/types/category';
-import ProfessionType from '@/types/profession';
+import { useSession } from 'next-auth/react';
 import { useAppDispatch } from '@/hooks/useRedux';
 import useModal from '@/hooks/useModal';
-import categogyService from '@/services/categogyService';
 import { toast } from 'sonner';
-import professionService from '@/services/professionService';
+import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { setLoading } from '@/features/loading/loadingSlice';
+
 import ColumnsType, { DataField } from '@/components/ColumnsType';
 import { Button } from '@/components/ui/button';
 import Table from '@/components/table/Table';
@@ -16,14 +15,19 @@ import Modal from '@/components/modal/Modal';
 import { Input } from '@/components/ui/input';
 import InputWithLabel from '@/components/input/InputWithLabel';
 import SelectWithLabel from '@/components/select/SelectWithLabel';
-import { HiOutlineExclamationCircle } from 'react-icons/hi';
+
+import professionService from '@/services/professionService';
+import categoryService from '@/services/categoryService';
+
+import CategoryType from '@/types/category';
+import ProfessionType from '@/types/profession';
 
 interface Professions {
   professions: Professions[];
 }
 
 export default function Professions() {
-  // const { professions, categories } = useLoaderData() as ProfessionsLoader
+  const { data: session } = useSession();
   const [professions, setProfessions] = useState<ProfessionType[]>([]);
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
@@ -45,7 +49,7 @@ export default function Professions() {
   //load data
   useEffect(() => {
     async function loadData(): Promise<void> {
-      const categories: CategoryType[] = await categogyService.getCategories();
+      const categories: CategoryType[] = await categoryService.getCategories();
       setCategories(categories);
     }
     loadData().catch(() => {
@@ -69,7 +73,13 @@ export default function Professions() {
       document.getElementById('newProfessionName');
     if (name instanceof HTMLInputElement) {
       serviceProcess(
-        professionService.createProfession(name.value, categoryTarget),
+        professionService.createProfession(
+          {
+            name: name.value,
+            categoryId: categoryTarget,
+          },
+          session!!.accessToken
+        ),
         'Tạo ngành nghề thành công',
         'Không thể tạo ngành nghề'
       );
@@ -83,7 +93,14 @@ export default function Professions() {
     if (name instanceof HTMLInputElement) {
       const id: number = parseInt(professionTarget?.id || '-1');
       serviceProcess(
-        professionService.updateProfession(id, name.value, categoryTarget),
+        professionService.updateProfession(
+          id,
+          {
+            name: name.value,
+            categoryId: categoryTarget,
+          },
+          session!!.accessToken
+        ),
         'Cập nhật ngành nghề thành công',
         'Cập nhật ngành nghề không thành công'
       );
@@ -93,7 +110,7 @@ export default function Professions() {
   const deleteProfession = (): void => {
     const id: number = parseInt(professionTarget?.id || '-1');
     serviceProcess(
-      professionService.deleteProfessionById(id),
+      professionService.deleteProfessionById(id, session!!.accessToken),
       'Đã xóa ngành nghề',
       'Không thể xóa ngành nghề'
     );

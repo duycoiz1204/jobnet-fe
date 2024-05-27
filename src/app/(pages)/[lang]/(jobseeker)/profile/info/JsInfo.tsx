@@ -1,25 +1,27 @@
-'use client'
+'use client';
 
-import InfoSection from "@/components/InfoSection";
-import FileUpload from "@/components/input/FileUpload";
-import InputWithLabel from "@/components/input/InputWithLabel";
-import { ListInputChangeEvent } from "@/components/input/ListInput";
-import LocationInput, { LocationInputChangeEvent } from "@/components/input/LocationInput";
-import Modal from "@/components/modal/Modal";
-import ModalForm from "@/components/modal/ModalForm";
-import { Button } from "@/components/ui/button";
-import { setLoading } from "@/features/loading/loadingSlice";
-import useModal from "@/hooks/useModal";
-import { useAppDispatch } from "@/hooks/useRedux";
-import { useForceUpdate } from "@/lib/hooks";
-import jobSeekerService from "@/services/jobSeekerService";
-import ErrorType from "@/types/error";
-import JobSeekerType from "@/types/jobSeeker";
-import { CircleAlert, OctagonAlert, TicketCheck } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
-import { toast } from "sonner";
+import InfoSection from '@/components/InfoSection';
+import FileUpload from '@/components/input/FileUpload';
+import InputWithLabel from '@/components/input/InputWithLabel';
+import { ListInputChangeEvent } from '@/components/input/ListInput';
+import LocationInput, {
+  LocationInputChangeEvent,
+} from '@/components/input/LocationInput';
+import Modal from '@/components/modal/Modal';
+import ModalForm from '@/components/modal/ModalForm';
+import { Button } from '@/components/ui/button';
+import { setLoading } from '@/features/loading/loadingSlice';
+import useModal from '@/hooks/useModal';
+import { useAppDispatch } from '@/hooks/useRedux';
+import { useForceUpdate } from '@/lib/hooks';
+import jobSeekerService from '@/services/jobSeekerService';
+import ErrorType from '@/types/error';
+import JobSeekerType from '@/types/jobSeeker';
+import { CircleAlert, OctagonAlert, TicketCheck } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
+import { useCallback, useState } from 'react';
+import { toast } from 'sonner';
 
 const initPersonalInfo = (jobSeeker: JobSeekerType) => ({
   name: jobSeeker.name,
@@ -36,23 +38,22 @@ const initProfessionInfo = (jobSeeker: JobSeekerType) => ({
 });
 
 interface Props {
-  _jobSeeker: JobSeekerType
+  _jobSeeker: JobSeekerType;
 }
 
 export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
   const t = useTranslations();
   const dispatch = useAppDispatch();
-  const { data: session } = useSession()
+  const { data: session } = useSession();
   // _jobSeeker.refresh = false
   const [jobSeeker, setJobSeeker] = useState<JobSeekerType>(_jobSeeker);
-  const [keyAvatar, setKeyAvatar] = useState<number>(0)
+  const [keyAvatar, setKeyAvatar] = useState<number>(0);
   const [file, setFile] = useState<File>();
   const [personalInfo, setPersonalInfo] = useState(initPersonalInfo(jobSeeker));
   const [professionInfo, setProfessionInfo] = useState(
     initProfessionInfo(jobSeeker)
   );
   const { modal, openModal, closeModal } = useModal();
-
 
   const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     changeInfo(e, setPersonalInfo);
@@ -111,10 +112,11 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
       try {
         const jobSeekerRes = await jobSeekerService.uploadJobSeekerProfileImage(
           _jobSeeker.id,
-          formData
+          formData,
+          session!!.accessToken
         ); // Need to add accessToken
         // setJobSeeker({...jobSeekerRes, refresh: !jobSeeker.refresh});
-        setKeyAvatar(keyAvatar + 1)
+        setKeyAvatar(keyAvatar + 1);
         setFile(undefined);
         toast.success('Cập nhật ảnh hồ sơ thành công.');
       } catch (err) {
