@@ -7,7 +7,7 @@ type Type = {
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 function TinyEditor({ data, ...props }: Type) {
-  const tiny_mce_api_key = envConfig.TINYMCE_KEY;
+  const tiny_mce_api_key = envConfig.NEXT_PUBLIC_TINYMCE_KEY
 
   const [value, setValue] = useState<string>(data || '');
   useEffect(() => {

@@ -270,7 +270,7 @@ export default function PostCreation() {
   // *
 
   // * Default value of tiny
-  const editorInitValue = `${t(
+  const editorInitValue = `${t.raw(
     'recruiter.postCreation.inputs.desc.initValue'
   )}`;
   // *
@@ -390,7 +390,7 @@ export default function PostCreation() {
                   )}
                   value="intern"
                   checked={inputs?.workType === 'full-time'}
-                  // onChange={handlePermissionChange}
+                // onChange={handlePermissionChange}
                 />
 
                 <Radio
@@ -402,7 +402,7 @@ export default function PostCreation() {
                   )}
                   value="intern"
                   checked={inputs?.workType === 'part-time'}
-                  // onChange={handlePermissionChange}
+                // onChange={handlePermissionChange}
                 />
                 <Radio
                   id="intern"
@@ -413,7 +413,7 @@ export default function PostCreation() {
                   )}
                   value="intern"
                   checked={inputs?.workType === 'intern-time'}
-                  // onChange={handlePermissionChange}
+                // onChange={handlePermissionChange}
                 />
               </div>
             </LabelSection>
@@ -441,12 +441,12 @@ export default function PostCreation() {
                 !inputs.yearExp
                   ? ''
                   : inputs.yearExp < 1
-                  ? 'Dưới 1 năm'
-                  : inputs.yearExp <= 2
-                  ? '1 - 2 năm'
-                  : inputs.yearExp <= 5
-                  ? '3 - 5 năm'
-                  : '5 năm trở lên'
+                    ? 'Dưới 1 năm'
+                    : inputs.yearExp <= 2
+                      ? '1 - 2 năm'
+                      : inputs.yearExp <= 5
+                        ? '3 - 5 năm'
+                        : '5 năm trở lên'
               }
               options={[
                 {

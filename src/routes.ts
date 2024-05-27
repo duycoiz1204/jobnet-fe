@@ -25,7 +25,10 @@ export const jobSeekerRoutes = ['/profile/**'];
  * These route required authentication
  * @type {string[]}
  */
-export const recruiterRoutes = ['/recruiter/**'];
+export const recruiterRoutes = [
+  "/recruiter/posts/**",
+  "/recruiter/profile/**"
+];
 
 /**
  * An array of routes that are accessible to admin route

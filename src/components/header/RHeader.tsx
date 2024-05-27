@@ -79,18 +79,18 @@ export default function RHeadder(): JSX.Element {
               <Dropdown
                 className="p-2"
                 render={
-                  <NavLink href="/posts" className={recruiterNavLink}>
+                  <NavLink href="/recruiter/posts" className={recruiterNavLink}>
                     {t('header.recruiter.posts.label')}
                   </NavLink>
                 }
                 type="hover"
                 position="bottomLeft"
               >
-                <Dropdown.Item to="posts" icon={FaBars as IconType}>
+                <Dropdown.Item to="/recruiter/posts" icon={FaBars as IconType}>
                   {t('header.recruiter.posts.dropdown.managementPosts')}
                 </Dropdown.Item>
                 <Dropdown.Item
-                  to="../../recruiter/posts/new"
+                  to="/recruiter/posts/new"
                   icon={FaFile as IconType}
                 >
                   {t('header.recruiter.posts.dropdown.createPost')}

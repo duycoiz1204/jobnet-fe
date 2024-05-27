@@ -44,7 +44,7 @@ export default function PostManagement(): JSX.Element {
       });
       setPagination(pagination);
     })();
-  });
+  }, []);
 
   const handleCriteriaInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setCriteria((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -244,7 +244,7 @@ function JobItem({
           render={
             <Button size="lg">
               <FaGear className="w-4 h-4 mr-1" />
-              {t('recruiterIdruiter.postManagement.jobItem.button.custom')}
+              {t('recruiter.postManagement.jobItem.button.custom')}
             </Button>
           }
           position="bottomRight"

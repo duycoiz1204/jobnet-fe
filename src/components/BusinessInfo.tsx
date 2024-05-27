@@ -1,3 +1,4 @@
+'use client'
 import { FaPlusCircle } from 'react-icons/fa';
 import businessService from '../services/businessService';
 
@@ -11,7 +12,7 @@ import {
   FaUpload,
 } from 'react-icons/fa6';
 import jobSeekerService from '../services/jobSeekerService';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { Link } from '@/navigation';
 import { useTranslations } from 'next-intl';
@@ -38,14 +39,18 @@ function BusinessInfo({
 
   const jobSeekerId = (session?.user?.id as string) || '';
   const businessId = business.id;
-  const [follow, setFollow] = useState(false);
-  if (jobSeekerId) {
-    business.followers?.forEach((i) => {
-      if (i == jobSeekerId && !follow) {
-        setFollow(true);
-      }
-    });
-  }
+  const [follow, setFollow] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (jobSeekerId) {
+      business.followers?.forEach((i) => {
+        if (i == jobSeekerId) {
+          setFollow(true);
+        }
+      });
+    }
+  }, [])
+
 
   const handleFollowClick = () => {
     void (async () => {
@@ -53,44 +58,36 @@ function BusinessInfo({
         toast.error('Error: You need to Login');
         return;
       }
-      const jobSeekerRes =
-        await jobSeekerService.updateJobSeekerBusinessFollowed(jobSeekerId, {
-          status: 'FOLLOW',
-          businessId: businessId,
-        });
-      if (!jobSeekerRes) {
-        return toast.error('Error: ');
-      }
-      const business = await businessService.updateBusinessFollowers(
-        businessId,
-        { status: 'FOLLOW', userId: jobSeekerId },
-        session?.accessToken!
-      );
-      if (business) {
+      try {
+        const jobSeekerRes =
+          await jobSeekerService.updateJobSeekerBusinessFollowed(jobSeekerId, {
+            status: 'FOLLOW',
+            businessId: businessId,
+          }, session!!.accessToken!!);
         setFollow(true);
         toast.success(t('toast.follow.followed'));
+      } catch (e) {
+        if (e instanceof TypeError) {
+          toast.error(`Something wrong!!! Reload page...`)
+        }
       }
     })();
   };
 
   const handleUnFollowClick = () => {
     void (async () => {
-      const jobSeekerRes =
-        await jobSeekerService.updateJobSeekerBusinessFollowed(jobSeekerId, {
-          status: 'UNFOLLOW',
-          businessId: businessId,
-        });
-      if (!jobSeekerRes) {
-        return toast.error('Error: ');
-      }
-      const business = await businessService.updateBusinessFollowers(
-        businessId,
-        { status: 'UNFOLLOW', userId: jobSeekerId },
-        session?.accessToken!
-      );
-      if (business) {
+      try {
+        const jobSeekerRes =
+          await jobSeekerService.updateJobSeekerBusinessFollowed(jobSeekerId, {
+            status: 'UNFOLLOW',
+            businessId: businessId,
+          }, session!!.accessToken!!) || undefined
         setFollow(false);
         toast.success(t('toast.follow.unfollow'));
+      } catch (e) {
+        if (e instanceof TypeError) {
+          toast.error(`Something wrong!!! Reload page...`)
+        }
       }
     })();
   };

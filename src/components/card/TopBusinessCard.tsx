@@ -22,7 +22,7 @@ export default function TopBusinessCard({
 
   const [totalJobsOfBusiness, setTotalJobsOfBusiness] = useState<PostType[]>();
   const session = useSession();
-  const [follow, setFollow] = useState(false);
+  const [follow, setFollow] = useState<boolean>(false);
   const jobSeekerId = session.data?.user?.id as string;
 
   useEffect(() => {
@@ -36,13 +36,16 @@ export default function TopBusinessCard({
     })();
   }, [data.id]);
 
-  if (jobSeekerId) {
-    data.followers?.forEach((i) => {
-      if (i == jobSeekerId && !follow) {
-        setFollow(true);
-      }
-    });
-  }
+  useEffect(() => {
+    if (jobSeekerId) {
+      data.followers?.forEach((i) => {
+        if (i == jobSeekerId) {
+          setFollow(true);
+        }
+      });
+    }
+  }, [])
+
 
   const handleFollowClick = () => {
     void (async () => {
@@ -50,43 +53,42 @@ export default function TopBusinessCard({
         toast.error('Error: You need to Login');
         return;
       }
-      const jobSeekerRes =
+
+      try {
         await jobSeekerService.updateJobSeekerBusinessFollowed(jobSeekerId, {
           status: 'FOLLOW',
           businessId: data.id,
-        });
-      if (!jobSeekerRes) {
-        return toast.error('Error: ');
-      }
-      const business = await businessService.updateBusinessFollowers(data.id, {
-        status: 'FOLLOW',
-        userId: jobSeekerId,
-      });
-      if (business) {
+        }, session.data!!.accessToken!!);
         setFollow(true);
         toast.success(t('toast.follow.followed'));
+
+      } catch (e) {
+        console.log(e instanceof TypeError);
+        
+        if (e instanceof TypeError) {
+          toast.error(`Something wrong!!! Reload page...`)
+        }
       }
     })();
   };
 
   const handleUnFollowClick = () => {
     void (async () => {
-      const jobSeekerRes =
+      try {
         await jobSeekerService.updateJobSeekerBusinessFollowed(jobSeekerId, {
           status: 'UNFOLLOW',
           businessId: data.id,
-        });
-      if (!jobSeekerRes) {
-        return toast.error('Error: ');
-      }
-      const business = await businessService.updateBusinessFollowers(data.id, {
-        status: 'UNFOLLOW',
-        userId: jobSeekerId,
-      });
-      if (business) {
+        }, session.data!!.accessToken!!);
+
         setFollow(false);
         toast.success(t('toast.follow.unfollow'));
+
+      } catch (e) {
+        if (e instanceof TypeError) {
+          toast.error(`Something wrong!!! Reload page...`)
+        }
       }
+
     })();
   };
 
@@ -129,7 +131,7 @@ export default function TopBusinessCard({
                 {t('home.topLeadingBusinesses.button.follow')}
               </Button>
             ) : (
-              <Button color={'red'} onClick={() => handleUnFollowClick()}>
+              <Button variant={'red'} onClick={() => handleUnFollowClick()}>
                 <CirclePlus className="w-5 h-5 mr-2" />
                 {t('home.topLeadingBusinesses.button.unfollow')}
               </Button>

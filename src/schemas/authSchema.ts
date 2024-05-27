@@ -70,7 +70,8 @@ export const jsVerifySchema = z.object({
 export const configSchema = z.object({
     AUTH_SECRET: z.string().optional(),
     NEXT_PUBLIC_BASE_URL: z.string(),
-    NEXT_PUBLIC_ELASTIC: z.string()
+    NEXT_PUBLIC_ELASTIC: z.string(),
+    NEXT_PUBLIC_TINYMCE_KEY: z.string()
 })
 
 

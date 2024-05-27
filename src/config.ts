@@ -3,7 +3,7 @@ import { configSchema } from '@/schemas/authSchema';
 const configProject = configSchema.safeParse({
   NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   NEXT_PUBLIC_ELASTIC: process.env.NEXT_PUBLIC_ELASTIC,
-  TINYMCE_KEY: process.env.TINYMCE_KEY,
+  NEXT_PUBLIC_TINYMCE_KEY: process.env.NEXT_PUBLIC_TINYMCE_KEY,
 });
 
 if (!configProject.success) {

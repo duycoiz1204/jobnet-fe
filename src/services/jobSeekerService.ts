@@ -105,12 +105,13 @@ class JobSeekerService extends BaseService {
     return this.getResponseData<JobSeekerType>(res);
   }
 
-  async updateJobSeekerBusinessFollowed(id: string, req: object) {
+  async updateJobSeekerBusinessFollowed(id: string, req: object, accessToken: string) {
     const url = `${this.apiBaseUrl}/${id}/follow`;
     const res = await fetch(url, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
       },
       body: JSON.stringify(req),
     });

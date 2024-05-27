@@ -41,7 +41,7 @@ class BusinessService extends BaseService {
   }
 
   async getBusinessById(id: string) {
-    const res = await fetch(`${this.apiBaseUrl}/${id}`);
+    const res = await fetch(`${this.apiBaseUrl}/${id}`, {cache: "no-cache"});
 
     this.checkResponseNotOk(res);
     return this.getResponseData<BusinessType>(res);
