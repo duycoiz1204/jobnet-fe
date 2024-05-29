@@ -33,7 +33,10 @@ import { useTransition } from 'react'
 
 export default function RHeadder(): JSX.Element {
   const [isPending, startTrasition] = useTransition()
-  const session = useSession()
+  let session = useSession()
+  if (session && session.data?.user.role != "Recruiter"){
+    session.data = null
+  }
   const t = useTranslations()
   const pathname = usePathname()
 
@@ -210,10 +213,10 @@ const RecruiterRegister = ({
           <div className="text-sm font-semibold">{auth?.user?.email}</div>
         </Dropdown.Header>
         <Dropdown.Divider />
-        <Dropdown.Item to="profile" icon={FaRegUser as IconType}>
+        <Dropdown.Item to="/recruiter/profile" icon={FaRegUser as IconType}>
           {t('header.recruiter.accountPopup.account')}
         </Dropdown.Item>
-        <Dropdown.Item to="business" icon={FaBusinessTime as IconType}>
+        <Dropdown.Item to="/recruiter/business" icon={FaBusinessTime as IconType}>
           {t('header.recruiter.accountPopup.businessInfo')}
         </Dropdown.Item>
         <Dropdown.Item to="jobseeker/settings" icon={FaGear as IconType}>

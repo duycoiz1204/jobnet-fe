@@ -32,16 +32,16 @@ export default function RcSidebar({ }: Props) {
                         <Sidebar.Item to="." end icon={FaBriefcase as IconType}>
                             {t('sidebar.recruiter.dashboard')}
                         </Sidebar.Item>
-                        <Sidebar.Item to="posts" icon={FaPaste as IconType}>
+                        <Sidebar.Item to="/recruiter/posts" end icon={FaPaste as IconType}>
                             {t('sidebar.recruiter.managePosts')}
                         </Sidebar.Item>
-                        <Sidebar.Item to="campaigns" icon={FaCampground as IconType}>
+                        <Sidebar.Item to="/recruiter/campaigns" icon={FaCampground as IconType}>
                             {t('sidebar.recruiter.camping')}
                         </Sidebar.Item>
-                        <Sidebar.Item to="applicants" icon={FaUsers as IconType}>
+                        <Sidebar.Item to="/recruiter/applicants" icon={FaUsers as IconType}>
                             {t('sidebar.recruiter.candidate')}
                         </Sidebar.Item>
-                        <Sidebar.Item to="interviews" icon={FaClipboard as IconType}>
+                        <Sidebar.Item to="/recruiter/interviews" icon={FaClipboard as IconType}>
                             {t('sidebar.recruiter.interview')}
                         </Sidebar.Item>
                     </Sidebar.ItemGroup>
@@ -50,10 +50,10 @@ export default function RcSidebar({ }: Props) {
                             label={t('sidebar.recruiter.account.label')}
                             icon={FaUser as IconType}
                         >
-                            <Sidebar.Item icon={FaClipboardUser as IconType} to="profile">
+                            <Sidebar.Item icon={FaClipboardUser as IconType} to="/recruiter/profile">
                                 {t('sidebar.recruiter.account.collapse.accountInfo')}
                             </Sidebar.Item>
-                            <Sidebar.Item icon={FaBuilding as IconType} to="business">
+                            <Sidebar.Item icon={FaBuilding as IconType} to="/recruiter/business">
                                 {t('sidebar.recruiter.account.collapse.businessInfo')}
                             </Sidebar.Item>
                         </Sidebar.Collapse>

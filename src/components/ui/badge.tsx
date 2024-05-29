@@ -15,7 +15,10 @@ const badgeVariants = cva(
         destructive:
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
         outline: "text-foreground",
-        success: "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
+        submitted: 'px-2 text-white rounded-lg bg-cyan-500',
+        reviewed: 'px-2 text-white rounded-lg bg-yellow-500',
+        rejected: 'px-2 text-white rounded-lg bg-red-500v',
+        success: "px-2 text-white rounded-lg bg-red-500v bg-emerald-500"
       },
     },
     defaultVariants: {

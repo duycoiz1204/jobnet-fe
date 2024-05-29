@@ -26,6 +26,7 @@ import ErrorType from '@/types/error';
 import ApplicationType from '@/types/application';
 import { useAppDispatch } from '@/hooks/useRedux';
 import PaginationType from '@/types/pagination';
+import clsx from 'clsx';
 
 interface RecentAppCpn {
   _applications: PaginationType<ApplicationType>;
@@ -57,7 +58,7 @@ export default function RecentAppCpn({ _applications }: RecentAppCpn) {
       dispatch(setLoading(true));
 
       try {
-        const resumeBlob = await resumeService.getResumeFile(resumeId);
+        const resumeBlob = await resumeService.getResumeFile(resumeId, session!!.accessToken);
         const resumeBlobURL = URL.createObjectURL(resumeBlob);
         window.open(resumeBlobURL);
       } catch (err) {
@@ -193,8 +194,8 @@ export default function RecentAppCpn({ _applications }: RecentAppCpn) {
                       src={
                         selectedApplication.jobSeeker.profileImageId
                           ? jobSeekerService.getJobSeekerProfileImage(
-                              selectedApplication.jobSeeker.id
-                            )
+                            selectedApplication.jobSeeker.id
+                          )
                           : 'https://www.w3schools.com/howto/img_avatar2.png'
                       }
                       alt=""
@@ -285,7 +286,16 @@ export default function RecentAppCpn({ _applications }: RecentAppCpn) {
                           ) + ':'
                         }
                       >
-                        <Badge className="w-min" color="success">
+                        <Badge variant={clsx({
+                          "submitted":
+                            selectedApplication.applicationStatus === 'Submitted',
+                          "reviewed":
+                            selectedApplication.applicationStatus === 'Reviewed',
+                          "rejected":
+                            selectedApplication.applicationStatus === 'Rejected',
+                          "success":
+                            selectedApplication.applicationStatus === 'Hired',
+                        }) as any}>
                           {selectedApplication.applicationStatus}
                         </Badge>
                       </DetailsSection>
@@ -371,9 +381,8 @@ export const Application = ({
   return (
     <>
       <div
-        className={`w-full h-fit flex flex-col gap-3 ${
-          type === 'Admin' ? 'bg-slate-200' : 'bg-slate-100'
-        } p-6 rounded-md`}
+        className={`w-full h-fit flex flex-col gap-3 ${type === 'Admin' ? 'bg-slate-200' : 'bg-slate-100'
+          } p-6 rounded-md`}
       >
         <div className="flex justify-between">
           <div>
@@ -406,8 +415,8 @@ export const Application = ({
             src={
               application.post.business.profileImageId
                 ? businessService.getBusinessProfileImage(
-                    application.post.business.id
-                  )
+                  application.post.business.id
+                )
                 : '/business.png'
             }
             className="object-cover w-12 h-12 rounded"

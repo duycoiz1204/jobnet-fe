@@ -42,10 +42,11 @@ class RecruiterService extends BaseService {
     return this.getResponseData<PaginationType<RecruiterType>>(res);
   }
 
-  async getRecruiterById(id: string, accessToken: string) {
+  async getRecruiterById(id: string, accessToken?: string) {
     const res = await fetch(`${this.apiBaseUrl}/${id}`, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+        // Authorization: `Bearer ${accessToken}`,
       },
     });
 
