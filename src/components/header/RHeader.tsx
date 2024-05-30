@@ -51,7 +51,7 @@ export default function RHeadder(): JSX.Element {
       <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between h-20 px-4 bg-white shadow lg:px-8 hover:shadow-lg">
         <div>
           <div className="flex items-center">
-            <Link href="." className="flex items-center">
+            <Link href="/recruiter" className="flex items-center">
               <img src={'/vite.svg'} className="h-10" />
               <h2 className="hidden ml-4 text-2xl font-bold lg:inline-block">
                 Brand
@@ -61,21 +61,21 @@ export default function RHeadder(): JSX.Element {
               <Dropdown
                 className="p-2"
                 render={
-                  <NavLink href="/jobseekers" className={recruiterNavLink}>
+                  <NavLink href="/recruiter/applicants" className={recruiterNavLink}>
                     {t('header.recruiter.candidate.label')}
                   </NavLink>
                 }
                 type="hover"
                 position="bottomLeft"
               >
-                <Dropdown.Item to="jobseekers" icon={FaBars as IconType}>
+                <Dropdown.Item to="/recruiter/applicants" icon={FaBars as IconType}>
                   {t('header.recruiter.candidate.dropdown.managementCandidate')}
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item to="jobseekers" icon={FaUser as IconType}>
+                <Dropdown.Item to="/recruiter/applicants" icon={FaUser as IconType}>
                   {t('header.recruiter.candidate.dropdown.rightCandidate')}
                 </Dropdown.Item>
-                <Dropdown.Item to="jobseeker" icon={FaHeart as IconType}>
+                <Dropdown.Item to="/recruiter/applicants" icon={FaHeart as IconType}>
                   {t('header.recruiter.candidate.dropdown.appliedCandiate')}
                 </Dropdown.Item>
               </Dropdown>
@@ -102,14 +102,14 @@ export default function RHeadder(): JSX.Element {
               <Dropdown
                 className="p-2"
                 render={
-                  <NavLink href="campaigns" className={recruiterNavLink}>
+                  <NavLink href="/recruiter/campaigns" className={recruiterNavLink}>
                     {t('header.recruiter.cv.label')}
                   </NavLink>
                 }
                 type="hover"
                 position="bottomLeft"
               >
-                <Dropdown.Item to="campaigns" icon={FaBars as IconType}>
+                <Dropdown.Item to="/recruiter/campaigns" icon={FaBars as IconType}>
                   {t('header.recruiter.cv.dropdown.rightCV')}
                 </Dropdown.Item>
               </Dropdown>
@@ -129,7 +129,7 @@ export default function RHeadder(): JSX.Element {
           )}{' '}
           {!session?.data?.user && (
             <Link
-              href={'../'}
+              href={'/'}
               className="px-4 py-2 font-semibold text-white transition-all rounded-lg bg-slate-400 hover:bg-slate-500"
             >
               {t('header.recruiter.unRegister.candidate')}
@@ -179,7 +179,7 @@ const RecruiterRegister = ({
       </TooltipProvider> */}
 
       {auth?.user && (
-        <Link href={'../../recruiter/posts/new'} className="block">
+        <Link href={'/recruiter/posts/new'} className="block">
           <Button size="sm">
             {' '}
             <FaFile className="mr-2" />
@@ -219,7 +219,7 @@ const RecruiterRegister = ({
         <Dropdown.Item to="/recruiter/business" icon={FaBusinessTime as IconType}>
           {t('header.recruiter.accountPopup.businessInfo')}
         </Dropdown.Item>
-        <Dropdown.Item to="jobseeker/settings" icon={FaGear as IconType}>
+        <Dropdown.Item to="/recruiter/profile" icon={FaGear as IconType}>
           {t('header.recruiter.accountPopup.setting')}
         </Dropdown.Item>
         <Dropdown.Divider />

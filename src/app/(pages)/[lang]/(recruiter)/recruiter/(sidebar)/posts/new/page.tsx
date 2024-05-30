@@ -21,7 +21,6 @@ import recruiterService from '@/services/recruiterService';
 import businessService from '@/services/businessService';
 import BusinessType from '@/types/business';
 import { Form } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import InputWithLabel from '@/components/input/InputWithLabel';
 import Selection from '@/components/select/Selection';
 import TagsInput from '@/components/input/TagsInput';
@@ -40,6 +39,7 @@ import LabelSection from '@/components/LabelSection';
 
 import { useFormState } from 'react-dom';
 import Radio from '@/components/input/Radio';
+import { Input } from '@/components/ui/input';
 
 export default function PostCreation() {
   const t = useTranslations();

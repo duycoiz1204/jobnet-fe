@@ -1,4 +1,6 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink } from '@/components/NavLink'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import useCollapse from '@/hooks/useCollapse'
 import { FaSearch } from 'react-icons/fa'
 import {
   FaArrowLeft,
@@ -7,21 +9,15 @@ import {
   FaBell,
   FaRocketchat,
 } from 'react-icons/fa6'
-import { Tooltip } from 'flowbite-react'
-
-import admin from '../../assets/images/admin.png'
-import useCollapse from '../../hooks/useCollapse'
-
 export default function ADHeader({
-  handleClick,
-  icon,
+  // handleClick,
+  // icon,
 }: {
-  handleClick: () => void
-  icon: boolean
+  // handleClick: () => void
+  // icon: boolean
 }): JSX.Element {
   const adminNavLink = ({ isActive }: { isActive: boolean }) =>
-    `transition-all hover:text-emerald-500 relative ${
-      isActive ? 'text-emerald-500' : ''
+    `transition-all hover:text-emerald-500 relative ${isActive ? 'text-emerald-500' : ''
     }`
 
   const [isVisible, controlVisible] = useCollapse()
@@ -30,7 +26,7 @@ export default function ADHeader({
     <>
       <header className="relative top-0 left-0 right-0 flex items-center justify-center h-20 px-2 mr-5 bg-white rounded-bl-lg rounded-br-lg shadow lg:mr-0 md:gap-10 lg:justify-between lg:gap-0 gap-x-5 lg:px-8 hover:shadow-lg">
         <div className="flex items-center gap-x-4 md:gap-x-2">
-          <span
+          {/* <span
             onClick={handleClick}
             className="block p-4 text-2xl leading-none transition-all rounded-lg cursor-pointer text-emerald-500 hover:bg-slate-100"
           >
@@ -46,7 +42,7 @@ export default function ADHeader({
                 </span>
               </>
             )}
-          </span>
+          </span> */}
 
           <h2 className="hidden ml-4 text-2xl font-bold sm:block">Dashboard</h2>
         </div>
@@ -64,41 +60,65 @@ export default function ADHeader({
             </div>
           </div>
           <div className="flex items-center gap-7">
-            <Tooltip content="Chat" style="light">
-              <NavLink to="chat" className={adminNavLink}>
-                <FaRocketchat className="text-2xl" />
-                <span className="shadow-md text-white absolute text-xs p-[2px] rounded-full bg-emerald-500 top-[-50%] right-[-50%]">
-                  23
-                </span>
-              </NavLink>
-            </Tooltip>
-            <Tooltip content="Thông báo" style="light">
-              <NavLink
-                to="notifications"
-                relative="route"
-                className={adminNavLink}
-              >
-                <FaBell className="text-2xl" />
-                <span className="shadow-md text-white absolute text-xs p-[2px] rounded-full bg-emerald-500 top-[-50%] right-[-50%]">
-                  51
-                </span>
-              </NavLink>
-            </Tooltip>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <NavLink href="chat" className={adminNavLink}>
+                    <FaRocketchat className="text-2xl" />
+                    <span className="shadow-md text-white absolute text-xs p-[2px] rounded-full bg-emerald-500 top-[-50%] right-[-50%]">
+                      23
+                    </span>
+                  </NavLink>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Chat</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <NavLink
+                    href="notifications"
+                    // relative="route"
+                    className={adminNavLink}
+                  >
+                    <FaBell className="text-2xl" />
+                    <span className="shadow-md text-white absolute text-xs p-[2px] rounded-full bg-emerald-500 top-[-50%] right-[-50%]">
+                      51
+                    </span>
+                  </NavLink>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Thông báo</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             <div
               className="inline-block cursor-pointer lg:hidden sm:block hover:text-emerald-500"
               onClick={controlVisible}
             >
               <FaSearch className="text-2xl" />
             </div>
-            <Tooltip content="Join Peter" style="light">
-              <div className="w-10 h-10 transition-all border-2 rounded-full cursor-pointer hover:border-emerald-500">
-                <img
-                  src={admin}
-                  alt=""
-                  className="w-full h-full rounded-full"
-                />
-              </div>
-            </Tooltip>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="w-10 h-10 transition-all border-2 rounded-full cursor-pointer hover:border-emerald-500">
+                    <img
+                      src={'/admin.png'}
+                      alt=""
+                      className="w-full h-full rounded-full"
+                    />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Join Peter</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+           
             <div className="flex-col items-center justify-center hidden sm:block md:hidden lg:flex">
               <h2 className="font-bold leading-none">Join Peter</h2>
               <span className="text-[#464a53] opacity-75 text-sm">

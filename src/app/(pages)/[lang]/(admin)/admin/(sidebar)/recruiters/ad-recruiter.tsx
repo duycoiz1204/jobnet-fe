@@ -27,12 +27,16 @@ type RecruiterCriteria = {
   sortBy: string[];
 };
 
-export default function ADRecruiterManagement() {
+interface ADRecruiterManagementProps {
+    _recruiters: PaginationType<RecruiterType>
+}
+
+export default function ADRecruiterManagement({_recruiters} : ADRecruiterManagementProps) {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
 
   const [dataSource, setDataSource] = useState<PaginationType<RecruiterType>>(
-    undefined!
+    _recruiters
   );
 
   const [params, setParams] = useState<RecruiterCriteria>({
@@ -43,14 +47,6 @@ export default function ADRecruiterManagement() {
     sortBy: [],
   });
 
-  useEffect(() => {
-    (async () => {
-      const _pagination = await recruiterService.getRecruiters({
-        accessToken: session!!.accessToken,
-      });
-      setDataSource(_pagination);
-    })();
-  }, []);
 
   const resetParams = () => {
     handleFindRecruiter({

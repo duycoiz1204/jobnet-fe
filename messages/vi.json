@@ -79,7 +79,8 @@
       "accountPopup": {
         "account": "Tài khoản",
         "businessInfo": "Thông tin doanh nghiệp",
-        "setting": "Thiết lập"
+        "setting": "Thiết lập",
+        "logout": "Đăng xuất"
       },
       "modal": {
         "logout": {

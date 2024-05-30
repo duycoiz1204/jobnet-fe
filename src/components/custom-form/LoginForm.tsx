@@ -12,9 +12,8 @@ import { z } from 'zod'
 import { useState, useTransition } from 'react'
 import {  useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { useSession } from 'next-auth/react'
-import { usePathname, useRouter } from '@/navigation'
-import { DEFAULT_LOGIN_JOBSEEKER_REDIRECT, DEFAULT_LOGIN_RECRUITER_REDIRECT } from '@/routes'
+import { usePathname } from '@/navigation'
+import { DEFAULT_LOGIN_ADMIN_REDIRECT, DEFAULT_LOGIN_JOBSEEKER_REDIRECT, DEFAULT_LOGIN_RECRUITER_REDIRECT } from '@/routes'
 
 type LoginProps = {
 
@@ -48,10 +47,11 @@ export default function LoginForm({ }: LoginProps) {
             }else{
                 let url = callbackUrl
                 if (!url){
-                    url = (pathname.includes("recruiter")) ? DEFAULT_LOGIN_RECRUITER_REDIRECT : DEFAULT_LOGIN_JOBSEEKER_REDIRECT
+                    url = (pathname.includes("recruiter")) ? DEFAULT_LOGIN_RECRUITER_REDIRECT : (
+                        (pathname.includes("admin")) ? DEFAULT_LOGIN_ADMIN_REDIRECT : DEFAULT_LOGIN_JOBSEEKER_REDIRECT
+                    )
                 }
                 window.location.href = url
-                // console.log("Session Data: ", status);
             }
         })
     }

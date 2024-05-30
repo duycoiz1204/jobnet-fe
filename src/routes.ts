@@ -48,6 +48,7 @@ export const authRoutes = [
   '/account/verify',
   '/recruiter/signin',
   '/recruiter/signup',
+  "/admin/signin"
 ];
 
 /**
@@ -62,4 +63,6 @@ export const apiAuthPrefix = '/api/auth';
  * @type {string}
  */
 export const DEFAULT_LOGIN_JOBSEEKER_REDIRECT = '/';
-export const DEFAULT_LOGIN_RECRUITER_REDIRECT = '/recruiter';
+export const DEFAULT_LOGIN_RECRUITER_REDIRECT = '/recruiter'
+export const DEFAULT_LOGIN_ADMIN_REDIRECT = '/admin';
+

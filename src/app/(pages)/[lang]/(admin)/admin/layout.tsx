@@ -12,6 +12,7 @@ import { Toaster } from 'sonner';
 import { boolean } from 'zod';
 import Footer from '@/components/Footer';
 import RHeadder from '@/components/header/RHeader';
+import ADHeader from '@/components/header/ADHeader';
 
 export const metadata: Metadata = {
     title: 'Recruiter Home',
@@ -29,35 +30,17 @@ type Props = Readonly<{
 const inter = Inter({ subsets: ['latin'] });
 
 export default async function Layout({ children, params }: Props) {
-    const head = await headers()
-    const pathname = head.get("x-pathname")!!
     const session = await auth();
     const messages = await getMessages();
-    let isUseHeader = true
-    if (pathname.includes("view-resume")) {
-        isUseHeader = false
-    }
 
     return (
-
         <html lang={params.lang}>
             <ReduxProvider>
                 <SessionsProvider session={session}>
                     <NextIntlClientProvider messages={messages} locale={params.lang}>
 
                         <body className={inter.className}>
-                            {(isUseHeader == true) ? (
-                                <div className="flex">
-                                    <RHeadder />
-                                    <div className="flex-1 px-2 py-2 bg-white lg:p-6">
-                                        {children}
-                                    </div>
-                                </div>
-                            ) : (
-                                <div>{ children }</div>
-                            )}
-                            {/* @ts-expect-error Async Server Component */}
-                            <Footer />
+                            <div>{children}</div>
                         </body>
                         <Toaster />
                     </NextIntlClientProvider>

@@ -59,8 +59,8 @@ class ApplicationService extends BaseService {
     props?.toDate && params.append('toDate', props.toDate.toString());
 
     const url = params.toString().length
-      ? `${this.apiBaseUrl}/recruiter?${params.toString()}`
-      : `${this.apiBaseUrl}/recruiter`;
+      ? `${this.apiBaseUrl}?${params.toString()}`
+      : `${this.apiBaseUrl}`;
 
     const res = await fetch(url, {
       headers: {

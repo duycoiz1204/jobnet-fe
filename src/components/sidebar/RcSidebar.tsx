@@ -1,6 +1,6 @@
 'use client'
 import Sidebar from '@/components/Sidebar'
-import React from 'react'
+import React, { useTransition } from 'react'
 import {
     FaBriefcase,
     FaBuilding,
@@ -15,12 +15,26 @@ import { HiArrowSmRight } from 'react-icons/hi'
 
 import type { IconType } from 'react-icons'
 import { useTranslations } from 'next-intl'
+import { logoutAction } from '@/actions/jsAuth'
+import { usePathname } from '@/navigation'
+import Modal from '@/components/modal/Modal'
+import { BsBoxArrowRight } from 'react-icons/bs'
+import { Button } from '@/components/ui/button'
+import useModal from '@/hooks/useModal'
 
 type Props = {}
 
 export default function RcSidebar({ }: Props) {
+    const [isPending, startTrasition] = useTransition()
     const t = useTranslations()
-
+    const pathname = usePathname()
+    const { modal, openModal, closeModal } = useModal()
+    const handleLogout = () => {
+        startTrasition(async () => {
+            await logoutAction()
+            window.location.href = pathname
+        })
+    }
     return (
         <div
             className="sticky hidden top-20 lg:flex"
@@ -57,12 +71,37 @@ export default function RcSidebar({ }: Props) {
                                 {t('sidebar.recruiter.account.collapse.businessInfo')}
                             </Sidebar.Item>
                         </Sidebar.Collapse>
-                        <Sidebar.Item icon={HiArrowSmRight as IconType}>
+                        <Sidebar.Item onClick={() => openModal('recruiter-logout-modal')} icon={HiArrowSmRight as IconType}>
                             {t('sidebar.recruiter.logout')}
                         </Sidebar.Item>
                     </Sidebar.ItemGroup>
                 </Sidebar.Items>
             </Sidebar>
+            <Modal
+                id="recruiter-logout-modal"
+                show={modal === 'recruiter-logout-modal'}
+                size="md"
+                popup
+                onClose={closeModal}
+            >
+                <Modal.Header />
+                <Modal.Body>
+                    <div className="text-center">
+                        <BsBoxArrowRight className="mx-auto mb-4 text-gray-400 h-14 w-14 dark:text-gray-200" />
+                        <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                            {t('header.recruiter.modal.logout.title')}
+                        </h3>
+                        <div className="flex justify-center gap-4">
+                            <Button onClick={handleLogout}>
+                                {t('header.recruiter.modal.logout.button.logout')}
+                            </Button>
+                            <Button variant="red" onClick={closeModal}>
+                                {t('header.recruiter.modal.logout.button.cancel')}
+                            </Button>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
         </div>
 
     )

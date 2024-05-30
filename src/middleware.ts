@@ -1,4 +1,4 @@
-import { DEFAULT_LOGIN_RECRUITER_REDIRECT, adminRoutes, recruiterRoutes } from './routes';
+import { DEFAULT_LOGIN_ADMIN_REDIRECT, DEFAULT_LOGIN_RECRUITER_REDIRECT, adminRoutes, recruiterRoutes } from './routes';
 import { NextRequest, NextResponse } from 'next/server';
 import { locales, defaultLocale, localePrefix } from '@/navigation';
 import createMiddleware from 'next-intl/middleware';
@@ -101,7 +101,7 @@ export default auth((req) => {
         if (isLoggedIn) {
             return Response.redirect(new URL( 
                 (req.auth!!.user.role == "JobSeeker") ? DEFAULT_LOGIN_JOBSEEKER_REDIRECT : (
-                    (req.auth!!.user.role == "Recruiter") ? DEFAULT_LOGIN_RECRUITER_REDIRECT : "ADMIN HERE"
+                    (req.auth!!.user.role == "Recruiter") ? DEFAULT_LOGIN_RECRUITER_REDIRECT : DEFAULT_LOGIN_ADMIN_REDIRECT
                 )
                 , req.nextUrl
             )) // Need 2 param to create absolute URL
@@ -121,9 +121,14 @@ export default auth((req) => {
 
         const encodedCallbackUrl = encodeURIComponent(callBackUrl)
         // Bring CallbackUrl to LoginForm 
-
+        let url = `/${locale}/`
+        if (roleReq == "Recruiter"){
+            url += "recruiter"
+        }else if (roleReq == "Admin"){
+            url += "admin"
+        }
         return Response.redirect(new URL(
-            `/${locale}/signin?callbackUrl=${encodedCallbackUrl}`,
+            `${url}/signin?callbackUrl=${encodedCallbackUrl}`,
             req.nextUrl
         ))
     }
