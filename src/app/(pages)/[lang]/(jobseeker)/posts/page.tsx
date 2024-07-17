@@ -18,13 +18,10 @@ export default async function Posts({ }: Props) {
   const url = header.get("x-url")
   const searchParams = new URL(url as string).searchParams
 
-  const criteria = {
-    search: (!searchParams.get('search')) ? searchParams.get('search') : '',
-  }
+  const search = (searchParams.get('search')) ? searchParams.get('search')!! : ''
   // Fetching
   const paginationPosts = await postService.getPosts({
-    ...criteria,
-    search: ""
+    search
   })
   const categories = await categoryService.getCategories()
   const professions = await professionService.getProfessions()

@@ -46,15 +46,15 @@ class PostService extends BaseService {
     props?.businessId && params.append('businessId', props.businessId);
     // props?.activeStatus && params.append('activeStatus', props.activeStatus)
     props?.fromDate &&
-      params.append('fromDate', format(new Date(props.fromDate), 'dd/MM/yyyy'));
+      params.append('fromDate', format(new Date(props.fromDate), 'dd/MM/yyyy'))
     props?.toDate &&
       params.append('toDate', format(new Date(props.toDate), 'dd/MM/yyyy'));
-    props?.isExpired && params.append('isExpired', props.isExpired.toString());
+    props?.isExpired && params.append('isExpired', props.isExpired.toString())
 
     const url = params.toString().length
       ? `${this.apiElasticUrl}?${params.toString()}`
       : this.apiElasticUrl;
-    console.log("URL: ", url);
+    console.log("URL: ", url)
 
     // const res = await fetch(url);
 

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '@/app/globals.css';
 import AdSidebar from '@/components/sidebar/AdSidebar';
+import ProviderLayout from '@/components/layout/ProviderLayout';
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -18,11 +19,16 @@ type Props = Readonly<{
 
 export default async function Layout({ children, params }: Props) {
     return (
-        <div className="flex h-screen bg-slate-100">
+        <ProviderLayout
+        // eslint-disable-next-line react/no-children-prop
+        children={
+            <div className="flex h-screen bg-slate-100">
             <AdSidebar />
             <div className="flex-1 mx-4">
                 {children}
             </div>
         </div>
+        }
+        params={params} />
     );
 }

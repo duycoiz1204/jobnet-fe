@@ -5,3 +5,5 @@ export default interface ProfessionType {
   categoryId: string;
   totalPosts: number
 }
+
+

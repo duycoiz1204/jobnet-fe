@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '@/app/globals.css';
 import RcSidebar from '@/components/sidebar/RcSidebar';
+import RootLayout from '@/app/layout';
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -18,11 +19,14 @@ type Props = Readonly<{
 
 export default async function Layout({ children, params }: Props) {
     return (
-        <div className="flex">
-            <RcSidebar />
-            <div className="flex-1 px-2 py-2 bg-white lg:p-6">
-                {children}
+        // eslint-disable-next-line react/no-children-prop
+        <RootLayout children={
+            <div className="flex">
+                <RcSidebar />
+                <div className="flex-1 px-2 py-2 bg-white lg:p-6">
+                    {children}
+                </div>
             </div>
-        </div>
+        } params={params}/>
     );
 }

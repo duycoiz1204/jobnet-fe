@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import '@/app/globals.css';
+import ProviderLayout from '@/components/layout/ProviderLayout';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,12 +16,11 @@ type Props = Readonly<{
   params: { lang: string };
 }>;
 
-export default async function RootLayout({ children }: Props) {
+export default async function Layout({ children, params }: Props) {
   return (
-    <html>
-      <body>
-        {children}
-      </body>
-    </html>
+    <ProviderLayout 
+    // eslint-disable-next-line react/no-children-prop
+    children={<div>{children}</div>}
+    params={params}/>
   );
 }

@@ -8,15 +8,17 @@ interface LoadingProps {
 
 function Loader({ show, onClose }: LoadingProps): JSX.Element {
   return (
-    <Modal show={show} popup onClose={onClose} className="w-[auto]" size={'sm'}>
-      <Modal.Body className="flex flex-col items-center justify-center py-3">
-        <HashLoader
-          className="-translate-x-4"
-          color="#36d7b7"
-          size={40}
-          speedMultiplier={1.2}
-        />
-        <h2 className="mt-2">Vui lòng chờ ...</h2>
+    <Modal show={show} popup onClose={onClose} className="w-[auto]" size={'md'}>
+      <Modal.Body className="">
+        <div className='flex flex-col gap-y-4 items-center justify-center pt-5'>
+          <HashLoader
+            className="-translate-x-4"
+            color="#36d7b7"
+            size={40}
+            speedMultiplier={1.2}
+          />
+          <h2 >Vui lòng chờ ...</h2>
+        </div>
       </Modal.Body>
     </Modal>
   );

@@ -15,7 +15,7 @@ type Props = Readonly<{
   params: { lang: string };
 }>;
 
-export default async function RootLayout({ children, params }: Props) {
+export default async function Layout({ children, params }: Props) {
   return (
     <div>
       {children}

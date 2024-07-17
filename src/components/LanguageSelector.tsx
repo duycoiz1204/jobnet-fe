@@ -1,11 +1,9 @@
 'use client'
 import Dropdown from '@/components/Dropdown'
 import { Badge } from '@/components/ui/badge'
-import { redirect, usePathname, useRouter } from '@/navigation'
+import {  usePathname, useRouter } from '@/navigation'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip"
 import { useLocale, useTranslations } from 'next-intl'
-import { getLocale, getTranslations } from 'next-intl/server'
-import { headers } from 'next/headers'
 
 
 export default function LanguageSelector(): React.ReactElement {

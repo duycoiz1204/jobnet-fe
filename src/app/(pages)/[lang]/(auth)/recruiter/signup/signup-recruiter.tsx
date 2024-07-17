@@ -54,8 +54,6 @@ export default function RcSignUpForm({ }: Props) {
     }
 
     const handleBusinessChange = (business: BusinessType) => {
-        console.log("Confirm 2: ", recruiterSignUp);
-
         setRecruiterSignUp({
             intent: "registerWithSelectedBusiness",
             selectedBusiness: business,
@@ -74,7 +72,6 @@ export default function RcSignUpForm({ }: Props) {
                 if (!validatedField.success || !values.businessName) {
                     setError("Invalid Information.")
                 } else {
-                    console.log("New Values: ", values);
                     const user = await registrationService.registerRecruiterWithNewBusiness(
                         {
                             email: values.email,
@@ -90,7 +87,6 @@ export default function RcSignUpForm({ }: Props) {
                 if (!validatedField.success) {
                     setError("Invalid Information.")
                 } else {
-                    console.log("Selected Values: ", values);
                     const user =
                         await registrationService.registerRecruiterWithSelectedBusiness(
                             {

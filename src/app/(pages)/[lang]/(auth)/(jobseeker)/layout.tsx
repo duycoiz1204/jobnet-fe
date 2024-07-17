@@ -1,16 +1,8 @@
 import AuthenticateLayout from '@/components/layout/AuthenticateLayout';
-import { usePathname } from '@/navigation';
 import '@/app/globals.css';
 import { headers } from 'next/headers';
 import React from 'react'
-import { ReduxProvider } from '@/context/ReduxProvider';
-import SessionsProvider from '@/context/SessionProvider';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
-import { auth } from '@/auth';
-import { Toaster } from 'sonner';
-import { Inter } from 'next/font/google';
-
+import ProviderLayout from '@/components/layout/ProviderLayout';
 type LayoutSize = 'xs' | 'sm' | 'md' | 'lg'
 
 type Props = Readonly<{
@@ -72,13 +64,9 @@ const adSignInLayout = {
     layoutSize: 'sm',
     verify: false
 }
-const inter = Inter({ subsets: ['latin'] });
 
-export default async function RootLayout({ children, params }: Props) {
-    const session = await auth();
-    const messages = await getMessages();
+export default async function Layout({ children, params }: Props) {
     const header = headers()
-    console.log("URL: ", header.get("x-pathname"));
     const pathname = header.get("x-pathname")
     const { welcome, introduction, intendedFor, padding, backgroundImage, layoutSize } =
         (pathname?.includes("recruiter")) ? (
@@ -90,30 +78,22 @@ export default async function RootLayout({ children, params }: Props) {
                 )
             )
         )
-    console.log({ welcome, introduction, intendedFor, padding, backgroundImage });
 
     return (
-        <html lang={params.lang}>
-            <ReduxProvider>
-                <SessionsProvider session={session}>
-                    <NextIntlClientProvider messages={messages} locale={params.lang}>
-
-                        <body className={inter.className}>
-                            <AuthenticateLayout
-                                welcome={welcome}
-                                introduction={introduction}
-                                intendedFor={intendedFor}
-                                padding={padding}
-                                backgroundImage={backgroundImage}
-                                layoutSize={layoutSize as LayoutSize}
-                            >
-                                {children}
-                            </AuthenticateLayout>
-                        </body>
-                        <Toaster />
-                    </NextIntlClientProvider>
-                </SessionsProvider>
-            </ReduxProvider>
-        </html>
+        <ProviderLayout
+            // eslint-disable-next-line react/no-children-prop
+            children={
+                <AuthenticateLayout
+                    welcome={welcome}
+                    introduction={introduction}
+                    intendedFor={intendedFor}
+                    padding={padding}
+                    backgroundImage={backgroundImage}
+                    layoutSize={layoutSize as LayoutSize}
+                >
+                    {children}
+                </AuthenticateLayout>
+            }
+            params={params} />
     )
 }
