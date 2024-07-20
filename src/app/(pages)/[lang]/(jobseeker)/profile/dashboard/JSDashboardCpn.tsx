@@ -28,7 +28,7 @@ export default function JSDashboardCpn({
             'rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px',
     };
     return (
-        <div className="bg-gray-100 dashboard pt-10">
+        <div className="pt-10 bg-gray-100 dashboard">
             <div className="flex flex-col w-full gap-3 mx-auto overflow-x-hidden lg:flex-row lg:gap-1 drop-shadow-lg">
                 <div className="w-full lg:w-2/6 bg-slate-50 h-fit">
                     <div className="flex items-center justify-center p-3 bg-purple-500 gap-x-16">

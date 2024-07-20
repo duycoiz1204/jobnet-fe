@@ -40,8 +40,8 @@ export default async function ProviderLayout({ children, params }: Props) {
                         <body>
                             {children}
                             <HubspotConversationsProvider />
+                            <Toaster />
                         </body>
-                        <Toaster />
                     </NextIntlClientProvider>
                 </SessionsProvider>
             </ReduxProvider>
