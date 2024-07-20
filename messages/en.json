@@ -338,6 +338,9 @@
           "cancel": "Cancel"
         }
       },
+      "upgradeAccount": {
+        "title": "Upgrade your account"
+      },
       "personalInfo": {
         "title": "Update personal information",
         "inputs": {

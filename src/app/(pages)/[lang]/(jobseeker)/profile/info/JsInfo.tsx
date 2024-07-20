@@ -13,14 +13,16 @@ import { Button } from '@/components/ui/button';
 import { setLoading } from '@/features/loading/loadingSlice';
 import useModal from '@/hooks/useModal';
 import { useAppDispatch } from '@/hooks/useRedux';
-import { useForceUpdate } from '@/lib/hooks';
+import { useRouter } from '@/navigation';
 import jobSeekerService from '@/services/jobSeekerService';
+import paymentService from '@/services/paymentService';
 import ErrorType from '@/types/error';
 import JobSeekerType from '@/types/jobSeeker';
 import { CircleAlert, OctagonAlert, TicketCheck } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { useCallback, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useCallback, useState, useEffect } from 'react';
 import { toast } from 'sonner';
 
 const initPersonalInfo = (jobSeeker: JobSeekerType) => ({
@@ -45,6 +47,8 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
   const t = useTranslations();
   const dispatch = useAppDispatch();
   const { data: session } = useSession();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   // _jobSeeker.refresh = false
   const [jobSeeker, setJobSeeker] = useState<JobSeekerType>(_jobSeeker);
   const [keyAvatar, setKeyAvatar] = useState<number>(0);
@@ -54,6 +58,23 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
     initProfessionInfo(jobSeeker)
   );
   const { modal, openModal, closeModal } = useModal();
+
+  useEffect(() => {
+    const upgradeAccount = searchParams.get('upgradeAccount');
+    const token = searchParams.get('token');
+    if (upgradeAccount === 'success' && token) {
+      (async () => {
+        try {
+          await paymentService.capturePayment({ token }, session?.accessToken!);
+          alert(upgradeAccount + ':' + token);
+        } catch (e) {
+          alert('Failed to capture payment');
+        }
+      })();
+    } else if (upgradeAccount === 'cancel' && token) {
+      alert(upgradeAccount + ':' + token);
+    }
+  }, [searchParams, session?.accessToken]);
 
   const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     changeInfo(e, setPersonalInfo);
@@ -193,7 +214,7 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
   };
 
   return (
-    <div className="divide-y-2 pt-20">
+    <div className="pt-20 divide-y-2">
       <div className="pb-6">
         <div className="flex flex-col items-baseline justify-between w-full gap-2 sm:flex-row">
           <h1 className="text-2xl font-bold">{t('jsProfile.title')}</h1>
@@ -239,7 +260,10 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
                 {t('jsProfile.button.deleteImage')}
               </Button>
             </div>
-            <Button color="slate">
+            <Button
+              color="slate"
+              onClick={() => openModal('upgrade-account-modal')}
+            >
               {t('jsProfile.button.upgradeAccount')}
             </Button>
           </div>
@@ -338,6 +362,54 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
             </Button>
             <Button color="slate" onClick={closeModal}>
               {t('jsProfile.modal.delete.button.cancel')}
+            </Button>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        id="upgrade-account-modal"
+        show={modal === 'upgrade-account-modal'}
+        onClose={closeModal}
+        size="lg"
+      >
+        <Modal.Header>{t('jsProfile.modal.upgradeAccount.title')}</Modal.Header>
+        <Modal.Body className="py-10 space-y-5">
+          <div className="space-y-4">
+            <h4>
+              Nâng cấp tài khoản để nâng cao trải nghiệm của bạn (thời hạn sử
+              dụng trong vòng 1 tháng).
+            </h4>
+            <div className="space-y-2">
+              <div>
+                Bạn có thể dùng những tính năng nâng cao sau khi nâng cấp, cụ
+                thể như sau:
+              </div>
+              <ul className="italic">
+                <li>1. Chatbot</li>
+                <li>2. Resume CVs</li>
+                <li>3. Biểu tượng xác minh tài khoản</li>
+              </ul>
+            </div>
+          </div>
+          <div className="flex justify-end gap-4">
+            <Button
+              color="emerald"
+              onClick={async () => {
+                const payment = await paymentService.createPayment(
+                  {
+                    total: 100,
+                    description: 'Create payment for upgrading account',
+                  },
+                  session?.accessToken!
+                );
+                router.push(payment.url);
+              }}
+            >
+              {t('fileUpload.button.upload')}
+            </Button>
+            <Button color="red" onClick={closeModal}>
+              {t('fileUpload.button.cancel')}
             </Button>
           </div>
         </Modal.Body>
