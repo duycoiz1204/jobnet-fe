@@ -66,13 +66,14 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
       (async () => {
         try {
           await paymentService.capturePayment({ token }, session?.accessToken!);
-          alert(upgradeAccount + ':' + token);
+          toast.success('Congrats! Your account is upgraded successfully');
+          setJobSeeker((js) => ({ ...js, upgraded: true }));
         } catch (e) {
-          alert('Failed to capture payment');
+          toast.error('Oops! Failed to capture payment');
         }
       })();
     } else if (upgradeAccount === 'cancel' && token) {
-      alert(upgradeAccount + ':' + token);
+      toast.info('Your account upgrading request is cancel');
     }
   }, [searchParams, session?.accessToken]);
 
@@ -260,12 +261,14 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
                 {t('jsProfile.button.deleteImage')}
               </Button>
             </div>
-            <Button
-              color="slate"
-              onClick={() => openModal('upgrade-account-modal')}
-            >
-              {t('jsProfile.button.upgradeAccount')}
-            </Button>
+            {!jobSeeker.upgraded && (
+              <Button
+                color="slate"
+                onClick={() => openModal('upgrade-account-modal')}
+              >
+                {t('jsProfile.button.upgradeAccount')}
+              </Button>
+            )}
           </div>
           <h1 className="mt-2 text-xl font-bold">{jobSeeker.name}</h1>
         </div>

@@ -4,7 +4,8 @@ export default interface UserType {
   id: string
   email: string
   name: string
-  role: 'Admin' | 'Recruiter' | 'JobSeeker'
+  role: 'Admin' | 'Recruiter' | 'JobSeeker',
+  upgraded: boolean,
 }
 
 export interface UserSessionType {
