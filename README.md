@@ -42,4 +42,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 
 ### Fixing Bug
-# Cors - Enable Chrome without security: "C:\Program Files\Google\Chrome\Application\chrome.exe" --user-data-dir="C:/Chrome dev session" --disable-web-security
+# Cors - Enable Chrome without security: 
+```bash 
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --user-data-dir="C:/Chrome dev session" --disable-web-security
+
+```

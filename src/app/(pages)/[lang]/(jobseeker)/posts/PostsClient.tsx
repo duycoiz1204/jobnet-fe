@@ -13,7 +13,7 @@ import PostType from '@/types/post'
 import ProfessionType from '@/types/profession'
 import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import EmptyData from '@/components/EmptyData'
 import Pagination from '@/components/Pagination'
@@ -22,17 +22,18 @@ import Post from '@/components/Post'
 type Props = {
     paginationPosts: PaginationType<PostType>,
     categories: CategoryType[],
-    professions: ProfessionType[]
+    professions: ProfessionType[],
+    posts: PostType[]
 }
 
 export default function PostsClient({
-    paginationPosts, categories, professions
+    paginationPosts, categories, professions, posts
 }: Props) {
     console.log("Reload posts page client");
     const t = useTranslations()
     const dispatch = useAppDispatch()
     const { pagination, setPagination, scrollIntoView, scrollIntoViewRef } = usePagination(paginationPosts)
-
+    const [postsFetch, setPosts] = useState(posts)
     const [criteria, setCriteria] = useState({
         search: '',
         categoryId: '',
@@ -53,17 +54,14 @@ export default function PostsClient({
         void (async () => {
             dispatch(setLoading(true))
             try {
-                const pagination = await postService.getPosts({
-                    page,
-                    ...criteria,
-                    minSalary: parseInt(criteria.minSalary),
-                    maxSalary: parseInt(criteria.maxSalary),
-                    provinceName: criteria.provinceName,
-                    sortBy: [criteria.sortBy],
-                    activeStatus: 'Opening',
-                    isExpired: false,
+                const postsChange = postsFetch.slice( (page - 1) * 5, page * 5)                
+                setPagination({
+                    totalElements: postsFetch.length,
+                    totalPages: Math.ceil(postsFetch.length / 5),
+                    currentPage: page,
+                    hasNextPage: Math.ceil(postsFetch.length / 5) !== page,
+                    data: postsChange
                 })
-                setPagination(pagination)
                 scrollIntoView()
             } catch (err) {
                 console.error(err)
@@ -87,7 +85,7 @@ export default function PostsClient({
             dispatch(setLoading(true))
 
             try {
-                const pagination = await postService.getPosts({
+                const postsNew = await postService.getPosts({
                     ...criteria,
                     minSalary: parseInt(criteria.minSalary),
                     maxSalary: parseInt(criteria.maxSalary),
@@ -96,7 +94,14 @@ export default function PostsClient({
                     activeStatus: 'Opening',
                     isExpired: false,
                 })
-                setPagination(pagination)
+                setPosts(postsNew)
+                setPagination({
+                    totalElements: postsNew.length,
+                    totalPages: Math.ceil(postsNew.length / 5),
+                    currentPage: 1,
+                    hasNextPage: Math.ceil(postsNew.length / 5) !== 1,
+                    data: postsNew.slice(0, 5)
+                })
             } catch (err) {
                 console.error(err)
             } finally {
@@ -104,25 +109,28 @@ export default function PostsClient({
             }
         })()
     }
-    
+
     const handleSortByChange = (e: SelectChangeEvent) => {
         const sortBy = e.target.value
-        console.log(sortBy)
 
         sortBy &&
             void (async () => {
                 dispatch(setLoading(true))
                 try {
-                    const pagination = await postService.getPosts({
-                        ...criteria,
-                        minSalary: parseInt(criteria.minSalary),
-                        maxSalary: parseInt(criteria.maxSalary),
-                        provinceName: criteria.provinceName,
-                        sortBy: [sortBy],
-                        activeStatus: 'Opening',
-                        isExpired: false,
+                    let postsSorted = [] as PostType[]
+                    if (sortBy == "salary-desc") {
+                        postsSorted = posts.sort((a, b) => b.maxSalary - a.maxSalary )
+                    } else {
+                        postsSorted = posts.sort((a, b) => new Date(a.createdAt) < new Date(b.createdAt) ? 1 : -1)
+                    }
+                    setPosts(postsSorted)
+                    setPagination({
+                        totalElements: postsFetch.length,
+                        totalPages: Math.ceil(postsFetch.length / 5),
+                        currentPage: 1,
+                        hasNextPage: Math.ceil(postsFetch.length / 5) !== 1,
+                        data: postsSorted.slice(0, 5)
                     })
-                    setPagination(pagination)
                     setCriteria((prev) => ({ ...prev, sortBy }))
                 } catch (err) {
                     console.error(err)
@@ -288,8 +296,7 @@ export default function PostsClient({
                                         {
                                             id: 'salary-desc',
                                             name: t('posts.select.sortBy.option.highestSalary'),
-                                        },
-                                        // { id: '', name: 'Cập nhật gần đây' },
+                                        }
                                     ]}
                                     value={criteria.sortBy}
                                     onSelectChange={handleSortByChange}

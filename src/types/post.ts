@@ -20,7 +20,7 @@ export default interface PostType {
   profession: ProfessionType | undefined;
   minSalary: string | number;
   minSalaryString: string;
-  maxSalary: string | number; 
+  maxSalary:  number; 
   maxSalaryString: string;
   level: LevelType;
   locations: Array<LocationType>;
