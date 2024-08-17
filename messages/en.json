@@ -306,8 +306,10 @@
     "button": {
       "uploadImage": "Upload image",
       "deleteImage": "Delete image",
+      "cvParser": "Update info from CV",
       "upgradeAccount": "Upgrade account"
     },
+    "aboutMe": "About me",
     "personalInfo": {
       "title": "Personal information",
       "items": {
@@ -326,6 +328,8 @@
         "workplace": "Workplace:"
       }
     },
+    "education": "Education",
+    "socialNetworks": "Social networks",
     "modal": {
       "profileImageUpload": {
         "title": "Upload image",
@@ -340,6 +344,20 @@
       },
       "upgradeAccount": {
         "title": "Upgrade your account"
+      },
+      "cvParser": {
+        "title": "Update profile from CV",
+        "inputs": {
+          "cv": {
+            "title": "Upload CV"
+          }
+        }
+      },
+      "aboutMe": {
+        "title": "Update about me",
+        "textArea": {
+          "placeholder": "Type your about me here..."
+        }
       },
       "personalInfo": {
         "title": "Update personal information",
@@ -385,6 +403,18 @@
         "button": {
           "update": "Update",
           "cancel": "Cancel"
+        }
+      },
+      "education": {
+        "title": "Update education",
+        "textArea": {
+          "placeholder": "Type your education here..."
+        }
+      },
+      "socialNetworks": {
+        "title": "Update social networks",
+        "textArea": {
+          "placeholder": "Type your social networks here..."
         }
       }
     }
@@ -1124,7 +1154,7 @@
     }
   },
   "verify": {
-    "sentTitle": "We had sent the OTP code to your email", 
+    "sentTitle": "We had sent the OTP code to your email",
     "jobSeeker": {
       "welcome": "Verify your account to complete employer account creation",
       "intended": "Authenticate employer account"

@@ -71,7 +71,7 @@ InfoSection.Item = function Item({
   title,
   content,
 }: {
-  title: string;
+  title?: string;
   content?: string;
 }): JSX.Element {
   const context = useContext(InfoSectionContext);
@@ -82,7 +82,9 @@ InfoSection.Item = function Item({
 
   return (
     <div className="flex items-center">
-      <div className="flex-none w-32 font-semibold sm:w-40">{title}</div>
+      {title && (
+        <div className="flex-none w-32 font-semibold sm:w-40">{title}</div>
+      )}
       <div className="flex items-center grow">{content}</div>
     </div>
   );

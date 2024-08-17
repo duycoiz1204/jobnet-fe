@@ -9,7 +9,9 @@ import LocationInput, {
 } from '@/components/input/LocationInput';
 import Modal from '@/components/modal/Modal';
 import ModalForm from '@/components/modal/ModalForm';
+import TextareaWithLabel from '@/components/textarea/TextareaWithLabel';
 import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import { setLoading } from '@/features/loading/loadingSlice';
 import useModal from '@/hooks/useModal';
 import { useAppDispatch } from '@/hooks/useRedux';
@@ -22,8 +24,11 @@ import { CircleAlert, OctagonAlert, TicketCheck } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { toast } from 'sonner';
+import pyhelperService from '@/services/pyhelperService';
+
+const initAboutMe = (jobSeeker: JobSeekerType) => jobSeeker?.aboutMe || '';
 
 const initPersonalInfo = (jobSeeker: JobSeekerType) => ({
   name: jobSeeker.name,
@@ -39,6 +44,11 @@ const initProfessionInfo = (jobSeeker: JobSeekerType) => ({
   location: jobSeeker.location,
 });
 
+const initEducation = (jobSeeker: JobSeekerType) => jobSeeker?.education || '';
+
+const initSocialNetworks = (jobSeeker: JobSeekerType) =>
+  jobSeeker?.socialNetworks || '';
+
 interface Props {
   _jobSeeker: JobSeekerType;
 }
@@ -53,9 +63,15 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
   const [jobSeeker, setJobSeeker] = useState<JobSeekerType>(_jobSeeker);
   const [keyAvatar, setKeyAvatar] = useState<number>(0);
   const [file, setFile] = useState<File>();
+
+  const [aboutMe, setAboutMe] = useState(initAboutMe(jobSeeker));
   const [personalInfo, setPersonalInfo] = useState(initPersonalInfo(jobSeeker));
   const [professionInfo, setProfessionInfo] = useState(
     initProfessionInfo(jobSeeker)
+  );
+  const [education, setEducation] = useState(initEducation(jobSeeker));
+  const [socialNetworks, setSocialNetworks] = useState(
+    initSocialNetworks(jobSeeker)
   );
   const { modal, openModal, closeModal } = useModal();
 
@@ -77,6 +93,41 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
     }
   }, [searchParams, session?.accessToken]);
 
+  const handleCVParserInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const formData = new FormData();
+    formData.set('file', e.target.files![0], 'cvParser.pdf');
+
+    dispatch(setLoading(true));
+    (async () => {
+      try {
+        const response = await pyhelperService.parseCV(formData, 'cvParser');
+        setAboutMe((prev) => response.aboutMe || prev);
+        setPersonalInfo((prev) => ({
+          ...prev,
+          name: response.name || prev.name,
+          phone: response.phone || prev.phone,
+          nation: response.nation || prev.nation,
+        }));
+        setProfessionInfo((prev) => ({
+          ...prev,
+          profession: response.profession || prev.profession,
+        }));
+        setEducation((prev) => response.education || prev);
+        setSocialNetworks((prev) => response.socialNetworks.join('\n') || prev);
+        toast.success('Load CV profile successfully');
+      } catch (e) {
+        toast.error('Failed to load your CV!');
+      } finally {
+        dispatch(setLoading(false));
+      }
+    })();
+  };
+
+  const handleAboutMeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+    setAboutMe(e.target.value);
+
   const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     changeInfo(e, setPersonalInfo);
 
@@ -96,6 +147,13 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
     []
   );
 
+  const handleEducationChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+    setEducation(e.target.value);
+
+  const handleSocialNetworksChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => setSocialNetworks(e.target.value);
+
   const changeInfo = <T,>(
     e: React.ChangeEvent<HTMLInputElement>,
     setInfo: React.Dispatch<React.SetStateAction<T>>
@@ -112,6 +170,21 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
 
   const handleCloseProfessionInfoModal = () => {
     setProfessionInfo(initProfessionInfo(jobSeeker));
+    closeModal();
+  };
+
+  const handleEducationModalClose = () => {
+    setEducation(initEducation(jobSeeker));
+    closeModal();
+  };
+
+  const handleAboutMeModalClose = () => {
+    setAboutMe(initAboutMe(jobSeeker));
+    closeModal();
+  };
+
+  const handleSocialNetworksModalClose = () => {
+    setSocialNetworks(initSocialNetworks(jobSeeker));
     closeModal();
   };
 
@@ -150,7 +223,85 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
     })();
   };
 
-  const handlePersonalInfoUpdate = () => {
+  const handleParseCVSubmit = async () => {
+    if (
+      !aboutMe ||
+      !personalInfo.name ||
+      !personalInfo.email ||
+      !personalInfo.phone ||
+      !personalInfo.nation ||
+      !professionInfo.salary ||
+      !professionInfo.workingFormat ||
+      !professionInfo.profession ||
+      !professionInfo.location ||
+      !education
+    ) {
+      toast.error('Vui lòng nhập đầy đủ thông tin!');
+      return;
+    }
+
+    dispatch(setLoading(true));
+    try {
+      await jobSeekerService.updateJobSeekerAboutMe(
+        _jobSeeker.id,
+        { aboutMe },
+        session?.accessToken!
+      );
+      await jobSeekerService.updateJobSeekerPersonalInfo(
+        _jobSeeker.id,
+        personalInfo,
+        session!!.accessToken
+      );
+      await jobSeekerService.updateJobSeekerProfessionInfo(
+        _jobSeeker.id,
+        professionInfo,
+        session!!.accessToken
+      );
+      await jobSeekerService.updateJobSeekerEducation(
+        _jobSeeker.id,
+        { education },
+        session?.accessToken!
+      );
+      const jobSeeker = await jobSeekerService.updateJobSeekerSocialNetworks(
+        _jobSeeker.id,
+        { socialNetworks },
+        session?.accessToken!
+      );
+      setJobSeeker(jobSeeker);
+      toast.success('Cập nhật thông tin cá nhân thành công.');
+      closeModal();
+    } catch (e) {
+      openModal('cv-parser-modal');
+      toast.error((e as ErrorType).message);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
+  const handleAboutMeUpdate = async () => {
+    if (!aboutMe) {
+      toast.error('Vui lòng nhập đầy đủ thông tin!');
+      return;
+    }
+
+    dispatch(setLoading(true));
+    try {
+      const jobSeeker = await jobSeekerService.updateJobSeekerAboutMe(
+        _jobSeeker.id,
+        { aboutMe },
+        session?.accessToken!
+      );
+      setJobSeeker(jobSeeker);
+      toast.success('Cập nhật thông tin cá nhân thành công.');
+      closeModal();
+    } catch (e) {
+      toast.error((e as ErrorType).message);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
+  const handlePersonalInfoUpdate = async () => {
     if (
       !personalInfo.name ||
       !personalInfo.email ||
@@ -161,28 +312,26 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
       return;
     }
 
-    void (async () => {
-      closeModal();
-      dispatch(setLoading(true));
+    closeModal();
+    dispatch(setLoading(true));
 
-      try {
-        const jobSeeker = await jobSeekerService.updateJobSeekerPersonalInfo(
-          _jobSeeker.id,
-          personalInfo,
-          session!!.accessToken
-        );
-        setJobSeeker(jobSeeker);
-        toast.success('Cập nhật thông tin cá nhân thành công.');
-      } catch (err) {
-        openModal('personal-info-modal');
-        toast.error((err as ErrorType).message);
-      } finally {
-        dispatch(setLoading(false));
-      }
-    })();
+    try {
+      const jobSeeker = await jobSeekerService.updateJobSeekerPersonalInfo(
+        _jobSeeker.id,
+        personalInfo,
+        session!!.accessToken
+      );
+      setJobSeeker(jobSeeker);
+      toast.success('Cập nhật thông tin cá nhân thành công.');
+    } catch (err) {
+      openModal('personal-info-modal');
+      toast.error((err as ErrorType).message);
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
 
-  const handleProfessionInfoUpdate = () => {
+  const handleProfessionInfoUpdate = async () => {
     if (
       !professionInfo.salary ||
       !professionInfo.workingFormat ||
@@ -193,25 +342,69 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
       return;
     }
 
-    void (async () => {
-      closeModal();
-      dispatch(setLoading(true));
+    closeModal();
+    dispatch(setLoading(true));
 
-      try {
-        const jobSeeker = await jobSeekerService.updateJobSeekerProfessionInfo(
-          _jobSeeker.id,
-          professionInfo,
-          session!!.accessToken
-        );
-        setJobSeeker(jobSeeker);
-        toast.success('Cập nhật thông tin nghề nghiệp thành công.');
-      } catch (err) {
-        openModal('profession-info-modal');
-        toast.error((err as ErrorType).message);
-      } finally {
-        dispatch(setLoading(false));
-      }
-    })();
+    try {
+      const jobSeeker = await jobSeekerService.updateJobSeekerProfessionInfo(
+        _jobSeeker.id,
+        professionInfo,
+        session!!.accessToken
+      );
+      setJobSeeker(jobSeeker);
+      toast.success('Cập nhật thông tin nghề nghiệp thành công.');
+    } catch (err) {
+      openModal('profession-info-modal');
+      toast.error((err as ErrorType).message);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
+  const handleEducationUpdate = async () => {
+    if (!education) {
+      toast.error('Vui lòng nhập đầy đủ thông tin!');
+      return;
+    }
+
+    dispatch(setLoading(true));
+    try {
+      const jobSeeker = await jobSeekerService.updateJobSeekerEducation(
+        _jobSeeker.id,
+        { education },
+        session?.accessToken!
+      );
+      setJobSeeker(jobSeeker);
+      toast.success('Cập nhật thông tin cá nhân thành công.');
+      closeModal();
+    } catch (e) {
+      toast.error((e as ErrorType).message);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
+  const handleSocialNetworksUpdate = async () => {
+    if (!socialNetworks) {
+      toast.error('Vui lòng nhập đầy đủ thông tin!');
+      return;
+    }
+
+    dispatch(setLoading(true));
+    try {
+      const jobSeeker = await jobSeekerService.updateJobSeekerSocialNetworks(
+        _jobSeeker.id,
+        { socialNetworks },
+        session?.accessToken!
+      );
+      setJobSeeker(jobSeeker);
+      toast.success('Cập nhật thông tin cá nhân thành công.');
+      closeModal();
+    } catch (e) {
+      toast.error((e as ErrorType).message);
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
 
   return (
@@ -260,6 +453,12 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
               >
                 {t('jsProfile.button.deleteImage')}
               </Button>
+              <Button
+                data-modal-id="cv-parser-modal"
+                onClick={() => openModal('cv-parser-modal')}
+              >
+                {t('jsProfile.button.cvParser')}
+              </Button>
             </div>
             {!jobSeeker.upgraded && (
               <Button
@@ -273,6 +472,18 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
           <h1 className="mt-2 text-xl font-bold">{jobSeeker.name}</h1>
         </div>
       </div>
+
+      <InfoSection
+        className="py-6"
+        header={
+          <InfoSection.HeaderItem
+            title={t('jsProfile.aboutMe')}
+            handleOpenModal={() => openModal('about-me-modal')}
+          />
+        }
+      >
+        <InfoSection.Item content={jobSeeker.aboutMe} />
+      </InfoSection>
 
       <InfoSection
         className="py-6"
@@ -326,6 +537,30 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
           title={t('jsProfile.careerInfo.items.workplace')}
           content={`${jobSeeker.location?.specificAddress} - ${jobSeeker.location?.provinceName}`}
         />
+      </InfoSection>
+
+      <InfoSection
+        className="py-6"
+        header={
+          <InfoSection.HeaderItem
+            title={t('jsProfile.education')}
+            handleOpenModal={() => openModal('education-info-modal')}
+          />
+        }
+      >
+        <InfoSection.Item content={education} />
+      </InfoSection>
+
+      <InfoSection
+        className="py-6"
+        header={
+          <InfoSection.HeaderItem
+            title={t('jsProfile.socialNetworks')}
+            handleOpenModal={() => openModal('social-networks-modal')}
+          />
+        }
+      >
+        <InfoSection.Item content={socialNetworks} />
       </InfoSection>
 
       <Modal
@@ -415,6 +650,127 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
               {t('fileUpload.button.cancel')}
             </Button>
           </div>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        id="cv-parser-modal"
+        show={modal === 'cv-parser-modal'}
+        size="2xl"
+        onClose={() => undefined}
+      >
+        <Modal.Body>
+          <div>
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              {t('jsProfile.modal.cvParser.title')}
+            </h3>
+            <div className="space-y-4">
+              <InputWithLabel
+                label={t('jsProfile.modal.cvParser.inputs.cv.title')}
+                type="file"
+                name="cv"
+                accept="application/pdf"
+                onChange={handleCVParserInputChange}
+              />
+              <InputWithLabel
+                label={t('jsProfile.modal.personalInfo.inputs.fullName.title')}
+                name="name"
+                placeholder={t(
+                  'jsProfile.modal.personalInfo.inputs.fullName.placeholder'
+                )}
+                value={personalInfo.name}
+                onChange={handlePersonalInfoChange}
+              />
+              <TextareaWithLabel
+                label="About me"
+                name="aboutMe"
+                placeholder={t('jsProfile.modal.aboutMe.textArea.placeholder')}
+                value={aboutMe}
+                onChange={handleAboutMeChange}
+              />
+              <InputWithLabel
+                label={t('jsProfile.modal.personalInfo.inputs.phone.title')}
+                name="phone"
+                placeholder={t(
+                  'jsProfile.modal.personalInfo.inputs.phone.placeholder'
+                )}
+                value={personalInfo.phone}
+                onChange={handlePersonalInfoChange}
+              />
+              <InputWithLabel
+                label={t('jsProfile.modal.personalInfo.inputs.nation.title')}
+                name="nation"
+                placeholder={t(
+                  'jsProfile.modal.personalInfo.inputs.nation.placeholder'
+                )}
+                value={personalInfo.nation}
+                onChange={handlePersonalInfoChange}
+              />
+              <InputWithLabel
+                label={t(
+                  'jsProfile.modal.professionInfo.inputs.profession.title'
+                )}
+                name="profession"
+                placeholder={t(
+                  'jsProfile.modal.professionInfo.inputs.profession.placeholder'
+                )}
+                value={professionInfo.profession}
+                onChange={handleProfessionInfoChange}
+              />
+              <TextareaWithLabel
+                label="Education"
+                name="education"
+                placeholder={t(
+                  'jsProfile.modal.education.textArea.placeholder'
+                )}
+                value={education}
+                onChange={handleEducationChange}
+              />
+              <TextareaWithLabel
+                label="Social Networks"
+                name="socialNetworks"
+                placeholder={t(
+                  'jsProfile.modal.socialNetworks.textArea.placeholder'
+                )}
+                value={socialNetworks}
+                onChange={handleSocialNetworksChange}
+              />
+            </div>
+            <div className="flex justify-center gap-4 mt-3">
+              <Button
+                type="submit"
+                color="failure"
+                onClick={handleParseCVSubmit}
+              >
+                Tôi chắc chắn
+              </Button>
+              <Button color="gray" onClick={() => undefined}>
+                Hủy
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        id="about-me-modal"
+        show={modal === 'about-me-modal'}
+        size="2xl"
+        onClose={handleAboutMeModalClose}
+      >
+        <Modal.Body>
+          <ModalForm
+            title={t('jsProfile.modal.aboutMe.title')}
+            onInfoUpdate={handleAboutMeUpdate}
+            onModalClose={handleAboutMeModalClose}
+          >
+            <Textarea
+              name="aboutMe"
+              placeholder={t('jsProfile.modal.aboutMe.textArea.placeholder')}
+              value={aboutMe}
+              onChange={handleAboutMeChange}
+            />
+          </ModalForm>
         </Modal.Body>
       </Modal>
 
@@ -520,6 +876,52 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
               {t('jsProfile.modal.professionInfo.button.cancel')}
             </Button>
           </div>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        id="education-info-modal"
+        show={modal === 'education-info-modal'}
+        size="2xl"
+        onClose={handleEducationModalClose}
+      >
+        <Modal.Body>
+          <ModalForm
+            title={t('jsProfile.modal.education.title')}
+            onInfoUpdate={handleEducationUpdate}
+            onModalClose={handleEducationModalClose}
+          >
+            <Textarea
+              name="education"
+              placeholder={t('jsProfile.modal.education.textArea.placeholder')}
+              value={education}
+              onChange={handleEducationChange}
+            />
+          </ModalForm>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        id="social-networks-modal"
+        show={modal === 'social-networks-modal'}
+        size="2xl"
+        onClose={handleSocialNetworksModalClose}
+      >
+        <Modal.Body>
+          <ModalForm
+            title={t('jsProfile.modal.socialNetworks.title')}
+            onInfoUpdate={handleSocialNetworksUpdate}
+            onModalClose={handleSocialNetworksModalClose}
+          >
+            <Textarea
+              name="socialNetworks"
+              placeholder={t(
+                'jsProfile.modal.socialNetworks.textArea.placeholder'
+              )}
+              value={socialNetworks}
+              onChange={handleSocialNetworksChange}
+            />
+          </ModalForm>
         </Modal.Body>
       </Modal>
     </div>

@@ -58,6 +58,12 @@ class JobSeekerService extends BaseService {
     return this.getResponseData<JobSeekerType>(res);
   }
 
+  async updateJobSeekerAboutMe(id: string, req: object, accessToken: string) {
+    const url = `${this.apiBaseUrl}/${id}/aboutMe`;
+
+    return this.updateJobSeekerInfo(url, req, accessToken);
+  }
+
   async updateJobSeekerPersonalInfo(
     id: string,
     req: object,
@@ -74,6 +80,22 @@ class JobSeekerService extends BaseService {
     accessToken: string
   ) {
     const url = `${this.apiBaseUrl}/${id}/professionInfo`;
+
+    return this.updateJobSeekerInfo(url, req, accessToken);
+  }
+
+  async updateJobSeekerEducation(id: string, req: object, accessToken: string) {
+    const url = `${this.apiBaseUrl}/${id}/education`;
+
+    return this.updateJobSeekerInfo(url, req, accessToken);
+  }
+
+  async updateJobSeekerSocialNetworks(
+    id: string,
+    req: object,
+    accessToken: string
+  ) {
+    const url = `${this.apiBaseUrl}/${id}/socialNetworks`;
 
     return this.updateJobSeekerInfo(url, req, accessToken);
   }
