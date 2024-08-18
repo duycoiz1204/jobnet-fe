@@ -87,7 +87,7 @@ export default function PostsClient({
             dispatch(setLoading(true))
 
             try {
-                const postsNew = await postService.getPosts({
+                const postsNew = await postService.getElasticPosts({
                     ...criteria,
                     minSalary: parseInt(criteria.minSalary),
                     maxSalary: parseInt(criteria.maxSalary),

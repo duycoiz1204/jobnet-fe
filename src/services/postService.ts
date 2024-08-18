@@ -4,29 +4,32 @@ import BaseService from './baseService';
 
 import PostType, { PostActiveStatus } from '@/types/post';
 import envConfig from '@/config';
+import PaginationType from '@/types/pagination';
+
+type GetProps = {
+  page?: number;
+  pageSize?: number;
+  sortBy?: string[];
+  search?: string;
+  categoryId?: string;
+  professionId?: string;
+  minSalary?: number;
+  maxSalary?: number;
+  provinceName?: string;
+  workingFormat?: string;
+  recruiterId?: string;
+  businessId?: string;
+  activeStatus?: string;
+  fromDate?: string;
+  toDate?: string;
+  isExpired?: boolean | string;
+};
 
 class PostService extends BaseService {
   private apiBaseUrl = `${envConfig.NEXT_PUBLIC_BASE_URL}/api/posts`;
   private apiElasticUrl = `${envConfig.NEXT_PUBLIC_ELASTIC}/api/post`;
 
-  async getPosts(props?: {
-    page?: number;
-    pageSize?: number;
-    sortBy?: string[];
-    search?: string;
-    categoryId?: string;
-    professionId?: string;
-    minSalary?: number;
-    maxSalary?: number;
-    provinceName?: string;
-    workingFormat?: string;
-    recruiterId?: string;
-    businessId?: string;
-    activeStatus?: string;
-    fromDate?: string;
-    toDate?: string;
-    isExpired?: boolean | string;
-  }) {
+  async getPosts(props?: GetProps) {
     const params = new URLSearchParams();
     props?.page && params.append('page', props.page.toString());
     props?.pageSize && params.append('pageSize', props.pageSize.toString());
@@ -43,16 +46,35 @@ class PostService extends BaseService {
     props?.workingFormat && params.append('workingFormat', props.workingFormat);
     props?.recruiterId && params.append('recruiterId', props.recruiterId);
     props?.businessId && params.append('businessId', props.businessId);
-    // props?.activeStatus && params.append('activeStatus', props.activeStatus)
     props?.fromDate &&
-      params.append('fromDate', format(new Date(props.fromDate), 'dd/MM/yyyy'))
+      params.append('fromDate', format(new Date(props.fromDate), 'dd/MM/yyyy'));
     props?.toDate &&
       params.append('toDate', format(new Date(props.toDate), 'dd/MM/yyyy'));
-    props?.isExpired && params.append('isExpired', props.isExpired.toString())
+    props?.isExpired && params.append('isExpired', props.isExpired.toString());
+
+    const url = params.toString().length
+      ? `${this.apiBaseUrl}?${params.toString()}`
+      : this.apiBaseUrl;
+    const res = await fetch(url);
+
+    this.checkResponseNotOk(res);
+    return await this.getResponseData<PaginationType<PostType>>(res);
+  }
+
+  async getElasticPosts(props?: GetProps) {
+    const params = new URLSearchParams();
+    props?.search && params.append('search', props.search);
+    props?.categoryId && params.append('categoryId', props.categoryId);
+    props?.professionId && params.append('professionId', props.professionId);
+    props?.minSalary && params.append('minSalary', props.minSalary.toString());
+    props?.maxSalary && params.append('maxSalary', props.maxSalary.toString());
+    props?.provinceName &&
+      params.append('provinceName', props.provinceName.toString());
+    props?.workingFormat && params.append('workingFormat', props.workingFormat);
 
     const url = params.toString().length
       ? `${this.apiElasticUrl}?${params.toString()}`
-      : this.apiElasticUrl
+      : this.apiElasticUrl;
     const res = await fetch(url);
 
     this.checkResponseNotOk(res);

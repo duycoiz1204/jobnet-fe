@@ -140,8 +140,6 @@ class JobSeekerService extends BaseService {
 
   getJobSeekerProfileImage(id: string) {
     const url = `${this.apiBaseUrl}/${id}/profileImage`;
-    console.log('Come to get Image');
-
     return url;
   }
 

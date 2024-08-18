@@ -23,7 +23,7 @@ export default async function Posts({ }: Props) {
   console.log("Search: ", search);
   
   // Fetching
-  const posts = await postService.getPosts({
+  const posts = await postService.getElasticPosts({
     search
   })
   const paginationPosts = {
