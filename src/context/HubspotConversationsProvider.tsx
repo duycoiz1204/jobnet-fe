@@ -22,6 +22,8 @@ import Cookies from "js-cookie";
 import hubspotService from '@/services/hubspotService';
 import chatbotService from '@/services/chatbotService';
 import Loader from '@/components/loader/Loader';
+import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
+import { setLoading } from '@/features/loading/loadingSlice';
 
 interface HubspotConversationsContextType {
   toggleWidget: () => void;
@@ -38,7 +40,8 @@ export const HubspotConversationsProvider = ({ children }: { children?: ReactNod
 
   const [isReady, setIsReady] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setLoading] = useState(false)
+  const dispatch = useAppDispatch()
+  let isLoading = useAppSelector((state) => state.loading)
   // AskEmail Stage
   const botDefaultMessage = "First of all, enter basis information to save your contact"
   const botChatflowMessage = "Choose the thread that you want to ask"
@@ -217,7 +220,7 @@ export const HubspotConversationsProvider = ({ children }: { children?: ReactNod
   useEffect(() => {
     if (isOpen) {
       (async () => {
-        setLoading(true)
+        dispatch(setLoading(true))
         // The way set isShowChatflow always true except the remove thread behaviour from user system -> isShowChatflow not updated on that action.
         let isShowChatflow = (Cookies.get('isShowChatflow') == undefined || Cookies.get('isShowChatflow') == "true") ? true : false
         if (isShowChatflow) {
@@ -227,12 +230,12 @@ export const HubspotConversationsProvider = ({ children }: { children?: ReactNod
         if (!isShowChatflow) {
           setChatflowUIStageCriteria({ ...chatflowUIStageCriteria, isPassed: true })
           Cookies.set("isShowChatflow", "false")
-          setLoading(false)
+          dispatch(setLoading(false))
         } else {
           const AIUser = await hubspotService.getActor(process.env.NEXT_PUBLIC_HUSPOT_AI_ACTOR_ID as string)
           const AssistantUser = await hubspotService.getActor(process.env.NEXT_PUBLIC_HUSPOT_ASSISTANT_ACTOR_ID as string)
           setHubspotUser({ ...hubspotUser, aiUser: AIUser, assistantUser: AssistantUser })
-          setLoading(false)
+          dispatch(setLoading(false))
         }
       })();
     }
@@ -341,7 +344,6 @@ export const HubspotConversationsProvider = ({ children }: { children?: ReactNod
               : <BiSolidChat className='w-14 h-14 transition-all shadow-lg shadow-emerald-500/50 text-white hover:w-[60px] hover:h-[60px]  p-3 bg-emerald-400 rounded-full' />
           }
         </button>
-        <Loader show={isLoading} onClose={() => { }} />
       </div>
     </HubspotConversationsContext.Provider>
   );

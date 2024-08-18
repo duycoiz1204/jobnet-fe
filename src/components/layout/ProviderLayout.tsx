@@ -7,7 +7,7 @@ import SessionsProvider from '@/context/SessionProvider';
 import { ReduxProvider } from '@/context/ReduxProvider';
 import { HubspotConversationsProvider } from '@/context/HubspotConversationsProvider';
 import Script from 'next/script';
-
+import { LoaderReduxCpn } from '@/components/loader/Loader';
 
 export async function generateStaticParams() {
     return [{ lang: 'en' }, { lang: 'vi' }];
@@ -19,9 +19,8 @@ type Props = {
 }
 
 export default async function ProviderLayout({ children, params }: Props) {
-    const session = await auth();
-    const messages = await getMessages();
-
+    const session = await auth()
+    const messages = await getMessages()
     return (
         <html>
             <Script id='huspot-widget'>{`
@@ -41,6 +40,7 @@ export default async function ProviderLayout({ children, params }: Props) {
                             {children}
                             <HubspotConversationsProvider />
                             <Toaster />
+                            <LoaderReduxCpn />
                         </body>
                     </NextIntlClientProvider>
                 </SessionsProvider>

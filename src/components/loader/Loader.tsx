@@ -1,15 +1,18 @@
+'use client'
+import Modal from '@/components/modal/Modal';
+import { setLoading } from '@/features/loading/loadingSlice';
+import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { HashLoader } from 'react-spinners';
-import Modal from '../modal/Modal';
 
 interface LoadingProps {
   show: boolean;
-  onClose: () => void;
+  onClose?: () => void
 }
 
 function Loader({ show, onClose }: LoadingProps): JSX.Element {
   return (
     <Modal show={show} popup onClose={onClose} className="w-[auto]" size={'md'}>
-      <Modal.Body className="">
+      <Modal.Body>
         <div className='flex flex-col gap-y-4 items-center justify-center pt-5'>
           <HashLoader
             className="-translate-x-4"
@@ -49,3 +52,14 @@ export const LoadingGenerateJD = ({ show }: { show: boolean }) => {
     </>
   );
 };
+
+export const LoaderReduxCpn = () => {
+  const loading = useAppSelector((state) => state.loading)
+  return (
+    <>
+      <Loader show={loading} />
+    </>
+  );
+};
+
+
