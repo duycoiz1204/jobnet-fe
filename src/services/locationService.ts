@@ -1,7 +1,7 @@
 import BaseService from '@/services/baseService';
 import locations from '../../public/data/locations.json';
 
-export interface APILocationType {
+export interface LocationType {
   id?: string;
   name: string;
   slug?: string;
@@ -13,7 +13,7 @@ export interface APILocationType {
 
 class LocationService extends BaseService {
   getLocations() {
-    return locations;
+    return locations as LocationType[];
   }
 }
 

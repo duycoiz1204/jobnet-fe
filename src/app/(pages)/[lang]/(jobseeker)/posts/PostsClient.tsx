@@ -18,16 +18,18 @@ import { toast } from 'sonner'
 import EmptyData from '@/components/EmptyData'
 import Pagination from '@/components/Pagination'
 import Post from '@/components/Post'
+import { LocationType } from '@/services/locationService'
 
 type Props = {
     paginationPosts: PaginationType<PostType>,
     categories: CategoryType[],
     professions: ProfessionType[],
     posts: PostType[]
+    locations: LocationType[]
 }
 
 export default function PostsClient({
-    paginationPosts, categories, professions, posts
+    paginationPosts, categories, professions, posts, locations
 }: Props) {
     console.log("Reload posts page client");
     const t = useTranslations()
@@ -235,7 +237,7 @@ export default function PostsClient({
                                     name="provinceName"
                                     className="flex-1 bg-white"
                                     placeholder={t('posts.select.location.placeholder')}
-                                    // options={mappedLocations}
+                                    options={locations.map(location => ({...location, id: location.name}))}
                                     value={criteria.provinceName}
                                     onSelectChange={handleCriteriaChange}
                                 />
