@@ -52,6 +52,13 @@ export default function RecentAppCpn({ _applications }: RecentAppCpn) {
     openModal('details-modal');
   };
 
+  const handleCancelClick = (applicationId: string) => {
+    (async () => {
+      await applicationService.updateApplicationStatus(applicationId, "Canceled", session?.accessToken!!)
+      handlePageChange(pagination.currentPage);
+    })()
+  }
+
   const handleViewCVClick = (resumeId: string) => {
     void (async () => {
       closeModal();
@@ -98,6 +105,7 @@ export default function RecentAppCpn({ _applications }: RecentAppCpn) {
       key={application.id}
       application={application}
       onDetailsClick={() => handleDetailsClick(application.id)}
+      onCancelClick={() => handleCancelClick(application.id)}
     />
   ));
 
@@ -371,10 +379,12 @@ type ViewMode = 'Admin' | 'Jobseeker';
 export const Application = ({
   application,
   onDetailsClick,
+  onCancelClick,
   type = 'Jobseeker',
 }: {
   application: ApplicationType;
   onDetailsClick?: () => void;
+  onCancelClick?: () => void
   type?: ViewMode;
 }) => {
   const t = useTranslations();
@@ -446,7 +456,7 @@ export const Application = ({
                 {t('recentApplications.post.button.detail')}
               </Button>
               {application.applicationStatus === 'Submitted' && (
-                <Button variant="red" size="sm">
+                <Button variant="red" size="sm" onClick={onCancelClick}>
                   {t('recentApplications.post.button.cancel')}
                 </Button>
               )}

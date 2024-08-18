@@ -1,7 +1,7 @@
 import JobseekerType from './jobSeeker';
 import PostType from './post';
 
-export type ApplicationStatus = 'Submitted' | 'Reviewed' | 'Rejected' | 'Hired';
+export type ApplicationStatus = 'Submitted' | 'Reviewed' | 'Rejected' | 'Hired' | 'Canceled';
 
 export default interface ApplicationType {
   id: string;

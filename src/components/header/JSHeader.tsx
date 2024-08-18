@@ -52,21 +52,21 @@ export default function JSHeader({}: JSHeaderProps): JSX.Element {
           <Dropdown
             width="w-[300px]"
             render={
-              <NavLink href="posts" className={navLinkCls}>
+              <NavLink href="/posts" className={navLinkCls}>
                 {t('header.jobSeeker.search.label')}
               </NavLink>
             }
             type="hover"
           >
-            <Dropdown.Item to="posts" icon={FaSearch as IconType}>
+            <Dropdown.Item to="/posts" icon={FaSearch as IconType} >
               {t('header.jobSeeker.search.dropdown.searchJobs')}
             </Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item to="application" icon={FaGear as IconType}>
+            <Dropdown.Item to="/profile/recent-applications" icon={FaGear as IconType}>
               {t('header.jobSeeker.search.dropdown.appliedJobs')}
             </Dropdown.Item>
             <Dropdown.Item
-              to="jobseeker/favorite-jobs"
+              to="/profile/favourite-posts"
               icon={FaHeart as IconType}
             >
               {t('header.jobSeeker.search.dropdown.bookmarkedJobs')}
