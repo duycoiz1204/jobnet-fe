@@ -278,6 +278,15 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
     }
   };
 
+  const handleParseCVCancel = () => {
+    setAboutMe(initAboutMe(jobSeeker));
+    setPersonalInfo(initPersonalInfo(jobSeeker));
+    setProfessionInfo(initProfessionInfo(jobSeeker));
+    setEducation(initEducation(jobSeeker));
+    setSocialNetworks(initSocialNetworks(jobSeeker));
+    closeModal();
+  }
+
   const handleAboutMeUpdate = async () => {
     if (!aboutMe) {
       toast.error('Vui lòng nhập đầy đủ thông tin!');
@@ -657,7 +666,7 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
         id="cv-parser-modal"
         show={modal === 'cv-parser-modal'}
         size="2xl"
-        onClose={() => undefined}
+        onClose={handleParseCVCancel}
       >
         <Modal.Body>
           <div>
@@ -744,7 +753,7 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
               >
                 Tôi chắc chắn
               </Button>
-              <Button color="gray" onClick={() => undefined}>
+              <Button color="gray" onClick={handleParseCVCancel}>
                 Hủy
               </Button>
             </div>

@@ -8,6 +8,8 @@ import HomeCarousel from '@/components/HomeCarousel';
 import businessService from '@/services/businessService';
 import { auth } from '@/auth';
 import '@/app/globals.css';
+import categoryService from '@/services/categoryService';
+import CategoryCard from '@/components/card/CategoryCard';
 
 export default async function Home() {
   const t = await getTranslations();
@@ -15,7 +17,9 @@ export default async function Home() {
   const topBusinessesElms = (await businessService.getBusinesses()).data.map(
     (topBusiness) => <TopBusinessCard key={topBusiness.id} data={topBusiness} />
   );
-  const categoriesElms: any = [];
+  const categoriesElms = (await categoryService.getCategories()).map(
+    (category) => <CategoryCard key={category.id} data={category} />
+  );
 
   return (
     <div className="pt-20 pb-12 space-y-8">

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { Link, useRouter } from '@/navigation';
 import { useTranslations } from 'next-intl';
-import { differenceInDays } from 'date-fns';
+import { differenceInDays, parse } from 'date-fns';
 import { setLoading } from '@/features/loading/loadingSlice';
 import usePagination from '@/hooks/usePagination';
 
@@ -179,7 +179,7 @@ function FavoriteJob({
     const router = useRouter();
     const t = useTranslations();
     const remainingApplicationDays = differenceInDays(
-        new Date(post.applicationDeadline),
+        new Date(parse(post.applicationDeadline, 'dd/MM/yyyy', new Date())),
         new Date()
     );
     return (
@@ -216,9 +216,13 @@ function FavoriteJob({
                 </div>
             </div>
             <div className="flex flex-wrap justify-start gap-2 md:gap-4">
-                <Tag>Quận 7, Tp HCM</Tag>
-                <Tag>Mới</Tag>
-                <Tag>Còn {remainingApplicationDays} ngày để ứng tuyển</Tag>
+                {post.locations.map((location, index) => (
+                    <Tag key={index}>{location.provinceName}</Tag>
+                ))}
+                <Tag>{t('post.tag.new')}</Tag>
+                <Tag>
+                    {t('post.tag.remainingDays', { number: remainingApplicationDays })}{' '}
+                </Tag>
             </div>
             <div className="flex flex-col items-center justify-between gap-2 md:gap-0 sm:flex-row">
                 <div className="flex-none text-sm italic text-slate-600 text-end">
