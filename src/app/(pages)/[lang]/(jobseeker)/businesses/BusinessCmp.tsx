@@ -138,7 +138,7 @@ function BusinessItem({ business }: { business: BusinessType }): JSX.Element {
                     className="object-cover w-full h-full rounded-md"
                 ></img>
             </div>
-            <div className="flex flex-col px-3 pb-6 -mt-3 -translate-y-8 lg:mt-0 lg:px-6">
+            <div className="flex flex-col px-3 pb-6 gap-y-3 -mt-3 -translate-y-8 lg:mt-0 lg:px-6">
                 <Link
                     href={`${pathname}/${business.id}`}
                     className="inline-block text-lg font-bold truncate hover:underline hover:text-emerald-500"
@@ -146,7 +146,7 @@ function BusinessItem({ business }: { business: BusinessType }): JSX.Element {
                     {business.name}
                 </Link>
                 <div
-                    className="w-full h-full p-0 m-0 -translate-y-4 top-5 multiline-ellipsis"
+                    className="w-full h-full p-0 m-0 -translate-y-4 top-5 multiline-ellipsis text-justify overflow-hidden"
                     dangerouslySetInnerHTML={{ __html: business.description }}
                 ></div>
             </div>

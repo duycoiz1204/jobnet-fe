@@ -64,6 +64,7 @@ function BusinessInfo({
             status: 'FOLLOW',
             businessId: businessId,
           }, session!!.accessToken!!);
+          
         setFollow(true);
         toast.success(t('toast.follow.followed'));
       } catch (e) {

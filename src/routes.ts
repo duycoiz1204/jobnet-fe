@@ -59,6 +59,18 @@ export const authRoutes = [
 export const apiAuthPrefix = '/api/auth';
 
 /**
+ * Routes with no chatWidget
+ * @type {string}
+ */
+export const noChatWidgetRoutes = [
+  '/signin',
+  '/signup',
+  '/account/verify',
+  '/recruiter/signin',
+  '/recruiter/signup',
+  "/admin/signin"
+];
+/**
  * The default redirect URL after logging in
  * @type {string}
  */

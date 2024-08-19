@@ -25,8 +25,8 @@ export default function AuthenticateLayout({
   const t = useTranslations();
   return (
     <div
-      className={`flex items-start justify-center ${
-        layoutSize === 'lg' ? 'py-8 mx-auto h-[90%]' : 'h-full pb-5 md:pt-10 '
+      className={`flex items-center justify-center ${
+        layoutSize === 'lg' ? 'py-8 mx-auto h-[100%]' : 'h-screen pb-5 '
       } md:px-2 lg:px-0 md:bg-slate-200`}
     >
       <div
