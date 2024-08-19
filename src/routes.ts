@@ -69,7 +69,7 @@ export const noChatWidgetRoutes = [
   '/recruiter/signin',
   '/recruiter/signup',
   "/admin/signin"
-];
+]
 /**
  * The default redirect URL after logging in
  * @type {string}

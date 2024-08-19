@@ -16,8 +16,8 @@ import {
     FaMagnifyingGlass,
     FaRegAddressCard,
     FaHeadphones,
+    FaAddressCard 
 } from 'react-icons/fa6'
-import { useState } from "react"
 import Modal from "@/components/modal/Modal"
 import useModal from "@/hooks/useModal"
 import { UserSessionType } from "@/types/user"
@@ -31,9 +31,9 @@ export default function AuthRightControls({
     auth: UserSessionType
     logout: () => void
 }): JSX.Element {
-    function FaAddressCard(props: IconBaseProps): Element {
-        throw new Error("Function not implemented.")
-    }
+    // function FaAddressCard(props: IconBaseProps): Element {
+    //     throw new Error("Function not implemented.")
+    // }
     const { modal, openModal, closeModal } = useModal()
     return (
         <>

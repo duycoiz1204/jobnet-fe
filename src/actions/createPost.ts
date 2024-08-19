@@ -3,7 +3,7 @@
 import { redirect } from '@/navigation';
 import postService from '@/services/postService';
 import ErrorType from '@/types/error';
-import LocationType from '@/types/location';
+import LocationFullType from '@/types/location';
 import { formatDate } from 'date-fns';
 import { toast } from 'sonner';
 
@@ -38,7 +38,7 @@ async function createPost(
   const locationJsons = formData.getAll('locations');
   formData.delete('locations');
   locationJsons
-    .map((json) => JSON.parse(json as string) as LocationType)
+    .map((json) => JSON.parse(json as string) as LocationFullType)
     .forEach((location, i) => {
       formData.append(`locations[${i}].provinceName`, location.provinceName);
       formData.append(

@@ -1,6 +1,5 @@
 import NextAuth from "next-auth"
 import authConfig from "@/auth.config"
-import envConfig from "@/config";
 import authService from "@/services/authService";
 
 

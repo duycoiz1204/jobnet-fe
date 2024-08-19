@@ -20,7 +20,7 @@ type Props = {
     searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default function page({ searchParams }: Props) {
+export default function VerifyPage({ searchParams }: Props) {
     const userId = searchParams.userId as string
     const email = searchParams.email
     const baseUrl = searchParams.baseUrl || ""

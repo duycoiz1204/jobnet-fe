@@ -6,10 +6,10 @@ export class DataField {
   }
 
   getValue(data: object | string): string {
-    let dataTemp: object | number | string = data;
+    let dataTemp: any = data;
 
     for (let i = 0; i < this.field.length; i++) {
-      dataTemp = dataTemp[this.field[i]];
+      dataTemp = dataTemp[this.field[i]]
     }
     if (dataTemp === 0) return '0';
     return (dataTemp as string) || 'No data';

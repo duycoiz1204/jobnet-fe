@@ -1,5 +1,4 @@
 import { DEFAULT_LOGIN_ADMIN_REDIRECT, DEFAULT_LOGIN_RECRUITER_REDIRECT, adminRoutes, recruiterRoutes } from './routes';
-import { NextRequest, NextResponse } from 'next/server';
 import { locales, defaultLocale, localePrefix } from '@/navigation';
 import createMiddleware from 'next-intl/middleware';
 

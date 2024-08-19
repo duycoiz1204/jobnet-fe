@@ -18,7 +18,7 @@ type Props = {
 
 }
 
-export default function page({ }: Props) {
+export default function SignUpPage({ }: Props) {
   const t = useTranslations();
   const [error, setError] = useState<string | undefined>("")
   const router = useRouter()

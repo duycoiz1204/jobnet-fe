@@ -15,16 +15,19 @@ export default {
     
             // logic to verify if user exists
             const {email, password} = credentials
-            
-            let response = await fetch("http://localhost:8080/api/auth/login", {
+            let response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {
               method: "POST",
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({email, password})
             })     
+            console.log(response);
+            
             if(response.ok){
               const {user, accessToken, refreshToken} = await response.json()
+              console.log("User: ", user, accessToken, refreshToken);
+              
               user.accessToken = accessToken
               user.refreshToken = refreshToken
               return user
