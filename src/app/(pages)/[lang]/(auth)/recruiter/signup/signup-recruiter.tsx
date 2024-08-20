@@ -19,6 +19,9 @@ import { useRouter } from '@/navigation';
 import { TriangleAlert } from 'lucide-react';
 import Modal from '@/components/modal/Modal';
 import useModal from '@/hooks/useModal';
+import ErrorType from '@/types/error';
+import { useAppDispatch } from '@/hooks/useRedux';
+import { setLoading } from '@/features/loading/loadingSlice';
 
 type Props = {}
 type IntentType = 'registerWithNewBusiness' | 'registerWithSelectedBusiness'
@@ -28,6 +31,7 @@ export default function RcSignUpForm({ }: Props) {
     const [error, setError] = useState<string | undefined>("")
     const t = useTranslations();
     const [isPending, startTrasition] = useTransition()
+    const dispatch = useAppDispatch();
     const { modal, openModal, closeModal } = useModal()
     const [recruiterSignUp, setRecruiterSignUp] = useState({
         intent: 'registerWithNewBusiness' as IntentType,
@@ -66,39 +70,44 @@ export default function RcSignUpForm({ }: Props) {
         startTrasition(async () => {
             setError("")
             const validatedField = rcRegisterSchema.safeParse(values)
-            console.log("VALues 1: ", values);
-            console.log("intent: ", recruiterSignUp.intent);
-            if (recruiterSignUp.intent === "registerWithNewBusiness") {
-                if (!validatedField.success || !values.businessName) {
-                    setError("Invalid Information.")
-                } else {
-                    const user = await registrationService.registerRecruiterWithNewBusiness(
-                        {
-                            email: values.email,
-                            password: values.password,
-                            name: values.name,
-                            phone: values.phone,
-                            businessName: values.businessName!!
-                        }
-                    )
-                    router.push(`/account/verify?userId=${user.id}&email=${user.email}&baseUrl=/recruiter`)
-                }
-            } else {
-                if (!validatedField.success) {
-                    setError("Invalid Information.")
-                } else {
-                    const user =
-                        await registrationService.registerRecruiterWithSelectedBusiness(
+            try {
+                dispatch(setLoading(true));
+                if (recruiterSignUp.intent === "registerWithNewBusiness") {
+                    if (!validatedField.success || !values.businessName) {
+                        setError("Invalid Information.")
+                    } else {
+                        const user = await registrationService.registerRecruiterWithNewBusiness(
                             {
                                 email: values.email,
                                 password: values.password,
                                 name: values.name,
                                 phone: values.phone,
-                                businessId: recruiterSignUp.selectedBusiness!!.id
+                                businessName: values.businessName!!
                             }
                         )
-                    router.push(`/account/verify?userId=${user.id}&email=${user.email}&baseUrl=/recruiter`)
+                        router.push(`/account/verify?userId=${user.id}&email=${user.email}&baseUrl=/recruiter`)
+                    }
+                } else {
+                    if (!validatedField.success) {
+                        setError("Invalid Information.")
+                    } else {
+                        const user =
+                            await registrationService.registerRecruiterWithSelectedBusiness(
+                                {
+                                    email: values.email,
+                                    password: values.password,
+                                    name: values.name,
+                                    phone: values.phone,
+                                    businessId: recruiterSignUp.selectedBusiness!!.id
+                                }
+                            )
+                        router.push(`/account/verify?userId=${user.id}&email=${user.email}&baseUrl=/recruiter`)
+                    }
                 }
+            } catch (error) {
+                setError((error as ErrorType).message)
+            } finally {
+                dispatch(setLoading(false));
             }
 
         })

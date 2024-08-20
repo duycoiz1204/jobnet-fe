@@ -34,7 +34,7 @@ export default interface PostType {
   // internalContact: string
   applicationDeadline: string;
   jdId: string | null;
-  recruiterId: RecruiterType | null;
+  recruiterId: string | null;
   business: BusinessPostType;
   activeStatus: PostActiveStatus;
   totalViews: number;

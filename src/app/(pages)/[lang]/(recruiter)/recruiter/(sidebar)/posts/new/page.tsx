@@ -252,7 +252,7 @@ export default function PostCreation() {
         description: temp.get('description') as string,
         title: temp.get('title') as string,
         locations: locations as LocationType[],
-        recruiterId: recruiter as RecruiterType,
+        recruiterId: recruiter?.id as string,
         benefits: benefits as BenefitType[],
         business: business as BusinessType,
         // degrees: degrees as DegreeType[],

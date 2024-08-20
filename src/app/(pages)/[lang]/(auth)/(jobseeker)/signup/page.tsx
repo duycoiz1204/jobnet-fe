@@ -13,6 +13,8 @@ import Link from 'next/link';
 import { useRouter } from '@/navigation';
 import { jsRegisterAction } from '@/actions/jsAuth';
 import UserType from '@/types/user';
+import { useAppDispatch } from '@/hooks/useRedux';
+import { setLoading } from '@/features/loading/loadingSlice';
 
 type Props = {
 
@@ -30,11 +32,12 @@ export default function SignUpPage({ }: Props) {
       password: "",
     }
   })
+  const dispatch = useAppDispatch();
   const [isPending, startTrasition] = useTransition()
   const onSubmit = (values: z.infer<typeof jsRegisterSchema>) => {
     setError("")
     startTrasition(async () => {
-
+      dispatch(setLoading(true));
       const validatedField = jsRegisterSchema.safeParse(values)
       if (!validatedField.success) {
         setError("Invalid Credentials.")
@@ -44,6 +47,7 @@ export default function SignUpPage({ }: Props) {
         const user = await jsRegisterAction(values) as UserType
         if (user) router.push(`/account/verify?userId=${user.id}&email=${user.email}`)
       }
+      dispatch(setLoading(false));
     })
   }
   return (

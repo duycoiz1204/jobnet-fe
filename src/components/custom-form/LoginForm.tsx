@@ -14,6 +14,8 @@ import {  useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { usePathname } from '@/navigation'
 import { DEFAULT_LOGIN_ADMIN_REDIRECT, DEFAULT_LOGIN_JOBSEEKER_REDIRECT, DEFAULT_LOGIN_RECRUITER_REDIRECT } from '@/routes'
+import { useAppDispatch } from '@/hooks/useRedux'
+import { setLoading } from '@/features/loading/loadingSlice'
 
 type LoginProps = {
 
@@ -34,12 +36,15 @@ export default function LoginForm({ }: LoginProps) {
     })
     const pathname = usePathname()
     const [isPending, startTrasition] = useTransition()
+    const dispatch = useAppDispatch();
 
     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
         setError("")
         startTrasition(async () => {
+            dispatch(setLoading(true));
             const response = await LoginAction(values, callbackUrl)
             if (!response) {
+                dispatch(setLoading(false));
                 return setError("Something wrong!! Please reload page...")
             }
             if (response && response["error"] !== undefined) {
@@ -53,6 +58,7 @@ export default function LoginForm({ }: LoginProps) {
                 }
                 window.location.href = url
             }
+            dispatch(setLoading(false));
         })
     }
     return (

@@ -2,8 +2,8 @@
   @tailwind components;
   @tailwind utilities;
 
-  /* Hide Error Nextjs
-  nextjs-portal {
+  /* Hide Error Nextjs */
+  /* nextjs-portal {
     display: none;
   } */
   @layer base {

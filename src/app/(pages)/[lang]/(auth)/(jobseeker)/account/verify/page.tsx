@@ -15,6 +15,8 @@ import {
     InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { jsVerifyAction } from '@/actions/jsAuth'
+import { useAppDispatch } from '@/hooks/useRedux'
+import { setLoading } from '@/features/loading/loadingSlice'
 
 type Props = {
     searchParams: { [key: string]: string | string[] | undefined };
@@ -24,12 +26,13 @@ export default function VerifyPage({ searchParams }: Props) {
     const userId = searchParams.userId as string
     const email = searchParams.email
     const baseUrl = searchParams.baseUrl || ""
-    console.log("baseUrl: ", baseUrl);
     
     const router = useRouter()
     const t = useTranslations()
     const [value, setValue] = useState("")
     const [isPending, startTrasition] = useTransition()
+
+    const dispatch = useAppDispatch();
 
     const form = useForm<z.infer<typeof jsVerifySchema>>({
         resolver: zodResolver(jsVerifySchema),
@@ -40,11 +43,13 @@ export default function VerifyPage({ searchParams }: Props) {
 
     const onSubmit = (data: z.infer<typeof jsVerifySchema>) => {
         startTrasition(async () => {
+            dispatch(setLoading(true));
             const validatedField = jsVerifySchema.safeParse(data)
             if (validatedField.success) {
                 await jsVerifyAction(data, userId)
                 router.push(`${baseUrl}/signin?type=success&message=Account verified successfull.`)
             }
+            dispatch(setLoading(false))
         })
     }
 

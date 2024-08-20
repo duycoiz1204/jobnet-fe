@@ -54,7 +54,7 @@ export default async function ProviderLayout({ children, params }: Props) {
                             {children}
                             <Toaster />
                             { isUseChatWidget && <HubspotConversationsProvider /> }
-                            { isUseChatWidget && <LoaderReduxCpn /> }
+                            <LoaderReduxCpn />
                         </body>
                     </NextIntlClientProvider>
                 </SessionsProvider>

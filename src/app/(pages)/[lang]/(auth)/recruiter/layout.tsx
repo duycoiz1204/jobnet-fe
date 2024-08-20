@@ -36,7 +36,7 @@ const jsVerifyLayout = {
     intendedFor: 'verify.jobSeeker.intended',
     padding: 'py-6',
     backgroundImage: '/otp-layout.png',
-    layoutSize: 'xs',
+    layoutSize: 'sm',
     verify: true
 }
 const rcSignInLayout = {

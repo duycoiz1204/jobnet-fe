@@ -47,7 +47,7 @@ class RegistrationService extends BaseService {
       }
     )
 
-    this.checkResponseNotOk(res)
+    await this.checkResponseNotOk(res)
     return this.getResponseData<UserType>(res)
   }
   async registerRecruiterWithSelectedBusiness(req: object) {
@@ -62,7 +62,7 @@ class RegistrationService extends BaseService {
       }
     )
 
-    this.checkResponseNotOk(res)
+    await this.checkResponseNotOk(res)
     return this.getResponseData<UserType>(res)
   }
 }

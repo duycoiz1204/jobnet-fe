@@ -84,31 +84,6 @@ export default function AuthRightControls({
                 </Dropdown.Item>
             </Dropdown>
 
-            <Dropdown
-                className="h-12 px-2 md:hidden"
-                render={<FaBars className="w-5 h-5" />}
-                type="hover"
-            >
-                <Dropdown.Header>
-                    <div className="text-lg font-bold text-emerald-400">
-                        {t('header.jobSeeker.classification')}
-                    </div>
-                </Dropdown.Header>
-                <Dropdown.Divider />
-                <Dropdown.Item to="posts" icon={FaMagnifyingGlass as IconType}>
-                    {t('header.jobSeeker.search.label')}
-                </Dropdown.Item>
-                <Dropdown.Item icon={FaRegAddressCard as IconType}>
-                    {t('header.jobSeeker.profileAndCV.label')}
-                </Dropdown.Item>
-                <Dropdown.Item icon={FaAddressCard as unknown as IconType}>
-                    {t('header.jobSeeker.business.label')}
-                </Dropdown.Item>
-                <Dropdown.Item icon={FaHeadphones as IconType}>
-                    {/* {t('header.jobSeeker.contacct')}  */}
-                    Chưa có language
-                </Dropdown.Item>
-            </Dropdown>
 
             {/* Logout */}
             <Modal

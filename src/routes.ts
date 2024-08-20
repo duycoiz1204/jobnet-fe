@@ -27,7 +27,10 @@ export const jobSeekerRoutes = ['/profile/**'];
  */
 export const recruiterRoutes = [
   "/recruiter/posts/**",
-  "/recruiter/profile/**"
+  "/recruiter/profile/**",
+  "/recruiter/applicants/**",
+  "/recruiter/campaigns/**",
+  "/recruiter/business/**"
 ];
 
 /**

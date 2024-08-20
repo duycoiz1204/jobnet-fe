@@ -12,7 +12,7 @@ import { toast } from 'sonner';
 import { Badge } from '../ui/badge';
 import { CheckboxItem } from './TableHeader';
 import { FaFilter } from 'react-icons/fa6';
-import { Table } from '../table/Table';
+import Table from '../table/Table';
 import Modal from '../modal/Modal';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { Button } from '../ui/button';
@@ -179,7 +179,7 @@ function ADPostTable({ loaderData, col, status, ...props }: DefaultPostPage) {
       filterKey: 'recruiterName',
       width: 250,
       render: (record: PostType) => (
-        <span className="">{record.recruiter?.name}</span>
+        <span className="">{record.recruiterId}</span> // Need to change to name
       ),
     },
     {
