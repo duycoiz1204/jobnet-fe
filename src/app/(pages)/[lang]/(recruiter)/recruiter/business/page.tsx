@@ -1,4 +1,4 @@
-import MyBusiness from '@/app/(pages)/[lang]/(recruiter)/recruiter/(sidebar)/business/business-info'
+import MyBusiness from '@/app/(pages)/[lang]/(recruiter)/recruiter/business/business-info'
 import { auth } from '@/auth'
 import { redirect } from '@/navigation'
 import businessService from '@/services/businessService'

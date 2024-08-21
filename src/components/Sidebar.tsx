@@ -23,6 +23,7 @@ interface SidebarItemProps extends React.HTMLAttributes<HTMLDivElement> {
   to?: string
   end?: boolean
   icon: IconType
+  onClick?: () => void
 }
 
 interface SidebarCollapseProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -164,6 +165,7 @@ Sidebar.Item = function SidebarItem({
   end,
   icon,
   children,
+  onClick,
 }: SidebarItemProps): JSX.Element {
   const { isCollapse } = useContext(SidebarContext)
   const { isInCollapse } = useContext(SidebarCollapseContext)
@@ -185,7 +187,7 @@ Sidebar.Item = function SidebarItem({
   const noActiveUtils = clsx(baseUtils, theme.item.active.off)
 
   const content = (
-    <div className="flex items-center h-6">
+    <div className="flex items-center h-6" onClick={onClick}>
       <Icon className={iconUtils} />
       {!isCollapse && children}
     </div>

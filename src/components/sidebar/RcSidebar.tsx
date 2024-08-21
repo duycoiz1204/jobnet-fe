@@ -37,7 +37,7 @@ export default function RcSidebar({ }: Props) {
     }
     return (
         <div
-            className="sticky hidden top-20 lg:flex"
+            className="sticky hidden top-20 lg:flex z-10"
             style={{ height: 'calc(100vh - 80px)' }}
         >
             <Sidebar>
@@ -61,6 +61,7 @@ export default function RcSidebar({ }: Props) {
                     </Sidebar.ItemGroup>
                     <Sidebar.ItemGroup>
                         <Sidebar.Collapse
+                            className='hover:cursor-pointer'
                             label={t('sidebar.recruiter.account.label')}
                             icon={FaUser as IconType}
                         >
@@ -71,7 +72,7 @@ export default function RcSidebar({ }: Props) {
                                 {t('sidebar.recruiter.account.collapse.businessInfo')}
                             </Sidebar.Item>
                         </Sidebar.Collapse>
-                        <Sidebar.Item onClick={() => openModal('recruiter-logout-modal')} icon={HiArrowSmRight as IconType}>
+                        <Sidebar.Item className='hover:cursor-pointer' onClick={() => openModal('recruiter-logout-modal')} icon={HiArrowSmRight as IconType}>
                             {t('sidebar.recruiter.logout')}
                         </Sidebar.Item>
                     </Sidebar.ItemGroup>
@@ -102,6 +103,7 @@ export default function RcSidebar({ }: Props) {
                     </div>
                 </Modal.Body>
             </Modal>
+
         </div>
 
     )

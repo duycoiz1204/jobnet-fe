@@ -14,7 +14,6 @@ export default interface RecruiterType {
 }
 
 export interface FormUpdateProfileRCProps {
-  email: string;
   name: string;
   phone: string;
   nation: string;

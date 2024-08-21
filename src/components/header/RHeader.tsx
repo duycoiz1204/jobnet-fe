@@ -51,12 +51,12 @@ export default function RHeadder(): JSX.Element {
       <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between h-20 px-4 bg-white shadow lg:px-8 hover:shadow-lg">
         <div>
           <div className="flex items-center">
-            <Link href="/recruiter" className="flex items-center">
+            <NavLink href="/recruiter" className="flex items-center">
               <img src={'/vite.svg'} className="h-10" />
               <h2 className="hidden ml-4 text-2xl font-bold lg:inline-block">
                 Brand
               </h2>
-            </Link>
+            </NavLink>
             <nav className="items-center hidden ml-6 font-semibold lg:ml-8 md:gap-2 lg:gap-6 md:flex">
               <Dropdown
                 className="p-2"

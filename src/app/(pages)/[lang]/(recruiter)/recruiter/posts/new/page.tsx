@@ -198,6 +198,8 @@ export default function PostCreation() {
   // *
 
   // * Fetch get recruiter
+  console.log("Recruiter", recruiter);
+  
   const getRecruiterById = useCallback(async () => {
     try {
       const response = await recruiterService.getRecruiterById(

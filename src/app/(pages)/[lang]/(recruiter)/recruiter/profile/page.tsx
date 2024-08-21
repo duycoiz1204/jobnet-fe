@@ -49,18 +49,16 @@ export default function Account(): JSX.Element {
     if (!formRef.current) return;
     const formData = new FormData(formRef.current);
 
-    const email = formData.get('email') as string;
     const name = formData.get('name') as string;
     const phone = formData.get('phone') as string;
     const nation = formData.get('nation') as string;
 
-    if (!email || !name || !phone || !nation) {
+    if ( !name || !phone || !nation) {
       toast.error('Bạn vui lòng nhập đầy đủ thông tin!');
       return;
     }
 
     const formValues: FormUpdateProfileRCProps = {
-      email,
       name,
       phone,
       nation,
@@ -172,13 +170,6 @@ export default function Account(): JSX.Element {
           </Modal.Header>{' '}
           <Modal.Body className="flex flex-col px-6 gap-y-4">
             <InputWithLabel
-              label="Email"
-              type="email"
-              color="emerald"
-              placeholder={recruiterReload?.email}
-              name="email"
-            />
-            <InputWithLabel
               label={t('recruiter.profile.update.modal.labelUsername')}
               type="text"
               color="emerald"
@@ -205,7 +196,7 @@ export default function Account(): JSX.Element {
               <Button type="submit">
                 {t('recruiter.profile.update.footerButton.update')}
               </Button>
-              <Button color="red" onClick={closeModal}>
+              <Button type="button" color="red" onClick={closeModal}>
                 {t('recruiter.profile.update.footerButton.cancel')}
               </Button>
             </div>

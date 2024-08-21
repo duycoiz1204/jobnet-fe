@@ -191,12 +191,14 @@ export default function ApplicantManagement({ _applications }: ApplicantManageme
     ))
 
     return (
-        <>
+        <div>
             <main className="space-y-8">
                 <div className="space-y-2">
                     <div className="flex items-baseline justify-between">
                         <h2 className="text-2xl font-bold">Quản lý ứng tuyển</h2>
-                        <Button>Đăng bài tuyển dụng</Button>
+                        <Button onClick={() => {
+                            router.push("/recruiter/posts/new")
+                        }}>Đăng bài tuyển dụng</Button>
                     </div>
                     <div className="font-semibold text-slate-500">
                         Kiểm soát các người ứng tuyển.
@@ -354,7 +356,7 @@ export default function ApplicantManagement({ _applications }: ApplicantManageme
                                 Phê duyệt
                             </Button>
                             <Button
-                                color="rose"
+                                variant="rose"
                                 onClick={() =>
                                     handleApplicationStatusUpdate(
                                         selectedApplication.id,
@@ -362,13 +364,13 @@ export default function ApplicantManagement({ _applications }: ApplicantManageme
                                     )
                                 }
                             >
-                                Hủy
+                                Từ chối
                             </Button>
                         </div>
                     </Modal.Body>
                 </Modal>
             )}
-        </>
+        </div>
     )
 }
 

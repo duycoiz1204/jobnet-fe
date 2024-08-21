@@ -1,4 +1,4 @@
-import Campaign from '@/app/(pages)/[lang]/(recruiter)/recruiter/(sidebar)/campaigns/campaign-cpn'
+import Campaign from '@/app/(pages)/[lang]/(recruiter)/recruiter/campaigns/campaign-cpn'
 import { auth } from '@/auth'
 import resumeService from '@/services/resumeService'
 import React from 'react'
