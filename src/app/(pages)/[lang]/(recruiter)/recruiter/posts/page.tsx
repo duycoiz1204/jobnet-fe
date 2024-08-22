@@ -40,11 +40,10 @@ export default function PostManagement(): JSX.Element {
     (async () => {
       const pagination = await postService.getPosts({
         recruiterId,
-        activeStatus: 'Open',
       });
       setPagination(pagination);
     })();
-  }, []);
+  }, [recruiterId, setPagination]);
 
   const handleCriteriaInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setCriteria((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -104,7 +103,11 @@ export default function PostManagement(): JSX.Element {
   ) => {
     void (async () => {
       try {
-        await postService.updatePostStatus(postId, activeStatus);
+        await postService.updatePostStatus(
+          postId,
+          activeStatus,
+          session?.accessToken!
+        );
         const _pagination = await postService.getPosts({
           recruiterId,
           page: pagination.currentPage,
@@ -183,6 +186,10 @@ export default function PostManagement(): JSX.Element {
       </div>
       <Tabs>
         <Tabs.Item
+          title={t('recruiter.postManagement.tab.all')}
+          onTabClick={() => handleTabClick()}
+        />
+        <Tabs.Item
           title={t('recruiter.postManagement.tab.open')}
           onTabClick={() => handleTabClick('Opening')}
         />
@@ -195,10 +202,6 @@ export default function PostManagement(): JSX.Element {
           onTabClick={() => handleTabClick('Stopped')}
         />
         <Tabs.Item title={t('recruiter.postManagement.tab.expire')} />
-        <Tabs.Item
-          title={t('recruiter.postManagement.tab.all')}
-          onTabClick={() => handleTabClick()}
-        />
       </Tabs>
       <div className="grid w-full grid-cols-2 gap-5">
         {postElms?.length ? (
@@ -284,13 +287,13 @@ function JobItem({
             <span className="font-semibold">
               {t('recruiter.postManagement.jobItem.view')}:
             </span>{' '}
-            5
+            {post.totalViews}
           </div>
           <div>
             <span className="font-semibold">
               {t('recruiter.postManagement.jobItem.apply')}:
             </span>{' '}
-            5
+            {post.totalApplications}
           </div>
         </div>
         <div className="flex flex-col items-end gap-2">

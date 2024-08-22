@@ -1002,7 +1002,6 @@
       }
     },
     "profile": {
-      "authenticate": "Authentication level",
       "title": "Personal information",
       "status": {
         "title": "Update status",

@@ -38,6 +38,7 @@ export default interface PostType {
   business: BusinessPostType;
   activeStatus: PostActiveStatus;
   totalViews: number;
+  totalApplications: number;
   createdAt: string;
 }
 

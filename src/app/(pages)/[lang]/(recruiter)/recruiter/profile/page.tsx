@@ -53,7 +53,7 @@ export default function Account(): JSX.Element {
     const phone = formData.get('phone') as string;
     const nation = formData.get('nation') as string;
 
-    if ( !name || !phone || !nation) {
+    if (!name || !phone || !nation) {
       toast.error('Bạn vui lòng nhập đầy đủ thông tin!');
       return;
     }

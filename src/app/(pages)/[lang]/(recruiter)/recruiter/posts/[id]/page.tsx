@@ -165,7 +165,8 @@ export default function PostUpdate() {
       try {
         const _post = await postService.updatePostHeadingInfo(
           params.id,
-          headingInfo
+          headingInfo,
+          session?.accessToken!
         );
         setPost(_post);
         closeModal();
@@ -186,7 +187,8 @@ export default function PostUpdate() {
       try {
         const post = await postService.updatePostDetailedInfo(
           params.id,
-          detailedInfo
+          detailedInfo,
+          session?.accessToken!
         );
         setPost(post);
         closeModal();
@@ -214,7 +216,8 @@ export default function PostUpdate() {
       try {
         const post = await postService.updatePostGeneralInfo(
           params.id,
-          generalInfo
+          generalInfo,
+          session?.accessToken!
         );
         setPost(post);
         closeModal();

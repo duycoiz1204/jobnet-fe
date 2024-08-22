@@ -59,14 +59,6 @@ export const RCAccountComponent = ({
             {data?.name}
           </h2>
         </div>
-        {type === 'Recruiter' && (
-          <div className="flex gap-x-2 lg:-mt-10 lg:flex">
-            <p className="">{t('recruiter.profile.authenticate')}</p>
-            <Badge color="failure" className="text-sm text-center">
-              {t('recruiter.profile.status.unCompleted')}
-            </Badge>
-          </div>
-        )}
 
         {type === 'Admin' && (
           <div className="-mt-10">
@@ -105,11 +97,11 @@ export const RCAccountComponent = ({
           <div className="flex items-center gap-x-2">
             <p>{t('recruiter.profile.status.title')}:</p>
             {session?.user.email && session?.user.name ? (
-              <Badge color="success" className="text-sm text-center">
+              <Badge variant="success" className="text-sm text-center">
                 {t('recruiter.profile.status.completed')}
               </Badge>
             ) : (
-              <Badge color="failure" className="text-sm text-center">
+              <Badge variant="destructive" className="text-sm text-center">
                 {t('recruiter.profile.status.unCompleted')}
               </Badge>
             )}
@@ -126,11 +118,11 @@ export const RCAccountComponent = ({
             <div className="flex ml-auto gap-x-2">
               {t('recruiter.profile.adminRole.accountStatus.label')}
               {!data?.locked ? (
-                <Badge color="success" className="px-2 text-sm">
+                <Badge variant="success" className="px-2 text-sm">
                   {t('recruiter.profile.adminRole.accountStatus.normal')}
                 </Badge>
               ) : (
-                <Badge color="failure" className="px-2 text-sm">
+                <Badge variant="destructive" className="px-2 text-sm">
                   {t('recruiter.profile.adminRole.accountStatus.locked')}
                 </Badge>
               )}

@@ -964,7 +964,6 @@
       }
     },
     "profile": {
-      "authenticate": "Mức độ xác thực",
       "title": "Thông tin cá nhân",
       "status": {
         "title": "Cập nhật trạng thái",

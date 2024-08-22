@@ -263,7 +263,7 @@ export default function ResumeCpn({ _resumes }: ResumeProps) {
               <h4 className="text-xl font-semibold">
                 {t('resumes.uploadedCVs.title')}
               </h4>
-              <Badge color="success">
+              <Badge variant="success">
                 {t('resumes.uploadedCVs.count', { count: 5 })}
               </Badge>
             </div>
@@ -283,7 +283,7 @@ export default function ResumeCpn({ _resumes }: ResumeProps) {
               <h4 className="text-xl font-semibold">
                 {t('resumes.smartCVs.title')}
               </h4>
-              <Badge color="success">
+              <Badge variant="success">
                 {t('resumes.smartCVs.count', { count: 5 })}
               </Badge>
             </div>
@@ -484,7 +484,7 @@ function RecruiterViewedResumeItem({ id, image, name, business }: ViewerType) {
     <>
       <div className="flex items-center justify-between py-1">
         <div className="flex items-center px-2 gap-x-4">
-          <div className="object-cover rounded-full w-11 h-11 border-2 border-emerald-500">
+          <div className="object-cover border-2 rounded-full w-11 h-11 border-emerald-500">
             <img
               src={recruiterService.getRecruiterProfileImage(image)}
               alt=""
@@ -500,7 +500,7 @@ function RecruiterViewedResumeItem({ id, image, name, business }: ViewerType) {
         </div>
         <Badge
           color="green"
-          className="hover:bg-emerald-300 transition-all cursor-pointer"
+          className="transition-all cursor-pointer hover:bg-emerald-300"
           onClick={() => router.push(`../../businesses/${id}`)}
         >
           Doanh nghiệp
