@@ -261,6 +261,7 @@ export default function PostCreation() {
         level: levels![0] as LevelType,
         profession: formProfession,
         totalViews: 0,
+        totalApplications: Number(temp.get('totalApplications')),
         activeStatus: 'Pending',
         createdAt: '',
         jdId: '',

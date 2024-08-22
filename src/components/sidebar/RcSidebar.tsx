@@ -103,8 +103,6 @@ export default function RcSidebar({ }: Props) {
                     </div>
                 </Modal.Body>
             </Modal>
-
         </div>
-
     )
 }

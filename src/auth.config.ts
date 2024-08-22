@@ -9,12 +9,14 @@ export default {
           credentials: {
             email: {},
             password: {},
+            role: {}
           },
           authorize: async (credentials) => {
             let user = null
     
             // logic to verify if user exists
-            const {email, password} = credentials
+            const {email, password, role} = credentials
+            
             let response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {
               method: "POST",
               headers: {
@@ -26,11 +28,11 @@ export default {
             
             if(response.ok){
               const {user, accessToken, refreshToken} = await response.json()
-              console.log("User: ", user, accessToken, refreshToken);
-              
-              user.accessToken = accessToken
-              user.refreshToken = refreshToken
-              return user
+              if (user.role == role) {
+                user.accessToken = accessToken
+                user.refreshToken = refreshToken
+                return user
+              }
             }
             // return user object with the their profile data
             return user

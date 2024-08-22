@@ -62,7 +62,7 @@ const theme = {
   },
   itemGroup: { base: 'space-y-2 py-4  first:pt-0 last:pb-0 ' },
   item: {
-    base: ' flex items-center justify-between p-2 rounded-lg font-semibold hover:bg-emerald-400 hover:text-white transition-all',
+    base: 'flex items-center justify-between p-2 rounded-lg font-semibold hover:bg-emerald-400 hover:text-white transition-all',
     active: {
       on: 'bg-emerald-400 text-white',
       off: 'text-slate-900',

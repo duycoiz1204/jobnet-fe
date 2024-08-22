@@ -16,6 +16,7 @@ import postService from '@/services/postService';
 
 import PostType from '@/types/post';
 import ErrorType from '@/types/error';
+import { useSession } from 'next-auth/react';
 
 export default function ADPostDetail(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ export default function ADPostDetail(): JSX.Element {
   const [post, setPost] = useState<PostType | undefined>(undefined);
   const [updateData, setUpdateData] = useState<boolean>(true);
   const { modal, openModal, closeModal } = useModal();
-
+  const session = useSession()
   useEffect(() => {
     const loadData = async (): Promise<void> => {
       const data = await postService.getPostById(params.id);
@@ -38,7 +39,7 @@ export default function ADPostDetail(): JSX.Element {
     closeModal();
     dispatch(setLoading(true));
     try {
-      await postService.updatePostStatus(params.id, 'Blocked');
+      await postService.updatePostStatus(params.id, 'Blocked', session.data?.accessToken!!);
       toast.success('Đã khóa bài đăng');
       dispatch(setLoading(false));
       setUpdateData(!updateData);
@@ -52,7 +53,7 @@ export default function ADPostDetail(): JSX.Element {
     closeModal();
     dispatch(setLoading(true));
     postService
-      .updatePostStatus(params.id, status ? 'Opening' : 'Rejected')
+      .updatePostStatus(params.id, status ? 'Opening' : 'Rejected', session.data?.accessToken!!)
       .then(() => {
         dispatch(setLoading(false));
         toast.success('Đã cập nhật bài đăng');

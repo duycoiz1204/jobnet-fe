@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
-import LoginForm from '@/components/custom-form/LoginForm'
+import LoginForm from '@/components/custom-form/LoginForm';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default async function page({ }: Props) {
     const t = await getTranslations();
     return (
         <div className='mt-[-40px]'>
-            <LoginForm/>
+            <LoginForm role='Recruiter'/>
             <div className="mt-4 text-center">
                 <span className="text-sm text-black">{t("signin.signup.label")}</span>
                 <Link

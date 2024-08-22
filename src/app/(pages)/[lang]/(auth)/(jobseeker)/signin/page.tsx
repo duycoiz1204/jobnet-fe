@@ -13,7 +13,7 @@ export default async function Signin({ params }: { params: { lang: string } }) {
     const t = await getTranslations()
     return (
         <div>
-            <LoginForm />
+            <LoginForm role='JobSeeker'/>
             <div className="mt-4 text-center">
                 <span className="text-black">{t("signin.signup.label")}</span>{' '}
                 <Link

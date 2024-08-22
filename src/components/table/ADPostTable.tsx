@@ -16,6 +16,7 @@ import Table from '../table/Table';
 import Modal from '../modal/Modal';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { Button } from '../ui/button';
+import { useSession } from 'next-auth/react';
 
 type PostCriteria = {
   search: string;
@@ -45,7 +46,7 @@ function ADPostTable({ loaderData, col, status, ...props }: DefaultPostPage) {
   const [isFieldsOpen, setOpenField] = useState(false);
   const [fields, setFields] = useState<Record<string, boolean>>(col);
   const [columns, setColumns] = useState<ColumnsType<PostType>[]>([]);
-
+  const session = useSession()
   useEffect(() => {
     setFields(col);
     setColumn(col);
@@ -135,7 +136,8 @@ function ADPostTable({ loaderData, col, status, ...props }: DefaultPostPage) {
       serviceProcess(
         postService.updatePostStatus(
           postTarget?.id,
-          status ? 'Opening' : 'Rejected'
+          status ? 'Opening' : 'Rejected',
+          session.data?.accessToken!!
         ),
         'Đã cập nhật bài đăng',
         'Không thể cập nhật bài đăng'

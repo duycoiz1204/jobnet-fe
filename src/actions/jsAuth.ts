@@ -2,8 +2,7 @@
 import registrationService from '@/services/registrationService';
 import * as z from "zod"
 import { LoginSchema, jsRegisterSchema, jsVerifySchema } from "@/schemas/authSchema"
-import { auth, signIn, signOut, unstable_update } from "@/auth"
-import { DEFAULT_LOGIN_JOBSEEKER_REDIRECT } from '@/routes';
+import { signIn, signOut } from "@/auth"
 import { AuthError } from 'next-auth';
 
 
@@ -12,11 +11,11 @@ export const LoginAction = async (values: z.infer<typeof LoginSchema>, callbackU
     if (!validatedField.success) {
         return { error: "Invalid Credentials." }
     }
-    const { email, password } = validatedField.data
+    const { email, password, role } = validatedField.data
 
-    try {
+    try {        
         const urlRedirect = await signIn("credentials", {
-            email, password, redirect: false
+            email, password, role, redirect: false
         })
         return { success: "Login successfully", url: urlRedirect }
 
@@ -33,7 +32,7 @@ export const LoginAction = async (values: z.infer<typeof LoginSchema>, callbackU
     }
 }
 
-export const jsRegisterAction = async (values: z.infer<typeof LoginSchema>) => {
+export const jsRegisterAction = async (values: z.infer<typeof jsRegisterSchema>) => {
     const validatedField = jsRegisterSchema.safeParse(values)
     if (!validatedField.success) {
         return { error: "Invalid Credentials." }
@@ -49,7 +48,5 @@ export const jsVerifyAction = async (values: z.infer<typeof jsVerifySchema>, use
 
 export const logoutAction = async () => {
     await signOut({ redirect: false })
-    // unstable_update({})  
-
 }
 

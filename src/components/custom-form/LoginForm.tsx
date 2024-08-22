@@ -10,18 +10,20 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useState, useTransition } from 'react'
-import {  useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { usePathname } from '@/navigation'
 import { DEFAULT_LOGIN_ADMIN_REDIRECT, DEFAULT_LOGIN_JOBSEEKER_REDIRECT, DEFAULT_LOGIN_RECRUITER_REDIRECT } from '@/routes'
 import { useAppDispatch } from '@/hooks/useRedux'
 import { setLoading } from '@/features/loading/loadingSlice'
+// import { useCurrentSession } from '@/lib/hooks'
+import { getSession } from 'next-auth/react'
 
 type LoginProps = {
-
+    role: "Recruiter" | "JobSeeker" | "Admin"
 }
 
-export default function LoginForm({ }: LoginProps) {
+export default function LoginForm({ role }: LoginProps) {
     const t = useTranslations()
     const searchParams = useSearchParams()
     const callbackUrl = searchParams.get("callbackUrl")
@@ -31,11 +33,13 @@ export default function LoginForm({ }: LoginProps) {
         resolver: zodResolver(LoginSchema),
         defaultValues: {
             email: "",
-            password: ""
+            password: "",
+            role: role
         }
     })
     const pathname = usePathname()
-    const [isPending, startTrasition] = useTransition()
+    // const { session, status } = useCurrentSession();
+    const [isPending, startTrasition] = useTransition() 
     const dispatch = useAppDispatch();
 
     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
@@ -49,7 +53,9 @@ export default function LoginForm({ }: LoginProps) {
             }
             if (response && response["error"] !== undefined) {
                 setError(response.error)
-            }else{
+            } else {
+                const sessionData = await getSession();
+
                 let url = callbackUrl
                 if (!url){
                     url = (pathname.includes("recruiter")) ? DEFAULT_LOGIN_RECRUITER_REDIRECT : (
