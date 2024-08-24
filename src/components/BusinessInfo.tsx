@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { FaPlusCircle } from 'react-icons/fa';
 import businessService from '../services/businessService';
 
@@ -50,8 +50,7 @@ function BusinessInfo({
         }
       });
     }
-  }, [])
-
+  }, []);
 
   const handleFollowClick = () => {
     void (async () => {
@@ -61,16 +60,20 @@ function BusinessInfo({
       }
       try {
         const jobSeekerRes =
-          await jobSeekerService.updateJobSeekerBusinessFollowed(jobSeekerId, {
-            status: 'FOLLOW',
-            businessId: businessId,
-          }, session!!.accessToken!!);
+          await jobSeekerService.updateJobSeekerBusinessFollowed(
+            jobSeekerId,
+            {
+              status: 'FOLLOW',
+              businessId: businessId,
+            },
+            session!!.accessToken!!
+          );
 
         setFollow(true);
         toast.success(t('toast.follow.followed'));
       } catch (e) {
         if (e instanceof TypeError) {
-          toast.error(`Something wrong!!! Reload page...`)
+          toast.error(`Something wrong!!! Reload page...`);
         }
       }
     })();
@@ -80,15 +83,19 @@ function BusinessInfo({
     void (async () => {
       try {
         const jobSeekerRes =
-          await jobSeekerService.updateJobSeekerBusinessFollowed(jobSeekerId, {
-            status: 'UNFOLLOW',
-            businessId: businessId,
-          }, session!!.accessToken!!) || undefined
+          (await jobSeekerService.updateJobSeekerBusinessFollowed(
+            jobSeekerId,
+            {
+              status: 'UNFOLLOW',
+              businessId: businessId,
+            },
+            session!!.accessToken!!
+          )) || undefined;
         setFollow(false);
         toast.success(t('toast.follow.unfollow'));
       } catch (e) {
         if (e instanceof TypeError) {
-          toast.error(`Something wrong!!! Reload page...`)
+          toast.error(`Something wrong!!! Reload page...`);
         }
       }
     })();
@@ -100,7 +107,7 @@ function BusinessInfo({
           <Image
             width={undefined}
             height={undefined}
-            alt=''
+            alt=""
             src={businessService.getBusinessBackgroundImage(business.id)}
             className="object-cover w-full h-full rounded-t"
           />
@@ -116,7 +123,10 @@ function BusinessInfo({
         <div className="relative flex flex-col items-center gap-8 p-8 border rounded-b lg:flex-row bg-slate-100">
           {mode === 'update' ? (
             <div className="relative">
-              <img
+              <Image
+                width={undefined}
+                height={undefined}
+                alt=""
                 src={businessService.getBusinessProfileImage(business.id)}
                 className="object-center h-40 border-2 w-44 border-slate-200"
               />
@@ -129,7 +139,10 @@ function BusinessInfo({
             </div>
           ) : (
             <div>
-              <img
+              <Image
+                width={undefined}
+                height={undefined}
+                alt=""
                 src={businessService.getBusinessProfileImage(business.id)}
                 className="object-cover w-40 h-40 rounded-full"
               />

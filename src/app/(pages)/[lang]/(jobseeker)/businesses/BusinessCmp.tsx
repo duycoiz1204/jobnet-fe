@@ -10,6 +10,7 @@ import businessService from '@/services/businessService'
 import BusinessType from '@/types/business'
 import PaginationType from '@/types/pagination'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
 import React, { useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 
@@ -92,7 +93,7 @@ export default function BusinessCmp({ data }: Props) {
                     </div>
                 </div>
                 <div className="lg:w-[272px] lg:h-[304px] hidden sm:block md:hidden lg:block mx-auto">
-                    <img src={'/vite.svg'} className="w-full h-full " />
+                    <Image width={undefined} height={undefined} src={'/vite.svg'} alt='Vite image' className="w-full h-full " />
                 </div>
             </div>
             <main ref={scrollIntoViewRef} className="px-3 pt-2 lg:pt-6 lg:px-20">
@@ -119,24 +120,30 @@ function BusinessItem({ business }: { business: BusinessType }): JSX.Element {
     return (
         <div className="w-full h-[420px] overflow-hidden bg-cover bg-no-repeat bg-slate-100 rounded-lg relative shadow-md cursor-pointer hover:bg-slate-300 transition-all">
             <div className="w-full h-[210px] rounded-lg">
-                <img
+                <Image
+                    width={undefined}
+                    height={undefined}
                     src={
                         business.backgroundImageId
                             ? businessService.getBusinessBackgroundImage(business.id)
                             : '/business.png'
                     }
+                    alt="Business image"
                     className="object-top w-full h-full transition duration-300 ease-in-out rounded-tl-lg rounded-tr-lg hover:scale-105"
                 />
             </div>
             <div className="w-[90px] h-[90px] mx-auto mb-0 -translate-y-[50%] rounded-md">
-                <img
+                <Image
+                    width={undefined}
+                    height={undefined}
                     src={
                         business.profileImageId
                             ? businessService.getBusinessProfileImage(business.id)
                             : '/business.png'
                     }
+                    alt='Business image'
                     className="object-cover w-full h-full rounded-md"
-                ></img>
+                ></Image>
             </div>
             <div className="flex flex-col px-3 pb-6 gap-y-3 -mt-3 -translate-y-8 lg:mt-0 lg:px-6">
                 <Link

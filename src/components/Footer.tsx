@@ -1,8 +1,9 @@
-import { getTranslations } from 'next-intl/server'
-import { Link } from '@/navigation'
+import { getTranslations } from 'next-intl/server';
+import { Link } from '@/navigation';
+import Image from 'next/image';
 
 export default async function Footer(): Promise<JSX.Element> {
-  const t = await getTranslations()
+  const t = await getTranslations();
   return (
     <footer className="grid flex-shrink-0 gap-8 px-6 py-8 md:gap-4 sm:px-8 lg:px-14 xl:px-48 md:grid-cols-2 lg:grid-cols-4 bg-slate-300">
       <div>
@@ -76,7 +77,9 @@ export default async function Footer(): Promise<JSX.Element> {
         </div>
       </div>
       <div>
-        <h4 className="text-lg font-semibold">{t('footer.newFeature.title')}</h4>
+        <h4 className="text-lg font-semibold">
+          {t('footer.newFeature.title')}
+        </h4>
         <div className="mt-4 text-sm">
           <Link
             href="#"
@@ -88,12 +91,15 @@ export default async function Footer(): Promise<JSX.Element> {
       </div>
       <div>
         <div className="flex justify-center h-16 p-2 rounded bg-slate-500">
-          <img src={'/vite.svg'} />
+          <Image
+            width={undefined}
+            height={undefined}
+            alt=""
+            src={'/vite.svg'}
+          />
         </div>
-        <p className="mt-2 text-center">
-        {t('footer.sologan')}
-        </p>
+        <p className="mt-2 text-center">{t('footer.sologan')}</p>
       </div>
     </footer>
-  )
+  );
 }

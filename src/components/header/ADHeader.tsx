@@ -1,26 +1,32 @@
-import { NavLink } from '@/components/NavLink'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import useCollapse from '@/hooks/useCollapse'
-import { FaSearch } from 'react-icons/fa'
+import { NavLink } from '@/components/NavLink';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import useCollapse from '@/hooks/useCollapse';
+import Image from 'next/image';
+import { FaSearch } from 'react-icons/fa';
 import {
   FaArrowLeft,
   FaArrowRight,
   FaBars,
   FaBell,
   FaRocketchat,
-} from 'react-icons/fa6'
-export default function ADHeader({
-  // handleClick,
-  // icon,
-}: {
+} from 'react-icons/fa6';
+export default function ADHeader({}: // handleClick,
+// icon,
+{
   // handleClick: () => void
   // icon: boolean
 }): JSX.Element {
   const adminNavLink = ({ isActive }: { isActive: boolean }) =>
-    `transition-all hover:text-emerald-500 relative ${isActive ? 'text-emerald-500' : ''
-    }`
+    `transition-all hover:text-emerald-500 relative ${
+      isActive ? 'text-emerald-500' : ''
+    }`;
 
-  const [isVisible, controlVisible] = useCollapse()
+  const [isVisible, controlVisible] = useCollapse();
 
   return (
     <>
@@ -106,9 +112,11 @@ export default function ADHeader({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="w-10 h-10 transition-all border-2 rounded-full cursor-pointer hover:border-emerald-500">
-                    <img
-                      src={'/admin.png'}
+                    <Image
+                      width={undefined}
+                      height={undefined}
                       alt=""
+                      src={'/admin.png'}
                       className="w-full h-full rounded-full"
                     />
                   </div>
@@ -118,7 +126,7 @@ export default function ADHeader({
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-           
+
             <div className="flex-col items-center justify-center hidden sm:block md:hidden lg:flex">
               <h2 className="font-bold leading-none">Join Peter</h2>
               <span className="text-[#464a53] opacity-75 text-sm">
@@ -150,5 +158,5 @@ export default function ADHeader({
         ></div>
       )}
     </>
-  )
+  );
 }

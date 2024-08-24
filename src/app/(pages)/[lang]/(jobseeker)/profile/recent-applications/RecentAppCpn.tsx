@@ -206,7 +206,6 @@ export default function RecentAppCpn({ _applications }: RecentAppCpn) {
                           )
                           : 'https://www.w3schools.com/howto/img_avatar2.png'
                       }
-                      alt=""
                       className="object-cover w-full h-full rounded-md"
                     />
                   </div>

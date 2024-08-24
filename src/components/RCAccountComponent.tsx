@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 import { FaLock, FaUpload } from 'react-icons/fa6';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
+import Image from 'next/image';
 
 type AccountType = 'Admin' | 'Recruiter' | 'Jobseeker';
 
@@ -29,16 +30,21 @@ export const RCAccountComponent = ({
     <>
       {' '}
       <div className="relative w-full h-56 bg-slate-50">
-        <img
+        <Image
+          width={undefined}
+          height={undefined}
+          alt=""
           src="/recruiter-auth.png"
           className="object-cover w-full h-full"
-          alt=""
         />
       </div>
       <div className="flex items-center justify-between gap-x-4">
         <div className="flex items-center gap-x-4">
           <div className="relative pl-6 rounded-full -translate-y-2/4">
-            <img
+            <Image
+              width={undefined}
+              height={undefined}
+              alt=""
               src={
                 data?.profileImageId
                   ? getProfileImage

@@ -1,34 +1,35 @@
-'use client'
-import { useState, createContext, useContext } from 'react'
-import { FaAngleDown, FaAngleUp } from 'react-icons/fa6'
+'use client';
+import { useState, createContext, useContext } from 'react';
+import { FaAngleDown, FaAngleUp } from 'react-icons/fa6';
 import {
   TbLayoutSidebarLeftCollapse,
   TbLayoutSidebarLeftExpand,
-} from 'react-icons/tb'
+} from 'react-icons/tb';
 
-import type { IconType } from 'react-icons'
-import clsx from 'clsx'
-import { NavLink } from '@/components/NavLink'
+import type { IconType } from 'react-icons';
+import clsx from 'clsx';
+import { NavLink } from '@/components/NavLink';
+import Image from 'next/image';
 
-type SidebarProps = React.HTMLAttributes<HTMLDivElement>
+type SidebarProps = React.HTMLAttributes<HTMLDivElement>;
 
 interface SidebarLogoProps extends React.HTMLAttributes<HTMLDivElement> {
-  img?: string
+  img?: string;
 }
 
-type SidebarItemsProps = React.HTMLAttributes<HTMLDivElement>
-type SidebarItemGroupProps = React.HTMLAttributes<HTMLDivElement>
+type SidebarItemsProps = React.HTMLAttributes<HTMLDivElement>;
+type SidebarItemGroupProps = React.HTMLAttributes<HTMLDivElement>;
 
 interface SidebarItemProps extends React.HTMLAttributes<HTMLDivElement> {
-  to?: string
-  end?: boolean
-  icon: IconType
-  onClick?: () => void
+  to?: string;
+  end?: boolean;
+  icon: IconType;
+  onClick?: () => void;
 }
 
 interface SidebarCollapseProps extends React.HTMLAttributes<HTMLDivElement> {
-  label: string
-  icon: IconType
+  label: string;
+  icon: IconType;
 }
 
 const theme = {
@@ -69,37 +70,37 @@ const theme = {
     },
     itemCollapse: 'pl-5',
   },
-}
+};
 
 const SidebarContext = createContext<{
-  isCollapse: boolean
-  setIsCollapse: (isCollapse: boolean) => void
+  isCollapse: boolean;
+  setIsCollapse: (isCollapse: boolean) => void;
 }>({
   isCollapse: false,
   setIsCollapse: () => undefined,
-})
+});
 
 const SidebarCollapseContext = createContext({
   isInCollapse: false,
-})
+});
 
 export default function Sidebar({
   className = '',
   children,
 }: SidebarProps): JSX.Element {
-  const [isCollapse, setIsCollapse] = useState(false)
+  const [isCollapse, setIsCollapse] = useState(false);
 
-  const handleChangeCollapse = () => setIsCollapse((prev) => !prev)
+  const handleChangeCollapse = () => setIsCollapse((prev) => !prev);
 
   const CollapseIcon = (
     isCollapse ? TbLayoutSidebarLeftExpand : TbLayoutSidebarLeftCollapse
-  ) as IconType
+  ) as IconType;
   const baseUtils = clsx(
     className,
     theme.sidebar.base,
     isCollapse ? theme.sidebar.collapse.on : theme.sidebar.collapse.off
-  )
-  const iconUtils = theme.sidebar.icon.base
+  );
+  const iconUtils = theme.sidebar.icon.base;
 
   return (
     <SidebarContext.Provider
@@ -118,7 +119,7 @@ export default function Sidebar({
         {children}
       </div>
     </SidebarContext.Provider>
-  )
+  );
 }
 
 Sidebar.Logo = function SidebarLogo({
@@ -126,38 +127,46 @@ Sidebar.Logo = function SidebarLogo({
   img = '',
   children,
 }: SidebarLogoProps): JSX.Element {
-  const { isCollapse } = useContext(SidebarContext)
+  const { isCollapse } = useContext(SidebarContext);
 
-  const baseUtils = clsx(className, theme.logo.base)
+  const baseUtils = clsx(className, theme.logo.base);
   const imgUtils = clsx(
     theme.logo.img.base,
     isCollapse ? theme.logo.img.collapse.on : theme.logo.img.collapse.off
-  )
+  );
 
   return (
     <div className={baseUtils}>
-      {img && <img src={img} className={imgUtils} />}
+      {img && (
+        <Image
+          width={undefined}
+          height={undefined}
+          alt=""
+          src={img}
+          className={imgUtils}
+        />
+      )}
       {!isCollapse && children}
     </div>
-  )
-}
+  );
+};
 
 Sidebar.Items = function SidebarItems({
   children,
 }: SidebarItemsProps): JSX.Element {
-  const baseUtils = theme.items.base
+  const baseUtils = theme.items.base;
 
-  return <div className={baseUtils}>{children}</div>
-}
+  return <div className={baseUtils}>{children}</div>;
+};
 
 Sidebar.ItemGroup = function SidebarItemGroup({
   className = '',
   children,
 }: SidebarItemGroupProps): JSX.Element {
-  const baseUtils = clsx(className, theme.itemGroup.base)
+  const baseUtils = clsx(className, theme.itemGroup.base);
 
-  return <div className={baseUtils}>{children}</div>
-}
+  return <div className={baseUtils}>{children}</div>;
+};
 
 Sidebar.Item = function SidebarItem({
   className = '',
@@ -167,31 +176,31 @@ Sidebar.Item = function SidebarItem({
   children,
   onClick,
 }: SidebarItemProps): JSX.Element {
-  const { isCollapse } = useContext(SidebarContext)
-  const { isInCollapse } = useContext(SidebarCollapseContext)
+  const { isCollapse } = useContext(SidebarContext);
+  const { isInCollapse } = useContext(SidebarCollapseContext);
 
-  const Icon = icon
+  const Icon = icon;
   const baseUtils = clsx(
     className,
     theme.item.base,
     isInCollapse && !isCollapse ? theme.item.itemCollapse : ''
-  )
+  );
   const iconUtils = clsx(
     theme.sidebar.icon.base,
     isCollapse
       ? theme.sidebar.icon.collapse.on
       : theme.sidebar.icon.collapse.off
-  )
+  );
 
-  const activeUtils = clsx(baseUtils, theme.item.active.on)
-  const noActiveUtils = clsx(baseUtils, theme.item.active.off)
+  const activeUtils = clsx(baseUtils, theme.item.active.on);
+  const noActiveUtils = clsx(baseUtils, theme.item.active.off);
 
   const content = (
     <div className="flex items-center h-6" onClick={onClick}>
       <Icon className={iconUtils} />
       {!isCollapse && children}
     </div>
-  )
+  );
 
   return to ? (
     <NavLink
@@ -203,8 +212,8 @@ Sidebar.Item = function SidebarItem({
     </NavLink>
   ) : (
     <div className={baseUtils}>{content}</div>
-  )
-}
+  );
+};
 
 Sidebar.Collapse = function SidebarCollapse({
   className = '',
@@ -212,28 +221,28 @@ Sidebar.Collapse = function SidebarCollapse({
   icon,
   children,
 }: SidebarCollapseProps): JSX.Element {
-  const { isCollapse } = useContext(SidebarContext)
+  const { isCollapse } = useContext(SidebarContext);
 
-  const [isShown, setIsShown] = useState(false)
+  const [isShown, setIsShown] = useState(false);
 
-  const handleCollapseToggle = () => setIsShown((prevIsShown) => !prevIsShown)
+  const handleCollapseToggle = () => setIsShown((prevIsShown) => !prevIsShown);
 
-  const Icon = icon
-  const ToggleIcon = (isShown ? FaAngleUp : FaAngleDown) as IconType
-  const baseUtils = clsx(className, theme.item.base)
+  const Icon = icon;
+  const ToggleIcon = (isShown ? FaAngleUp : FaAngleDown) as IconType;
+  const baseUtils = clsx(className, theme.item.base);
   const iconUtils = clsx(
     theme.sidebar.icon.base,
     isCollapse
       ? theme.sidebar.icon.collapse.on
       : theme.sidebar.icon.collapse.off
-  )
+  );
 
   const content = (
     <div className="flex items-center h-6">
       <Icon className={iconUtils} />
       {!isCollapse && label}
     </div>
-  )
+  );
 
   return (
     <SidebarCollapseContext.Provider
@@ -247,5 +256,5 @@ Sidebar.Collapse = function SidebarCollapse({
       </div>
       {isShown && children}
     </SidebarCollapseContext.Provider>
-  )
-}
+  );
+};

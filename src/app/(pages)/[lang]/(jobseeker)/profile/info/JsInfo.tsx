@@ -27,6 +27,7 @@ import { useSearchParams } from 'next/navigation';
 import React, { useCallback, useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import pyhelperService from '@/services/pyhelperService';
+import Image from 'next/image';
 
 const initAboutMe = (jobSeeker: JobSeekerType) => jobSeeker?.aboutMe || '';
 
@@ -442,7 +443,10 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
             <div className="flex flex-col items-center gap-2 sm:gap-4 sm:flex-row">
               <div className="relative">
                 <TicketCheck className="absolute bottom-0 right-0 grid w-5 h-5 text-emerald-500" />
-                <img
+                <Image
+                  width={undefined}
+                  height={undefined}
+                  alt=""
                   className="w-20 h-20 border-2 rounded-full"
                   key={keyAvatar}
                   src={

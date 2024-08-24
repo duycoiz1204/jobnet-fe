@@ -24,6 +24,7 @@ import WishlistType from '@/types/wishlist';
 import { useAppDispatch } from '@/hooks/useRedux';
 import PaginationType from '@/types/pagination';
 import businessService from '@/services/businessService';
+import Image from 'next/image';
 
 interface FavouritePostCpn {
     _wishlist: PaginationType<WishlistType>
@@ -185,7 +186,10 @@ function FavoriteJob({
     return (
         <div className="px-4 py-6 space-y-6 rounded-md bg-slate-100">
             <div className="flex items-center gap-4">
-                <img
+                <Image
+                    width={undefined}
+                    height={undefined}
+                    alt=""
                     src={
                     post.business.profileImageId
                         ? businessService.getBusinessProfileImage(post.business.id)

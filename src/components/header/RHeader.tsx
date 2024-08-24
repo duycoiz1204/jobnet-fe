@@ -1,6 +1,6 @@
-'use client'
-import { FaBell, FaEnvelope } from 'react-icons/fa'
-import { IconType } from 'react-icons'
+'use client';
+import { FaBell, FaEnvelope } from 'react-icons/fa';
+import { IconType } from 'react-icons';
 
 import {
   FaArrowRightFromBracket,
@@ -11,48 +11,60 @@ import {
   FaHeart,
   FaRegUser,
   FaUser,
-} from 'react-icons/fa6'
-import { BsBoxArrowRight } from 'react-icons/bs'
+} from 'react-icons/fa6';
+import { BsBoxArrowRight } from 'react-icons/bs';
 
-import recruiterService from '../../services/recruiterService'
+import recruiterService from '../../services/recruiterService';
 
-import Dropdown from '../Dropdown'
-import LanguageSelector from '../LanguageSelector'
+import Dropdown from '../Dropdown';
+import LanguageSelector from '../LanguageSelector';
 
-import useModal from '../../hooks/useModal'
-import { useTranslations } from 'next-intl'
-import { Link, usePathname } from '@/navigation'
-import { NavLink } from '@/components/NavLink'
-import { useSession } from 'next-auth/react'
-import { Session } from 'next-auth'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import { Button } from '@/components/ui/button'
-import Modal from '@/components/modal/Modal'
-import { logoutAction } from '@/actions/jsAuth'
-import { useTransition } from 'react'
+import useModal from '../../hooks/useModal';
+import { useTranslations } from 'next-intl';
+import { Link, usePathname } from '@/navigation';
+import { NavLink } from '@/components/NavLink';
+import { useSession } from 'next-auth/react';
+import { Session } from 'next-auth';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { Button } from '@/components/ui/button';
+import Modal from '@/components/modal/Modal';
+import { logoutAction } from '@/actions/jsAuth';
+import { useTransition } from 'react';
+import Image from 'next/image';
 
 export default function RHeadder(): JSX.Element {
-  const [isPending, startTrasition] = useTransition()
-  let session = useSession()
-  if (session && session.data?.user.role != "Recruiter"){
-    session.data = null
+  const [isPending, startTrasition] = useTransition();
+  let session = useSession();
+  if (session && session.data?.user.role != 'Recruiter') {
+    session.data = null;
   }
-  const t = useTranslations()
-  const pathname = usePathname()
+  const t = useTranslations();
+  const pathname = usePathname();
 
   const handleLogout = () => {
     startTrasition(async () => {
-      await logoutAction()
-      window.location.href = pathname
-    })
-  }
+      await logoutAction();
+      window.location.href = pathname;
+    });
+  };
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between h-20 px-4 bg-white shadow lg:px-8 hover:shadow-lg">
         <div>
           <div className="flex items-center">
             <NavLink href="/recruiter" className="flex items-center">
-              <img src={'/vite.svg'} className="h-10" />
+              <Image
+                width={undefined}
+                height={undefined}
+                alt=""
+                src={'/vite.svg'}
+                className="h-10"
+              />
               <h2 className="hidden ml-4 text-2xl font-bold lg:inline-block">
                 Brand
               </h2>
@@ -61,21 +73,33 @@ export default function RHeadder(): JSX.Element {
               <Dropdown
                 className="p-2"
                 render={
-                  <NavLink href="/recruiter/applicants" className={recruiterNavLink}>
+                  <NavLink
+                    href="/recruiter/applicants"
+                    className={recruiterNavLink}
+                  >
                     {t('header.recruiter.candidate.label')}
                   </NavLink>
                 }
                 type="hover"
                 position="bottomLeft"
               >
-                <Dropdown.Item to="/recruiter/applicants" icon={FaBars as IconType}>
+                <Dropdown.Item
+                  to="/recruiter/applicants"
+                  icon={FaBars as IconType}
+                >
                   {t('header.recruiter.candidate.dropdown.managementCandidate')}
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item to="/recruiter/applicants" icon={FaUser as IconType}>
+                <Dropdown.Item
+                  to="/recruiter/applicants"
+                  icon={FaUser as IconType}
+                >
                   {t('header.recruiter.candidate.dropdown.rightCandidate')}
                 </Dropdown.Item>
-                <Dropdown.Item to="/recruiter/applicants" icon={FaHeart as IconType}>
+                <Dropdown.Item
+                  to="/recruiter/applicants"
+                  icon={FaHeart as IconType}
+                >
                   {t('header.recruiter.candidate.dropdown.appliedCandiate')}
                 </Dropdown.Item>
               </Dropdown>
@@ -102,14 +126,20 @@ export default function RHeadder(): JSX.Element {
               <Dropdown
                 className="p-2"
                 render={
-                  <NavLink href="/recruiter/campaigns" className={recruiterNavLink}>
+                  <NavLink
+                    href="/recruiter/campaigns"
+                    className={recruiterNavLink}
+                  >
                     {t('header.recruiter.cv.label')}
                   </NavLink>
                 }
                 type="hover"
                 position="bottomLeft"
               >
-                <Dropdown.Item to="/recruiter/campaigns" icon={FaBars as IconType}>
+                <Dropdown.Item
+                  to="/recruiter/campaigns"
+                  icon={FaBars as IconType}
+                >
                   {t('header.recruiter.cv.dropdown.rightCV')}
                 </Dropdown.Item>
               </Dropdown>
@@ -120,10 +150,7 @@ export default function RHeadder(): JSX.Element {
         <div className="flex items-center gap-x-2 lg:gap-x-4">
           <LanguageSelector />
           {session?.data?.user ? (
-            <RecruiterRegister
-              logout={handleLogout}
-              auth={session.data}
-            />
+            <RecruiterRegister logout={handleLogout} auth={session.data} />
           ) : (
             <RecruiterUnregister />
           )}{' '}
@@ -138,18 +165,18 @@ export default function RHeadder(): JSX.Element {
         </div>
       </header>
     </>
-  )
+  );
 }
 
 const RecruiterRegister = ({
   auth,
   logout,
 }: {
-  auth: Session | undefined
-  logout: () => void
+  auth: Session | undefined;
+  logout: () => void;
 }) => {
-  const { modal, openModal, closeModal } = useModal()
-  const t = useTranslations()
+  const { modal, openModal, closeModal } = useModal();
+  const t = useTranslations();
   return (
     <>
       <TooltipProvider>
@@ -195,7 +222,10 @@ const RecruiterRegister = ({
       <Dropdown
         className="p-2 cursor-pointer"
         render={
-          <img
+          <Image
+            width={undefined}
+            height={undefined}
+            alt=""
             className="w-10 h-10 rounded-full hover:border-2 border-slate-200"
             src={
               recruiterService.getRecruiterProfileImage(auth?.user?.id) ||
@@ -216,7 +246,10 @@ const RecruiterRegister = ({
         <Dropdown.Item to="/recruiter/profile" icon={FaRegUser as IconType}>
           {t('header.recruiter.accountPopup.account')}
         </Dropdown.Item>
-        <Dropdown.Item to="/recruiter/business" icon={FaBusinessTime as IconType}>
+        <Dropdown.Item
+          to="/recruiter/business"
+          icon={FaBusinessTime as IconType}
+        >
           {t('header.recruiter.accountPopup.businessInfo')}
         </Dropdown.Item>
         <Dropdown.Item to="/recruiter/profile" icon={FaGear as IconType}>
@@ -259,14 +292,12 @@ const RecruiterRegister = ({
         </Modal.Body>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-function RecruiterUnregister({
-}: {
-  }): JSX.Element {
-  const t = useTranslations()
-  const pathname = usePathname()
+function RecruiterUnregister({}: {}): JSX.Element {
+  const t = useTranslations();
+  const pathname = usePathname();
   return (
     <>
       <Link href={`${pathname}/signin`}>
@@ -279,14 +310,13 @@ function RecruiterUnregister({
         </Button>
       </Link>
       <Link href={`${pathname}/signup`}>
-        <Button size="sm">
-          {t('header.recruiter.unRegister.register')}
-        </Button>
+        <Button size="sm">{t('header.recruiter.unRegister.register')}</Button>
       </Link>
     </>
-  )
+  );
 }
 
 const recruiterNavLink = ({ isActive }: { isActive: boolean }) =>
-  `transition-all hover:text-emerald-500 relative ${isActive ? 'text-emerald-500' : ''
-  }`
+  `transition-all hover:text-emerald-500 relative ${
+    isActive ? 'text-emerald-500' : ''
+  }`;

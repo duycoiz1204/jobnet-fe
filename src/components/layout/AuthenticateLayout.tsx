@@ -1,15 +1,16 @@
-import { useTranslations } from "next-intl"
+import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
-type LayoutSize = 'xs' | 'sm' | 'md' | 'lg'
+type LayoutSize = 'xs' | 'sm' | 'md' | 'lg';
 interface AuthenticationNode {
-  welcome: string
-  introduction?: string
-  intendedFor: string
-  padding?: string
-  children: React.ReactNode
-  backgroundImage: string
-  layoutSize?: LayoutSize
-  verify?: boolean
+  welcome: string;
+  introduction?: string;
+  intendedFor: string;
+  padding?: string;
+  children: React.ReactNode;
+  backgroundImage: string;
+  layoutSize?: LayoutSize;
+  verify?: boolean;
 }
 
 export default function AuthenticateLayout({
@@ -47,7 +48,13 @@ export default function AuthenticateLayout({
         {!verify && (
           <div className="relative hidden py-4 bg-gray-100 rounded-md md:block">
             <div className="absolute top-4 left-4">
-              <img src={"/vite.svg"} className="w-14 h-14" />
+              <Image
+                width={undefined}
+                height={undefined}
+                alt=""
+                src={'/vite.svg'}
+                className="w-14 h-14"
+              />
             </div>
             <div
               className={`${
@@ -55,7 +62,10 @@ export default function AuthenticateLayout({
               } px-4 pt-28`}
             >
               <div className="h-[200px] mx-auto">
-                <img
+                <Image
+                  width={undefined}
+                  height={undefined}
+                  alt=""
                   src={backgroundImage}
                   className="object-contain w-full h-full rounded-lg"
                 />
@@ -78,7 +88,13 @@ export default function AuthenticateLayout({
                   </p>
                 )}
                 <div className="flex items-center gap-3">
-                  <img src={"/vite.svg"} className="w-10 h-10 rounded-full"></img>
+                  <Image
+                    width={undefined}
+                    height={undefined}
+                    alt=""
+                    src={'/vite.svg'}
+                    className="w-10 h-10 rounded-full"
+                  ></Image>
                   <div className="flex flex-col text-white">
                     <p className="font-bold">My Team</p>
                     <p>Web Developer</p>
@@ -89,11 +105,7 @@ export default function AuthenticateLayout({
           </div>
         )}
 
-        <div
-          className={`${padding} ${
-            layoutSize === 'lg' && 'pr-8'
-          }`}
-        >
+        <div className={`${padding} ${layoutSize === 'lg' && 'pr-8'}`}>
           <p className="text-2xl font-bold text-emerald-500">{t(welcome)}</p>
           <p className="pt-2 font-semibold text-gray-700">{t(introduction)}</p>
           <p className={`${padding} text-lg`}>{t(intendedFor)}</p>
@@ -101,5 +113,5 @@ export default function AuthenticateLayout({
         </div>
       </div>
     </div>
-  )
+  );
 }

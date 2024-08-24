@@ -8,6 +8,7 @@ import PaginationType from '@/types/pagination';
 import ResumeType from '@/types/resume';
 import { CircleAlert, Pencil } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import React from 'react'
 
 interface Props {
@@ -32,13 +33,15 @@ export default function JSDashboardCpn({
             <div className="flex flex-col w-full gap-3 mx-auto overflow-x-hidden lg:flex-row lg:gap-1 drop-shadow-lg">
                 <div className="w-full lg:w-2/6 bg-slate-50 h-fit">
                     <div className="flex items-center justify-center p-3 bg-purple-500 gap-x-16">
-                        <img
+                        <Image
+                            width={undefined}
+                            height={undefined}
+                            alt=""
                             src={
                                 jobSeeker.profileImageId
                                     ? jobSeekerService.getJobSeekerProfileImage(jobSeeker.id)
                                     : 'https://www.w3schools.com/howto/img_avatar2.png'
                             }
-                            alt="img infor"
                             className="w-20 border-2 border-white rounded-md place-self-start"
                         />
                         <Link
@@ -92,7 +95,9 @@ export default function JSDashboardCpn({
                                 backgroundImage: 'conic-gradient(#1ac880 36deg, #f0f9ff 0deg)',
                             }}
                         >
-                            <img
+                            <Image
+                                width={undefined}
+                                height={undefined}
                                 src="/vite.svg"
                                 alt="img infor"
                                 className="w-32 border-2 border-white rounded-full outline outline-8 outline-white borer bg-blue-50"

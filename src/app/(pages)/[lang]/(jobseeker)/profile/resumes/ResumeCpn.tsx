@@ -30,6 +30,7 @@ import FileUpload from '@/components/input/FileUpload';
 import ResumeType from '@/types/resume';
 import ErrorType from '@/types/error';
 import { useAppDispatch } from '@/hooks/useRedux';
+import Image from 'next/image';
 
 const initPermission = (resume?: ResumeType) => ({
   id: resume?.id,
@@ -485,9 +486,11 @@ function RecruiterViewedResumeItem({ id, image, name, business }: ViewerType) {
       <div className="flex items-center justify-between py-1">
         <div className="flex items-center px-2 gap-x-4">
           <div className="object-cover border-2 rounded-full w-11 h-11 border-emerald-500">
-            <img
-              src={recruiterService.getRecruiterProfileImage(image)}
+            <Image
+              width={undefined}
+              height={undefined}
               alt=""
+              src={recruiterService.getRecruiterProfileImage(image)}
               className="w-full h-full rounded-full"
             />
           </div>
