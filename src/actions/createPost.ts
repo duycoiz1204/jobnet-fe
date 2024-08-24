@@ -1,5 +1,6 @@
 'use server';
 
+import { auth } from '@/auth';
 import { redirect } from '@/navigation';
 import postService from '@/services/postService';
 import ErrorType from '@/types/error';
@@ -25,6 +26,7 @@ async function createPost(
   formData: FormData
 ) {
   'use server';
+  const session = await auth();
 
   formData.get('applicationDeadline') &&
     formData.set(
@@ -46,13 +48,13 @@ async function createPost(
         location.specificAddress
       );
     });
+  
   try {
     formData.append('currency', 'VND');
 
-    await postService.createPost(formData);
+    await postService.createPost(formData, session?.accessToken!);
 
-    toast.success('Post created successfully.');
-    return redirect('/recruiter/posts');
+    return { type: 'success' as ToastTypes, message: 'Post created successfully.'};
   } catch (err) {
     return { type: 'error' as ToastTypes, message: (err as ErrorType).message };
   }

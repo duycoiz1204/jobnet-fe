@@ -89,13 +89,16 @@ class PostService extends BaseService {
     return this.getResponseData<PostType>(res);
   }
 
-  async createPost(req: FormData) {
+  async createPost(req: FormData, accessToken: string) {
     const res = await fetch(this.apiBaseUrl, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
       body: req,
     });
 
-    this.checkResponseNotOk(res);
+    await this.checkResponseNotOk(res);
     return this.getResponseData<PostType>(res);
   }
 

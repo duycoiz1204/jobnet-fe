@@ -1,5 +1,5 @@
 export default interface LocationFullType {
-  provinceCode: string
+  provinceCode: number | undefined
   provinceName: string
   specificAddress: string
 }

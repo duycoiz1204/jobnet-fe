@@ -40,9 +40,11 @@ import LabelSection from '@/components/LabelSection';
 import { useFormState } from 'react-dom';
 import Radio from '@/components/input/Radio';
 import { Input } from '@/components/ui/input';
+import { useRouter } from '@/navigation';
 
 export default function PostCreation() {
   const t = useTranslations();
+  const router = useRouter();
   const { data: session } = useSession();
 
   // * Generate and parse JD state
@@ -74,8 +76,6 @@ export default function PostCreation() {
   };
   const [state, formAction] = useFormState(createPost, test);
 
-  // *
-
   const { modal, openModal, closeModal } = useModal();
 
   useEffect(() => {
@@ -92,6 +92,10 @@ export default function PostCreation() {
   }, [session?.user.id, session?.accessToken]);
 
   useEffect(() => {
+    if (state.type === 'success') {
+      toast.success(state.message);
+      router.push('/recruiter/posts');
+    }
     const toastId = state.type && toast.error(state.message);
     return () => {
       toast.dismiss(toastId);
@@ -120,8 +124,6 @@ export default function PostCreation() {
     }
   };
 
-  // * Generate JS by AI
-
   const handleReceiveLocationData = (data: LocationType[]) => {
     setLocations(data);
   };
@@ -138,68 +140,6 @@ export default function PostCreation() {
     setDegrees(data);
   };
 
-  const handleGenerateJobDescription = () => {
-    if (formRef.current) {
-      const temp = new FormData(formRef.current);
-
-      const formProfession = professions?.find(
-        (profession) =>
-          temp &&
-          temp.get('professionId')?.toString() === profession.id.toString()
-      );
-
-      const data: GeneratePostType = {
-        otherRequirements: temp.get('otherRequirements') as string,
-        requireNumber: temp.get('requisitionNumber') as string,
-        minSalary: temp.get('minSalaryString') as string,
-        maxSalary: temp.get('maxSalaryString') as string,
-        yearExp: temp.get('yearsOfExperience') as string,
-        workType: temp.get('workingFormat') as string,
-        title: temp.get('title') as string,
-        profession: formProfession?.name,
-        degrees: degrees?.map((item) => item.name),
-        levels: levels?.map((item) => item.name),
-        benefits: benefits?.map((item) => item.name),
-        locations: locations?.map(
-          (item) => `${item.specificAddress} - ${item.provinceName}`
-        ),
-        //! language: [vi, en]
-      };
-      // void generatePost(data);
-    }
-  };
-  // const generatePost = async (data: GeneratePostType) => {
-  //   setLoading(true);
-  //   const result = await generateJDService.generatePost(data);
-  //   setLoading(false);
-  //   setTextData(result.content);
-  // };
-  // *
-
-  // * Parse JD by tessaract AI tools
-  // const handleChangeJD = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   void (async () => {
-  //     if (event.target.files) {
-  //       const form = new FormData();
-  //       const file = event.target.files[0];
-  //       form.append('jd', file);
-  //       setLoading(true);
-  //       const result = await generateJDService.parseJD(form);
-  //       console.log(result);
-  //       setLoading(false);
-
-  //       setTextData(result.content);
-  //       setInputs(result?.data);
-  //     } else {
-  //       toast.error(t('recruiter.postCreation.file.notFound'));
-  //     }
-  //   })();
-  // };
-  // *
-
-  // * Fetch get recruiter
-  console.log("Recruiter", recruiter);
-  
   const getRecruiterById = useCallback(async () => {
     try {
       const response = await recruiterService.getRecruiterById(
@@ -210,9 +150,8 @@ export default function PostCreation() {
     } catch (error) {
       console.error(t('recruiter.postCreation.error.fetch'), error);
     }
-  }, [session?.user.id, session?.accessToken, t]);
+  }, [session?.user.id, session?.accessToken]);
 
-  // * Fetch get business
   const getBusinessById = useCallback(async () => {
     try {
       const response = await businessService.getBusinessById(
@@ -222,7 +161,7 @@ export default function PostCreation() {
     } catch (error) {
       console.error(t('recruiter.postCreation.error.fetch'), error);
     }
-  }, [recruiter?.business.id, t]);
+  }, [recruiter?.business.id]);
 
   useEffect(() => {
     void getRecruiterById();
@@ -389,36 +328,30 @@ export default function PostCreation() {
                 <Radio
                   id="full-time"
                   name="workingFormat"
-                  className="mr-2"
+                  className="w-4 h-4 mr-2"
                   label={t(
                     'recruiter.postCreation.inputs.workingFormat.options.fulltime'
                   )}
                   value="intern"
-                  checked={inputs?.workType === 'full-time'}
-                  // onChange={handlePermissionChange}
                 />
 
                 <Radio
                   id="part-time"
                   name="workingFormat"
-                  className="mr-2"
+                  className="w-4 h-4 mr-2"
                   label={t(
                     'recruiter.postCreation.inputs.workingFormat.options.parttime'
                   )}
                   value="intern"
-                  checked={inputs?.workType === 'part-time'}
-                  // onChange={handlePermissionChange}
                 />
                 <Radio
                   id="intern"
                   name="workingFormat"
-                  className="mr-2"
+                  className="w-4 h-4 mr-2"
                   label={t(
                     'recruiter.postCreation.inputs.workingFormat.options.intern'
                   )}
                   value="intern"
-                  checked={inputs?.workType === 'intern-time'}
-                  // onChange={handlePermissionChange}
                 />
               </div>
             </LabelSection>
@@ -543,15 +476,6 @@ export default function PostCreation() {
               )}
             />
           </PostDetailSection>
-          <div className="">
-            <Button
-              className="mt-3 mr-auto text-white transition-all bg-cyan-500 hover:bg-cyan-600"
-              color="empty"
-              onClick={handleGenerateJobDescription}
-            >
-              {t('recruiter.postCreation.button.generatePost')}
-            </Button>
-          </div>
           <div>
             <h2 className="text-xl font-semibold">
               {t('recruiter.postCreation.inputs.desc.label')}

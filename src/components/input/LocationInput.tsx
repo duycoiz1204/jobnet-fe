@@ -48,7 +48,7 @@ function LocationInput({
   const [{ input, locations, isDialogShow, isHintsShow }, setLocationInput] =
     useState({
       input: {
-        provinceCode: '',
+        provinceCode: undefined as undefined | number,
         provinceName: '',
         specificAddress: '',
       },
@@ -82,15 +82,15 @@ function LocationInput({
 
   const handleSelectChange = (e: SelectChangeEvent) => {
     const location = mappedLocations.find(
-      (location) => location.id.toString() === e.target.value
+      (location) => location.id.toString() === e.target.value.toString()
     );
     location &&
       setLocationInput((prev) => ({
         ...prev,
         input: {
           ...prev.input,
-          provinceCode: location?.id.toString(),
-          provinceName: location?.name,
+          provinceCode: location.id,
+          provinceName: location.name,
         },
       }));
   };
@@ -115,7 +115,7 @@ function LocationInput({
       setLocationInput((prev) => ({
         ...prev,
         input: {
-          provinceCode: '',
+          provinceCode: undefined,
           provinceName: '',
           specificAddress: '',
         },
