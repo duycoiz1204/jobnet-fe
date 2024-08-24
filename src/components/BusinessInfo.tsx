@@ -20,6 +20,7 @@ import { toast } from 'sonner';
 import clsx from 'clsx';
 import { Button } from '@/components/ui/button';
 import { ItemPostHeading } from '@/components/PostDetailsInfo';
+import Image from 'next/image';
 
 interface BusinessInfoProps extends React.HTMLAttributes<HTMLDivElement> {
   mode?: 'view' | 'update' | 'admin';
@@ -64,7 +65,7 @@ function BusinessInfo({
             status: 'FOLLOW',
             businessId: businessId,
           }, session!!.accessToken!!);
-          
+
         setFollow(true);
         toast.success(t('toast.follow.followed'));
       } catch (e) {
@@ -96,7 +97,10 @@ function BusinessInfo({
     <div className={clsx(className, 'space-y-4')}>
       <div>
         <div className="relative h-56">
-          <img
+          <Image
+            width={undefined}
+            height={undefined}
+            alt=''
             src={businessService.getBusinessBackgroundImage(business.id)}
             className="object-cover w-full h-full rounded-t"
           />

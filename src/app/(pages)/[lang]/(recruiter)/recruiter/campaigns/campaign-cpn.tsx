@@ -2,6 +2,7 @@
 import Dropdown from '@/components/Dropdown'
 import { Link, useRouter } from '@/navigation'
 import ResumeType from '@/types/resume'
+import Image from 'next/image'
 import { useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 
@@ -10,7 +11,7 @@ interface CampainProps {
     _resumes: Array<ResumeType>
 }
 
-export default function Campaign({_resumes}: CampainProps): JSX.Element {
+export default function Campaign({ _resumes }: CampainProps): JSX.Element {
 
     const [option, showOption] = useState<boolean>(false)
     return (
@@ -78,10 +79,12 @@ function ItemCV({ data }: { data: ResumeType }): JSX.Element {
             className="w-full h-[193px] lg:p-4 p-1 bg-slate-200 rounded-md mt-6 cursor-pointer hover:bg-slate-300 transition-all"
         >
             <div className="flex items-center justify-between mt-3 gap-x-5 lg:mt-0">
-                <img
-                    className="lg:w-[110px] lg:h-[162px] w-[80px] h-[120px] object-cover rounded-md"
+                <Image
+                    width={undefined}
+                    height={undefined}
+                    alt=''
                     src={`${data.jobSeeker.profileImageId || '/public/candidate.png'}`}
-                    alt=""
+                    className="lg:w-[110px] lg:h-[162px] w-[80px] h-[120px] object-cover rounded-md"
                 />
                 <div className="flex flex-col gap-y-1">
                     <div className="flex items-center gap-x-2">

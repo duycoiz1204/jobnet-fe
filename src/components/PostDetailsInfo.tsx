@@ -26,6 +26,7 @@ import useIsInWishlist from '@/hooks/useIsInWishlist';
 import { useSession } from 'next-auth/react';
 import { Session } from 'next-auth';
 import { toast } from 'sonner';
+import Image from 'next/image';
 
 function PostDetailsInfo({
   type = 'View',
@@ -67,10 +68,13 @@ function PostDetailsInfo({
         <div className="col-span-1 p-6 border rounded bg-slate-50">
           <div className="flex flex-col gap-y-4">
             <div className="flex gap-x-4">
-              <img
-                src={businessService.getBusinessProfileImage(post.business?.id)}
-                className="object-cover w-24 h-24 border rounded border-slate-200"
-              />
+              <Image
+                    width={undefined}
+                    height={undefined}
+                    alt=''
+                    src={businessService.getBusinessProfileImage(post.business?.id)}
+                    className="object-cover w-24 h-24 border rounded border-slate-200"
+                />
               <h2 className="text-lg font-semibold">{post.business?.name}</h2>
             </div>
             <div className="flex flex-col gap-y-2">

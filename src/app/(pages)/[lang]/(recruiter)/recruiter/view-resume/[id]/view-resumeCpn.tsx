@@ -11,6 +11,7 @@ import resumeService from '@/services/resumeService'
 import { Badge } from '@/components/ui/badge'
 import recruiterService from '@/services/recruiterService'
 import { Textarea } from '@/components/ui/textarea'
+import Image from 'next/image'
 
 interface ViewResumeRCProps {
     _recruiter: RecruiterType
@@ -95,7 +96,13 @@ const ViewResumeRC = ({ _recruiter, id }: ViewResumeRCProps) => {
             <div className="h-screen col-span-1 p-4 bg-gray-50">
                 <div className="flex items-center gap-x-4">
                     <div className="w-12 h-12 rounded-full">
-                        <img src={'/admin.png'} alt="" className="w-full h-full rounded-full" />
+                        <Image
+                            width={undefined}
+                            height={undefined}
+                            alt=''
+                            src={'/admin.png'}
+                            className="w-full h-full rounded-full"
+                        />
                     </div>
                     <div className="flex flex-col">
                         <p className="font-semibold">{resume?.jobSeeker.name}</p>

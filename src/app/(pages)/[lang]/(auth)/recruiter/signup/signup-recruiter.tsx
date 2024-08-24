@@ -22,6 +22,7 @@ import useModal from '@/hooks/useModal';
 import ErrorType from '@/types/error';
 import { useAppDispatch } from '@/hooks/useRedux';
 import { setLoading } from '@/features/loading/loadingSlice';
+import Image from 'next/image';
 
 type Props = {}
 type IntentType = 'registerWithNewBusiness' | 'registerWithSelectedBusiness'
@@ -457,13 +458,16 @@ function BusinessSearchItem({
             className={`${className} p-4 cursor-pointer transition-all rounded hover:bg-slate-100 border-slate-200`}
         >
             <div className="flex items-center gap-x-4">
-                <img
-                    className="object-cover rounded w-14 h-14"
+                <Image
+                    width={undefined}
+                    height={undefined}
+                    alt=''
                     src={
                         business.profileImageId
                             ? businessService.getBusinessProfileImage(business.id)
                             : "/business.png"
                     }
+                    className="object-cover rounded w-14 h-14"
                 />
                 <div className="flex flex-col">
                     <p className="font-semibold truncate w-96 text-md">{business.name}</p>

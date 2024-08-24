@@ -20,6 +20,7 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import EmptyTableRow from '@/components/table/EmptyTableRow'
+import Image from 'next/image'
 
 
 
@@ -286,11 +287,12 @@ export default function ApplicantManagement({ _applications }: ApplicantManageme
                     <Modal.Body className="space-y-5">
                         <div className="flex gap-20">
                             <div className="w-40 h-40 translate-y-1/4">
-                                <img
-                                    src={jobSeekerService.getJobSeekerProfileImage(
-                                        selectedApplication.jobSeeker.id
-                                    )}
-                                    className="object-cover w-full h-full rounded-md"
+                                <Image 
+                                width={undefined}
+                                height={undefined}
+                                alt=''
+                                src={jobSeekerService.getJobSeekerProfileImage(selectedApplication.jobSeeker.id)}
+                                className="object-cover w-full h-full rounded-md"
                                 />
                             </div>
                             <div className="grid grid-cols-2 gap-4 grow">

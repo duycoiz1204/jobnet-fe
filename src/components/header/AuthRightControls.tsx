@@ -21,6 +21,7 @@ import {
 import Modal from "@/components/modal/Modal"
 import useModal from "@/hooks/useModal"
 import { UserSessionType } from "@/types/user"
+import Image from "next/image"
 
 export default function AuthRightControls({
     t,
@@ -54,10 +55,7 @@ export default function AuthRightControls({
             </TooltipProvider>
             <Dropdown
                 render={
-                    <img
-                        src={jobseekersService.getJobSeekerProfileImage(auth?.id)}
-                        className="w-10 h-10 border rounded-full"
-                    />
+                    <Image width={40} height={40} alt="Picture of the author" className="w-10 h-10 border rounded-full" src={jobseekersService.getJobSeekerProfileImage(auth?.id)}/>
                 }
                 type="hover"
                 position="bottomRight"
