@@ -92,8 +92,8 @@ export default async function Footer(): Promise<JSX.Element> {
       <div>
         <div className="flex justify-center h-16 p-2 rounded bg-slate-500">
           <Image
-            width={undefined}
-            height={undefined}
+            width={500}
+            height={500}
             alt=""
             src={'/vite.svg'}
           />

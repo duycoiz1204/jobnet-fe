@@ -139,8 +139,8 @@ Sidebar.Logo = function SidebarLogo({
     <div className={baseUtils}>
       {img && (
         <Image
-          width={undefined}
-          height={undefined}
+          width={500}
+          height={500}
           alt=""
           src={img}
           className={imgUtils}

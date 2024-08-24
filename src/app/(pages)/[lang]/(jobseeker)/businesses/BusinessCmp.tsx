@@ -93,7 +93,7 @@ export default function BusinessCmp({ data }: Props) {
                     </div>
                 </div>
                 <div className="lg:w-[272px] lg:h-[304px] hidden sm:block md:hidden lg:block mx-auto">
-                    <Image width={undefined} height={undefined} src={'/vite.svg'} alt='Vite image' className="w-full h-full " />
+                    <Image width={500} height={500} src={'/vite.svg'} alt='Vite image' className="w-full h-full " />
                 </div>
             </div>
             <main ref={scrollIntoViewRef} className="px-3 pt-2 lg:pt-6 lg:px-20">
@@ -121,8 +121,8 @@ function BusinessItem({ business }: { business: BusinessType }): JSX.Element {
         <div className="w-full h-[420px] overflow-hidden bg-cover bg-no-repeat bg-slate-100 rounded-lg relative shadow-md cursor-pointer hover:bg-slate-300 transition-all">
             <div className="w-full h-[210px] rounded-lg">
                 <Image
-                    width={undefined}
-                    height={undefined}
+                    width={500}
+                    height={500}
                     src={
                         business.backgroundImageId
                             ? businessService.getBusinessBackgroundImage(business.id)
@@ -134,8 +134,8 @@ function BusinessItem({ business }: { business: BusinessType }): JSX.Element {
             </div>
             <div className="w-[90px] h-[90px] mx-auto mb-0 -translate-y-[50%] rounded-md">
                 <Image
-                    width={undefined}
-                    height={undefined}
+                    width={500}
+                    height={500}
                     src={
                         business.profileImageId
                             ? businessService.getBusinessProfileImage(business.id)

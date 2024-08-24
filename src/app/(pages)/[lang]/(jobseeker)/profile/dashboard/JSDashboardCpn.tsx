@@ -34,8 +34,8 @@ export default function JSDashboardCpn({
                 <div className="w-full lg:w-2/6 bg-slate-50 h-fit">
                     <div className="flex items-center justify-center p-3 bg-purple-500 gap-x-16">
                         <Image
-                            width={undefined}
-                            height={undefined}
+                            width={500}
+                            height={500}
                             alt=""
                             src={
                                 jobSeeker.profileImageId
@@ -96,8 +96,8 @@ export default function JSDashboardCpn({
                             }}
                         >
                             <Image
-                                width={undefined}
-                                height={undefined}
+                                width={500}
+                                height={500}
                                 src="/vite.svg"
                                 alt="img infor"
                                 className="w-32 border-2 border-white rounded-full outline outline-8 outline-white borer bg-blue-50"

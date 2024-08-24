@@ -31,8 +31,8 @@ export const RCAccountComponent = ({
       {' '}
       <div className="relative w-full h-56 bg-slate-50">
         <Image
-          width={undefined}
-          height={undefined}
+          width={500}
+          height={500}
           alt=""
           src="/recruiter-auth.png"
           className="object-cover w-full h-full"
@@ -42,8 +42,8 @@ export const RCAccountComponent = ({
         <div className="flex items-center gap-x-4">
           <div className="relative pl-6 rounded-full -translate-y-2/4">
             <Image
-              width={undefined}
-              height={undefined}
+              width={500}
+              height={500}
               alt=""
               src={
                 data?.profileImageId

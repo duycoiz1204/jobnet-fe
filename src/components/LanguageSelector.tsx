@@ -30,8 +30,8 @@ export default function LanguageSelector(): React.ReactElement {
               <div className="flex items-center gap-2 transition-all hover:text-emerald-500">
                 <div className="h-5 w-7">
                   <Image
-                    width={undefined}
-                    height={undefined}
+                    width={500}
+                    height={500}
                     src={locale === 'en' ? '/english.png' : '/vietnam.png'}
                     alt=""
                     className="w-full h-full "
@@ -54,8 +54,8 @@ export default function LanguageSelector(): React.ReactElement {
         <div className="flex items-center gap-x-3">
           <div className="flex items-center gap-x-2">
             <Image
-              width={undefined}
-              height={undefined}
+              width={500}
+              height={500}
               alt=""
               src={'/vietnam.png'}
               className="h-5 w-7"
@@ -70,8 +70,8 @@ export default function LanguageSelector(): React.ReactElement {
         <div className="flex items-center gap-x-3">
           <div className="flex items-center gap-x-2">
             <Image
-              width={undefined}
-              height={undefined}
+              width={500}
+              height={500}
               alt=""
               src={'/english.png'}
               className="h-5 w-7"

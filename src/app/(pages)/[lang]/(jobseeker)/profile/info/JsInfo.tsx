@@ -444,8 +444,8 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
               <div className="relative">
                 <TicketCheck className="absolute bottom-0 right-0 grid w-5 h-5 text-emerald-500" />
                 <Image
-                  width={undefined}
-                  height={undefined}
+                  width={500}
+                  height={500}
                   alt=""
                   className="w-20 h-20 border-2 rounded-full"
                   key={keyAvatar}

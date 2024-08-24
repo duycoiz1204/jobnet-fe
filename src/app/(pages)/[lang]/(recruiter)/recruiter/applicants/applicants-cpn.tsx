@@ -288,8 +288,8 @@ export default function ApplicantManagement({ _applications }: ApplicantManageme
                         <div className="flex gap-20">
                             <div className="w-40 h-40 translate-y-1/4">
                                 <Image 
-                                width={undefined}
-                                height={undefined}
+                                width={500}
+                                height={500}
                                 alt=''
                                 src={jobSeekerService.getJobSeekerProfileImage(selectedApplication.jobSeeker.id)}
                                 className="object-cover w-full h-full rounded-md"

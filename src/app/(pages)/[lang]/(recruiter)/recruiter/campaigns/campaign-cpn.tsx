@@ -80,8 +80,8 @@ function ItemCV({ data }: { data: ResumeType }): JSX.Element {
         >
             <div className="flex items-center justify-between mt-3 gap-x-5 lg:mt-0">
                 <Image
-                    width={undefined}
-                    height={undefined}
+                    width={500}
+                    height={500}
                     alt=''
                     src={`${data.jobSeeker.profileImageId || '/public/candidate.png'}`}
                     className="lg:w-[110px] lg:h-[162px] w-[80px] h-[120px] object-cover rounded-md"

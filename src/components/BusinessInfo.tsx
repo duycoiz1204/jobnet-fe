@@ -105,8 +105,8 @@ function BusinessInfo({
       <div>
         <div className="relative h-56">
           <Image
-            width={undefined}
-            height={undefined}
+            width={500}
+            height={500}
             alt=""
             src={businessService.getBusinessBackgroundImage(business.id)}
             className="object-cover w-full h-full rounded-t"
@@ -124,8 +124,8 @@ function BusinessInfo({
           {mode === 'update' ? (
             <div className="relative">
               <Image
-                width={undefined}
-                height={undefined}
+                width={500}
+                height={500}
                 alt=""
                 src={businessService.getBusinessProfileImage(business.id)}
                 className="object-center h-40 border-2 w-44 border-slate-200"
@@ -140,8 +140,8 @@ function BusinessInfo({
           ) : (
             <div>
               <Image
-                width={undefined}
-                height={undefined}
+                width={500}
+                height={500}
                 alt=""
                 src={businessService.getBusinessProfileImage(business.id)}
                 className="object-cover w-40 h-40 rounded-full"

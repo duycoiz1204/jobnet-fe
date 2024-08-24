@@ -187,8 +187,8 @@ function FavoriteJob({
         <div className="px-4 py-6 space-y-6 rounded-md bg-slate-100">
             <div className="flex items-center gap-4">
                 <Image
-                    width={undefined}
-                    height={undefined}
+                    width={500}
+                    height={500}
                     alt=""
                     src={
                     post.business.profileImageId

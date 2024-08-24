@@ -59,8 +59,8 @@ export default function RHeadder(): JSX.Element {
           <div className="flex items-center">
             <NavLink href="/recruiter" className="flex items-center">
               <Image
-                width={undefined}
-                height={undefined}
+                width={500}
+                height={500}
                 alt=""
                 src={'/vite.svg'}
                 className="h-10"
@@ -223,8 +223,8 @@ const RecruiterRegister = ({
         className="p-2 cursor-pointer"
         render={
           <Image
-            width={undefined}
-            height={undefined}
+            width={500}
+            height={500}
             alt=""
             className="w-10 h-10 rounded-full hover:border-2 border-slate-200"
             src={

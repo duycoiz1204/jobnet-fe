@@ -13,7 +13,7 @@ function EmptyData({
   return (
     <div className="flex flex-col items-center gap-2">
       <div className="object-cover w-48 h-48">
-        <Image width={undefined} height={undefined} alt="" src={'/empty.png'} />
+        <Image width={500} height={500} alt="" src={'/empty.png'} />
       </div>
       <h4 className="text-lg font-bold">{title || t('emptyData.title')}</h4>
       <div className="text-slate-400">

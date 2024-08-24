@@ -487,8 +487,8 @@ function RecruiterViewedResumeItem({ id, image, name, business }: ViewerType) {
         <div className="flex items-center px-2 gap-x-4">
           <div className="object-cover border-2 rounded-full w-11 h-11 border-emerald-500">
             <Image
-              width={undefined}
-              height={undefined}
+              width={500}
+              height={500}
               alt=""
               src={recruiterService.getRecruiterProfileImage(image)}
               className="w-full h-full rounded-full"

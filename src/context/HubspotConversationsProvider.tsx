@@ -457,8 +457,8 @@ export const HubspotConversationsProvider = ({
               <div className="flex shadow-inner shadow-slate-400 p-2 rounded-md">
                 <div className="basis-1/4">
                   <Image
-                    width={undefined}
-                    height={undefined}
+                    width={500}
+                    height={500}
                     alt=""
                     src={hubspotUser.aiUser?.avatar as string}
                     className="w-[50%] rounded-full outline-emerald-200 outline"
@@ -476,8 +476,8 @@ export const HubspotConversationsProvider = ({
               <div className="flex shadow-inner shadow-slate-400 p-2 rounded-md">
                 <div className="basis-1/4">
                   <Image
-                    width={undefined}
-                    height={undefined}
+                    width={500}
+                    height={500}
                     alt=""
                     src={hubspotUser.assistantUser?.avatar as string}
                     className="w-[50%] rounded-full outline-emerald-200 outline"

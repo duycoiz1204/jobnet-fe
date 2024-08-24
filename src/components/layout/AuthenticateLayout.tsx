@@ -49,8 +49,8 @@ export default function AuthenticateLayout({
           <div className="relative hidden py-4 bg-gray-100 rounded-md md:block">
             <div className="absolute top-4 left-4">
               <Image
-                width={undefined}
-                height={undefined}
+                width={500}
+                height={500}
                 alt=""
                 src={'/vite.svg'}
                 className="w-14 h-14"
@@ -63,8 +63,8 @@ export default function AuthenticateLayout({
             >
               <div className="h-[200px] mx-auto">
                 <Image
-                  width={undefined}
-                  height={undefined}
+                  width={500}
+                  height={500}
                   alt=""
                   src={backgroundImage}
                   className="object-contain w-full h-full rounded-lg"
@@ -89,8 +89,8 @@ export default function AuthenticateLayout({
                 )}
                 <div className="flex items-center gap-3">
                   <Image
-                    width={undefined}
-                    height={undefined}
+                    width={500}
+                    height={500}
                     alt=""
                     src={'/vite.svg'}
                     className="w-10 h-10 rounded-full"

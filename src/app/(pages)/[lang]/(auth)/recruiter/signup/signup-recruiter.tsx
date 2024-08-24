@@ -459,8 +459,8 @@ function BusinessSearchItem({
         >
             <div className="flex items-center gap-x-4">
                 <Image
-                    width={undefined}
-                    height={undefined}
+                    width={500}
+                    height={500}
                     alt=''
                     src={
                         business.profileImageId

@@ -69,8 +69,8 @@ function PostDetailsInfo({
           <div className="flex flex-col gap-y-4">
             <div className="flex gap-x-4">
               <Image
-                width={undefined}
-                height={undefined}
+                width={500}
+                height={500}
                 alt=""
                 src={businessService.getBusinessProfileImage(post.business?.id)}
                 className="object-cover w-24 h-24 border rounded border-slate-200"

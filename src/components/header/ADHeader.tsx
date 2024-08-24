@@ -113,8 +113,8 @@ export default function ADHeader({}: // handleClick,
                 <TooltipTrigger asChild>
                   <div className="w-10 h-10 transition-all border-2 rounded-full cursor-pointer hover:border-emerald-500">
                     <Image
-                      width={undefined}
-                      height={undefined}
+                      width={500}
+                      height={500}
                       alt=""
                       src={'/admin.png'}
                       className="w-full h-full rounded-full"

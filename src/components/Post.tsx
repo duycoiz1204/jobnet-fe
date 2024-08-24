@@ -34,8 +34,8 @@ export default function Post({
       <div className="flex flex-col gap-4 md:gap-6 md:flex-row">
         <div className="flex justify-center flex-none">
           <Image
-            width={undefined}
-            height={undefined}
+            width={500}
+            height={500}
             alt=""
             src={
               post.business.profileImageId

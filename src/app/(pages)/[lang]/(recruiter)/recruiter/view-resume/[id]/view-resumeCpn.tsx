@@ -97,8 +97,8 @@ const ViewResumeRC = ({ _recruiter, id }: ViewResumeRCProps) => {
                 <div className="flex items-center gap-x-4">
                     <div className="w-12 h-12 rounded-full">
                         <Image
-                            width={undefined}
-                            height={undefined}
+                            width={500}
+                            height={500}
                             alt=''
                             src={'/admin.png'}
                             className="w-full h-full rounded-full"
