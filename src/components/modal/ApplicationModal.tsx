@@ -28,11 +28,13 @@ export default function ApplicationModal({
   modal,
   openModal,
   closeModal,
+  handleSubmitModal,
   post,
 }: {
   modal: string | undefined;
   openModal: (id: string) => void;
   closeModal: () => void;
+  handleSubmitModal: () => void;
   post: PostType;
 }): React.ReactElement {
   const { data: session } = useSession();
@@ -103,19 +105,16 @@ export default function ApplicationModal({
       return;
     }
 
-    const formData = new FormData();
-    formData.append('postId', post.id);
-    formData.append('resumeId', resumes![selectedResumeIndex].id);
-
     void (async () => {
       closeModal();
       dispatch(setLoading(true));
 
       try {
         await applicationService.createApplication(
-          formData,
+          {postId: post.id, resumeId: resumes![selectedResumeIndex].id},
           session?.accessToken!
         );
+        handleSubmitModal()
         toast.success(t('toast.applyCV.applied'));
       } catch (err) {
         openModal('application-modal');

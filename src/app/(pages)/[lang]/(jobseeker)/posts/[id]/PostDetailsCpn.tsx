@@ -158,6 +158,9 @@ export default function PostDetailsCpn({ _similarPostsPaginationData, postId, po
                     modal={modal}
                     openModal={openModal}
                     closeModal={closeModal}
+                    handleSubmitModal={() => {
+                        setIsSubmitted(true)
+                    }}
                     post={post}
                 />
             )}

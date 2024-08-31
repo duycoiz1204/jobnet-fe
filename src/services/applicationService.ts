@@ -72,11 +72,14 @@ class ApplicationService extends BaseService {
     return this.getResponseData<PaginationType<ApplicationType>>(res);
   }
 
-  async createApplication(data: FormData, accessToken: string) {
+  async createApplication(data: object, accessToken: string) {
     const res = await fetch(this.apiBaseUrl, {
       method: 'POST',
-      headers: { Authorization: `Bearer ${accessToken}` },
-      body: data,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
     });
 
     this.checkResponseNotOk(res);
