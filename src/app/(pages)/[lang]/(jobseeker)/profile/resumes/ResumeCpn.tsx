@@ -208,6 +208,27 @@ export default function ResumeCpn({ _resumes }: ResumeProps) {
     void fetchRecruiters();
   }, [viewerId]);
 
+  const handleViewClick = (resumeId: string) => {
+    void (async () => {
+        closeModal();
+        dispatch(setLoading(true));
+    
+        try {
+            const pdfBlob = await resumeService.getResumeFile(
+            resumeId,
+            session?.accessToken!
+            );
+            const pdfBlobURL = URL.createObjectURL(pdfBlob);
+            window.open(pdfBlobURL);
+        } catch (err) {
+            openModal('application-modal');
+            toast.error((err as ErrorType).message);
+        } finally {
+            dispatch(setLoading(false));
+        }
+    })();
+  };
+
   const resumeElms = resumes.map((resume, i) => (
     <TableRow key={resume.id}>
       <TableCell>{i + 1}</TableCell>
@@ -218,7 +239,7 @@ export default function ResumeCpn({ _resumes }: ResumeProps) {
         <Button
           size="lg"
           variant="cyan"
-          onClick={() => router.push(`../../view-resume/${resume.id}`)}
+          onClick={() => handleViewClick(resume.id)}
         >
           {t('resumes.uploadedCVs.button.view')}
         </Button>

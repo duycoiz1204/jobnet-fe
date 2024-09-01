@@ -21,6 +21,9 @@ import { toast } from 'sonner'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import EmptyTableRow from '@/components/table/EmptyTableRow'
 import Image from 'next/image'
+import { useDispatch } from 'react-redux'
+import { setLoading } from '@/features/loading/loadingSlice'
+import resumeService from '@/services/resumeService'
 
 
 
@@ -29,7 +32,7 @@ interface ApplicantManagementProps {
 }
 
 export default function ApplicantManagement({ _applications }: ApplicantManagementProps): JSX.Element {
-
+    const dispatch = useDispatch()
     const router = useRouter()
 
     const { pagination, setPagination } = usePagination(_applications)
@@ -94,6 +97,27 @@ export default function ApplicantManagement({ _applications }: ApplicantManageme
         setSelectedApplicationId(applicationId)
         openModal('info-view-modal')
     }
+
+    const handleViewClick = (resumeId: string) => {
+        void (async () => {
+            closeModal();
+            dispatch(setLoading(true));
+        
+            try {
+                const pdfBlob = await resumeService.getResumeFile(
+                resumeId,
+                session.data?.accessToken!
+                );
+                const pdfBlobURL = URL.createObjectURL(pdfBlob);
+                window.open(pdfBlobURL);
+            } catch (err) {
+                openModal('application-modal');
+                toast.error((err as ErrorType).message);
+            } finally {
+                dispatch(setLoading(false));
+            }
+        })();
+    };
 
     const handleApplicationStatusUpdate = (
         applicationId: string,
@@ -306,14 +330,7 @@ export default function ApplicantManagement({ _applications }: ApplicantManageme
                                     <ModalInfo title="CV Link:">
                                         <div
                                             className="px-3 text-center rounded cursor-pointer bg-slate-200 hover:bg-slate-300"
-                                            onClick={() => {
-                                                if (selectedApplication.resumeId) {
-                                                    router.push(`/recruiter/view-resume/${selectedApplication.resumeId}`)
-                                                } else {
-                                                    toast.error("JobSeeker didn't have CV yet...")
-                                                }
-                                            }
-                                            }
+                                            onClick={() => handleViewClick(selectedApplication.resume.id)}
                                         >
                                             Xem CV
                                         </div>
