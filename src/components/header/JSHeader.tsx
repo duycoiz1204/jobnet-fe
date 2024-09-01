@@ -41,7 +41,7 @@ export default function JSHeader({}: JSHeaderProps): JSX.Element {
   }
 
   return (
-    <header className="fixed z-50 flex items-center justify-between w-full h-20 px-4 bg-white shadow sm:px-8 hover:shadow-lg">
+    <header className="fixed z-40 flex items-center justify-between w-full h-20 px-4 bg-white shadow sm:px-8 hover:shadow-lg">
       <div className="flex items-center gap-10">
         <NavLink href="/" className="flex items-center">
           <img src={'/vite.svg'} className="h-10" />

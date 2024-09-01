@@ -24,7 +24,7 @@ export default async function Layout({ children, params }: Props) {
       // eslint-disable-next-line react/no-children-prop
       children={(
         <>
-          <JSHeader />
+          <JSHeader/>
           {children}
          
           <Footer />
