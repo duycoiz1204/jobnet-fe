@@ -176,7 +176,7 @@ export default function ApplicationModal({
   ));
 
   return (
-    <Modal show={modal === 'application-modal'} onClose={closeModal}>
+    <Modal show={modal === 'application-modal'} size="3xl" onClose={closeModal}>
       <Modal.Header className="text-xl text-white bg-white">
         {t('postDetails.modal.applyJob.title')}
       </Modal.Header>
