@@ -63,7 +63,7 @@ export default function RHeadder(): JSX.Element {
                 height={500}
                 alt=""
                 src={'/vite.svg'}
-                className="h-10"
+                className="w-full h-10"
               />
               <h2 className="hidden ml-4 text-2xl font-bold lg:inline-block">
                 Brand

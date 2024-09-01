@@ -112,7 +112,7 @@ export default function JSHeader({}: JSHeaderProps): JSX.Element {
             }
             type="hover"
           >
-            <Dropdown.Item to="businesses" icon={FaListCheck as IconType}>
+            <Dropdown.Item to="/businesses" icon={FaListCheck as IconType}>
               {t('header.jobSeeker.business.dropdown.businessList')}
             </Dropdown.Item>
             <Dropdown.Item to="" icon={FaStar as IconType}>

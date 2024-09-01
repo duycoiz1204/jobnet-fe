@@ -74,7 +74,7 @@ export default function PostDetailsCpn({ _similarPostsPaginationData, postId, po
     };
 
     const similarPostElms = similarPostsPagination.data.map((post) => (
-        <Post key={post.id} post={post} navigateTo={`/posts/${post.id}`} />
+        <Post key={post.id} post={post} />
     ));
     return (
         <div>

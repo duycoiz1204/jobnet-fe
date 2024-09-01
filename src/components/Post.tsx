@@ -13,13 +13,7 @@ import { useSession } from 'next-auth/react';
 import { Session } from 'next-auth';
 import Image from 'next/image';
 
-export default function Post({
-  post,
-  navigateTo,
-}: {
-  post: PostType;
-  navigateTo: string;
-}): JSX.Element {
+export default function Post({ post }: { post: PostType }): JSX.Element {
   const t = useTranslations();
   const session = useSession().data;
   const role = session?.user?.role || '';
@@ -73,7 +67,7 @@ export default function Post({
               )}
               <Button
                 variant={'emerald'}
-                onClick={() => router.push(`/posts/${navigateTo}`)}
+                onClick={() => router.push(`/posts/${post.id}`)}
                 size="sm"
               >
                 {t('post.button.detail')}
@@ -85,7 +79,7 @@ export default function Post({
             <Link
               href={`/businesses/${post.business.id}`}
               className="hover:text-emerald-500 hover:underline opacity-80 hover:opacity-100"
-            // preventScrollReset={true}
+              // preventScrollReset={true}
             >
               {post.business.name}
             </Link>
