@@ -228,14 +228,11 @@ export default function JsInfo({ _jobSeeker }: Props): React.ReactElement {
     if (
       !aboutMe ||
       !personalInfo.name ||
-      !personalInfo.email ||
       !personalInfo.phone ||
       !personalInfo.nation ||
-      !professionInfo.salary ||
-      !professionInfo.workingFormat ||
       !professionInfo.profession ||
-      !professionInfo.location ||
-      !education
+      !education ||
+      !socialNetworks
     ) {
       toast.error('Vui lòng nhập đầy đủ thông tin!');
       return;
